@@ -1,0 +1,18 @@
+@import "../constants.scss";
+
+.alert.review {
+    background-color: $contrast-green;
+
+    a[data-rate-action="do-rate"]{
+        text-decoration: none;
+        color: #fff;
+
+        .fa-star {
+            color: #d5d73c;
+        }
+    }
+
+    .fa-close{ 
+        color: #fff;
+    }
+}

@@ -1,0 +1,88 @@
+.base-table-viewer-structure {
+  margin-top: 1rem;
+}
+.base-table-viewer-structure .dataTable[role=grid] {
+  border: 1px;
+  border-radius: 5px;
+  border-color: #ddd;
+  border-style: solid;
+}
+.base-table-viewer-structure .dataTable[role=grid] thead {
+  background-color: #f8f9fa;
+}
+.base-table-viewer-structure .dataTable[role=grid] thead tr[role=row] {
+  vertical-align: top;
+}
+.base-table-viewer-structure .dataTable[role=grid] thead tr[role=row] th:nth-child(1) {
+  text-align: left;
+  padding-left: 10px;
+}
+.base-table-viewer-structure .dataTable[role=grid] thead tr[role=row] th {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+.base-table-viewer-structure .dataTable[role=grid] tbody tr.odd {
+  background-color: #ffffff;
+}
+.base-table-viewer-structure .dataTable[role=grid] tbody tr.odd:hover {
+  background-color: #f8f9fa;
+}
+.base-table-viewer-structure .dataTable[role=grid] tbody tr.even:hover {
+  background-color: #f8f9fa;
+}
+.base-table-viewer-structure .dataTable[role=grid] tbody tr td:nth-child(1) {
+  text-align: left;
+  padding-left: 20px;
+}
+.base-table-viewer-structure .dataTable[role=grid] tbody tr td {
+  border-bottom: 1px dashed rgba(178, 169, 255, 0.0588235294);
+  padding-top: 15px;
+  padding-bottom: 15px;
+  padding-left: 5px !important;
+}
+.base-table-viewer-structure .dataTable[role=grid] tbody tr td .call-stack {
+  color: #4f6df5;
+  text-decoration: none;
+  font-weight: bold;
+}
+.base-table-viewer-structure .dataTable[role=grid] tbody tr:hover {
+  --bs-table-accent-bg: #f8f9fa;
+}
+.base-table-viewer-structure .table-wrapper .dt-buttons {
+  margin-left: 15px;
+}
+.base-table-viewer-structure .table-wrapper .dt-buttons .dt-action-button {
+  border-radius: 0.25rem;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.35em;
+  margin: 5px 0 10px 0;
+  color: #4bb5ff;
+  border-radius: 0.1875rem;
+  cursor: pointer;
+  background: transparent;
+  border: 1px solid;
+  padding: 6px 22px;
+  height: 30px;
+}
+.base-table-viewer-structure .table-wrapper .dt-buttons .dt-action-button:hover {
+  filter: contrast(0.5);
+  border: 1px solid #4bb5ff;
+  background: transparent;
+}
+.base-table-viewer-structure .dataTables_paginate {
+  margin: 0px;
+  margin-top: 10px;
+  padding: 0px;
+  border: 1px;
+  border-radius: 5px;
+  border-style: solid;
+  border-color: #dddddd;
+  overflow: hidden;
+}
+.base-table-viewer-structure .log-filesize-limitation {
+  text-align: center;
+  color: #fa9732;
+}
+
+/*# sourceMappingURL=base-table-view.css.map */

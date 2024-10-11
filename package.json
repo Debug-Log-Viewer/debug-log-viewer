@@ -1,0 +1,15 @@
+{
+    "name": "Debug Log Viewer",
+    "version": "1.0.0",
+    "description": "",
+    "main": "./assets/js/main.js",
+    "scripts": {
+        "build-js": "webpack",
+        "build-scss": "sass --watch assets/scss:assets/css"
+    },
+    "devDependencies": {
+        "jquery": "^3.6.0",
+        "webpack": "^5.65.0",
+        "webpack-cli": "^4.9.1"
+    }
+}

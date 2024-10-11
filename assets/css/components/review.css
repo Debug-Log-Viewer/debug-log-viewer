@@ -1,0 +1,15 @@
+.alert.review {
+  background-color: #37ae3b;
+}
+.alert.review a[data-rate-action=do-rate] {
+  text-decoration: none;
+  color: #fff;
+}
+.alert.review a[data-rate-action=do-rate] .fa-star {
+  color: #d5d73c;
+}
+.alert.review .fa-close {
+  color: #fff;
+}
+
+/*# sourceMappingURL=review.css.map */
