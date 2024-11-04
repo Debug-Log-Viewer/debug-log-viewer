@@ -4,7 +4,7 @@ Contributors: lysyiweb
 Tags: debug, logs, error tracking, WP_DEBUG
 Requires at least: 4.6
 Tested up to: 6.6.2
-Stable tag: 1.0.0
+Stable tag: 1.0.2
 Requires PHP: 5.4
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -50,3 +50,9 @@ With Debug Log Viewer, developers can catch issues early, monitor their site mor
 == Changelog ==
 = 1.0.0 =
 Initial release
+
+= 1.0.1 =
+Fix UUID generation
+
+= 1.0.2 =
+Added assets (logo)

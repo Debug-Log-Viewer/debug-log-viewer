@@ -1,0 +1,50 @@
+#dbg_lv-404-redirects-table_paginate,
+#dbg_lv_log-table_paginate {
+  border-style: none !important;
+}
+
+#dbg_lv-404-redirects-table_paginate .current,
+#dbg_lv_log-table_paginate .current {
+  color: #fff !important;
+  background: #4f6df5 !important;
+}
+
+#dbg_lv-404-redirects-table_paginate .paginate_button,
+#dbg_lv-404-redirects-table_paginate .ellipsis,
+#dbg_lv-404-redirects-table_paginate .previous,
+#dbg_lv_log-table_paginate .paginate_button,
+#dbg_lv_log-table_paginate .ellipsis,
+#dbg_lv_log-table_paginate .previous {
+  margin: 0 3px;
+  border: 0;
+  border: 1px solid #4f6df5;
+  padding: 5px 15px;
+  border-radius: 5px;
+}
+
+#dbg_lv-404-redirects-table_paginate .paginate_button:hover,
+#dbg_lv-404-redirects-table_paginate .ellipsis:hover,
+#dbg_lv-404-redirects-table_paginate .previous:hover,
+#dbg_lv_log-table_paginate .paginate_button:hover,
+#dbg_lv_log-table_paginate .ellipsis:hover,
+#dbg_lv_log-table_paginate .previous:hover {
+  background: #4f6df5 !important;
+  color: #fff;
+}
+
+#dbg_lv-404-redirects-table_paginate .paginate_button a,
+#dbg_lv-404-redirects-table_paginate .ellipsis a,
+#dbg_lv-404-redirects-table_paginate .previous a,
+#dbg_lv_log-table_paginate .paginate_button a,
+#dbg_lv_log-table_paginate .ellipsis a,
+#dbg_lv_log-table_paginate .previous a {
+  text-decoration: none;
+  margin: 0px;
+}
+
+#dbg_lv-404-redirects-table_paginate .paginate_button.disabled:hover,
+#dbg_lv_log-table_paginate .paginate_button.disabled:hover {
+  color: #fff !important;
+}
+
+/*# sourceMappingURL=table-pagination.css.map */

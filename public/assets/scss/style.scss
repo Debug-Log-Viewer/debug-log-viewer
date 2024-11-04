@@ -1,0 +1,72 @@
+@import "./constants.scss";
+@import "./base/fonts.scss";
+
+@import "./pages/log-viewer.scss";
+
+@import "./components/scroll-to-top.scss";
+@import "./components/review.scss";
+@import "./components/sidebar.scss";
+@import "./components/table-pagination.scss";
+
+
+#wpbody-content {
+    background-color: $body-color;
+}
+
+.dbg_lv-dashboard,
+.dbg_lv-log-viewer,
+.dbg_lv-404-redirects,
+.dbg_lv-advisor {
+    max-width: 1800px;
+    padding-left: 30px;
+    padding-right: 30px;
+
+    p {
+        font-size: 15px;
+    }
+
+    .datetime {
+        min-width: 180px;
+    }
+}
+
+#wpcontent,
+#wpfooter {
+    margin-left: 135px;
+    padding-left: 25px;
+}
+
+.dbg_lv-dashboard,
+.dbg_lv-log-viewer,
+.dbg_lv-404-redirects,
+.dbg_lv-advisor {
+    .dataTables_wrapper {
+        .dataTables_length {
+            margin: 5px 0 10px 0;
+
+            select {
+                padding: 0 24px 0 8px;
+            }
+        }
+
+        .dataTables_filter {
+            margin: 5px 0 10px 0;
+
+            input {
+                height: 30px;
+            }
+        }
+
+        .dataTables_info {
+            margin-top: 4px;
+        }
+    }
+}
+
+
+@media print,
+not screen {
+    .no-print {
+        display: none;
+    }
+}

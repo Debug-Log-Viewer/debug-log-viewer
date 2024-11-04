@@ -1,0 +1,97 @@
+.settings,
+.notifications {
+  font-family: Helvetica;
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px #929ea9;
+  margin-bottom: 30px;
+}
+
+.settings .dbg_lv-pro-features,
+.notifications .dbg_lv-pro-features {
+  background: #4f6df5;
+  border: 0;
+  border-radius: 5px;
+  color: #fff;
+  text-decoration: none;
+  margin: 0 auto;
+  display: block;
+  text-align: center;
+  max-width: 130px;
+}
+
+.settings .dbg_lv-pro-features img,
+.notifications .dbg_lv-pro-features img {
+  width: 32px;
+}
+
+.settings .bootstrap-switch,
+.notifications .bootstrap-switch {
+  transform: scale(0.8);
+}
+
+.settings .log-info-block,
+.notifications .log-info-block {
+  font-size: 14px;
+  margin-bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.settings h5,
+.notifications h5 {
+  color: #040047;
+}
+
+.settings select,
+.notifications select {
+  max-width: inherit;
+}
+
+.settings input[type=email],
+.settings input[type=url],
+.settings select,
+.notifications input[type=email],
+.notifications input[type=url],
+.notifications select {
+  margin-top: 5px;
+  margin-bottom: 24px;
+  width: 100%;
+  padding: 5px 10px;
+  border: 1px solid #cecece;
+}
+
+.settings input[type=email][disabled],
+.settings input[type=url][disabled],
+.settings select[disabled],
+.notifications input[type=email][disabled],
+.notifications input[type=url][disabled],
+.notifications select[disabled] {
+  background-color: #f6f7f7;
+}
+
+.settings .form-check,
+.notifications .form-check {
+  margin-top: 5px;
+  margin-bottom: 24px;
+}
+
+.settings input[type=submit],
+.notifications input[type=submit] {
+  padding: 10px 20px;
+  border-radius: 5px;
+}
+
+.settings input[type=submit].enable,
+.notifications input[type=submit].enable {
+  background-color: #4f6df5;
+}
+
+.settings input[type=submit].disable,
+.notifications input[type=submit].disable {
+  background-color: #f84042;
+}
+
+/*# sourceMappingURL=sidebar.css.map */

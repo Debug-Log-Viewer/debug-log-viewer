@@ -1,0 +1,39 @@
+@import "../constants.scss";
+
+
+#dbg_lv-404-redirects-table_paginate,
+#dbg_lv_log-table_paginate {
+    border-style: none !important;
+
+    .current {
+        color: $white !important;
+        background: $main-theme-color !important;
+    }
+
+    .paginate_button,
+    .ellipsis,
+    .previous {
+        margin: 0 3px;
+        border: 0;
+        border: 1px solid $main-theme-color;
+
+        padding: 5px 15px;
+        border-radius: 5px;
+
+        &:hover {
+            background: $main-theme-color !important;
+            color: #fff;
+        }
+
+        a {
+            text-decoration: none;
+            margin: 0px;
+        }
+    }
+
+    .paginate_button.disabled {
+        &:hover {
+            color: #fff !important;
+        }
+    }
+}
