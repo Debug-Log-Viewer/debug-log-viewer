@@ -1,8 +1,10 @@
-import { updateEmailNotifications } from '../utils.js';
-import { initEmailNotificationsForm } from '../utils.js';
-import { initScrollToTopButton } from '../utils.js';
-import { generateUUID } from '../utils.js';
-
+import { 
+    updateEmailNotifications, 
+    initEmailNotificationsForm, 
+    initScrollToTopButton, 
+    generateUUID, 
+    showToast 
+} from '../utils.js';
 
 (async ($) => {
     const dataTableConfig = {
@@ -108,7 +110,7 @@ import { generateUUID } from '../utils.js';
             }, false);
 
         } catch (error) {
-            toastr.error(error, 'Error', { timeOut: 5000 });
+            showToast(error, 'error');
         }
     }
 
@@ -148,11 +150,11 @@ import { generateUUID } from '../utils.js';
             if (!response.success) {
                 throw new Error(response.error);
             }
-
-            toastr.success(`Debug mode: ${response.state}`, 'Success', { timeOut: 5000 });
+            showToast(`Debug mode: ${response.state}`, 'success');
 
         } catch (error) {
-            toastr.error(error, 'Error', { timeOut: 5000 });
+            // toastr.error(error, 'Error', { timeOut: 5000 });
+            showToast(error, 'error');
         }
     };
 
@@ -176,10 +178,10 @@ import { generateUUID } from '../utils.js';
                 throw new Error(`Request error: ${response.error}`);
             }
 
-            toastr.success(`Debug log scripts: ${response.state}`, 'Success', { timeOut: 5000 });
+            showToast(`Debug log scripts: ${response.state}`, 'success');
 
         } catch (error) {
-            toastr.error(error, 'Error', { timeOut: 5000 });
+            showToast(error, 'error');
         }
     }
 
@@ -209,13 +211,13 @@ import { generateUUID } from '../utils.js';
                 throw new Error(response.error);
             }
 
-            toastr.success('Logging enabled successfully.', 'Success', { timeOut: 5000 });
+            showToast('Logging enabled successfully.', 'success');
             setTimeout(function () {
                 location.reload();
             }, 1000);
 
         } catch (error) {
-            toastr.error(error, 'Error', { timeOut: 5000 });
+            showToast(error, 'error');
         }
     });
 
@@ -236,10 +238,10 @@ import { generateUUID } from '../utils.js';
                 throw new Error(response.error);
             }
 
-            toastr.success(`Debug scripts: ${response.state}`, 'Success', { timeOut: 5000 });
+            showToast(`Debug scripts: ${response.state}`, 'success');
 
         } catch (error) {
-            toastr.error(error, 'Error', { timeOut: 5000 });
+            showToast(error, 'error');
         }
     });
 
@@ -265,10 +267,10 @@ import { generateUUID } from '../utils.js';
                 throw new Error(response.error);
             }
 
-            toastr.success(`Display errors: ${response.state}`, 'Success', { timeOut: 5000 });
+            showToast(`Display errors: ${response.state}`, 'success');
 
         } catch (error) {
-            toastr.error(error, 'Error', { timeOut: 5000 });
+            showToast(error, 'error');
         }
     });
 
@@ -302,12 +304,12 @@ import { generateUUID } from '../utils.js';
                 throw new Error(response.error);
             }
 
-            toastr.success(`Log was cleared`, 'Success', { timeOut: 5000 });
+            showToast(`Log was cleared`, 'success');
 
             $('#dbg_lv_log-table').DataTable().ajax.reload();
 
         } catch (error) {
-            toastr.error(error, 'Error', { timeOut: 5000 });
+            showToast(error, 'error');
         }
     });
 
@@ -315,10 +317,9 @@ import { generateUUID } from '../utils.js';
         try {
             $('#dbg_lv_log-table').DataTable().ajax.reload();
 
-            toastr.success(`Log was refreshed`, 'Success', { timeOut: 5000 });
-
+            showToast('Log was refreshed', 'success');
         } catch (error) {
-            toastr.error(error, 'Error', { timeOut: 5000 });
+            showToast(error, 'error');
         }
     });
 
@@ -347,7 +348,7 @@ import { generateUUID } from '../utils.js';
                 URL.revokeObjectURL(url);
             },
             error: (xhr, status, error) => {
-                toastr.error(error, 'Error', { timeOut: 5000 });
+               showToast(error, 'error');
             }
         });
     });

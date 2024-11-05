@@ -9,7 +9,7 @@ export async function updateEmailNotifications(form, action) {
     const submitButton       = form.find('input[type="submit"]');
 
     if (!emailFiled?.val()) {
-        toastr.warning('Email is not specified', 'Warning', { timeOut: 5000 });
+        showToast('Email is not specified', 'warning');
         return
     }
 
@@ -36,7 +36,7 @@ export async function updateEmailNotifications(form, action) {
                 .addClass('enable')
                 .val('Enable');
 
-            toastr.success('Notifications disabled', 'Success', { timeOut: 5000 });
+            showToast('Notifications disabled', 'success');
 
             const rawUserEmailResponse = await jQuery.post(ajaxurl, {
                 action: 'dbg_lv_get_current_user_email',
@@ -80,10 +80,10 @@ export async function updateEmailNotifications(form, action) {
 
             form.attr('data-notifications-enabled', 'true');
 
-            toastr.success('Notifications enabled', 'Success', { timeOut: 5000 });
+            showToast('Notifications enabled', 'success');
         }
     } catch (error) {
-        toastr.error(error, 'Error', { timeOut: 5000 });
+        showToast(error, 'error');
     }
 
     submitButton.prop('disabled', false);
@@ -127,8 +127,7 @@ export async function initEmailNotificationsForm(form) {
                 .addClass('enable').val('Enable');
         }
     } catch (error) {
-        toastr.error(error, 'Error', { timeOut: 5000 });
-        return
+        showToast(error, 'error');
     }
 }
 
@@ -167,4 +166,25 @@ export function generateUUID() {
             return v.toString(16);
         });
     }
+}
+
+export function showToast(message, level) {
+    const $toast = $('#custom-toast');
+    const $toastBody = $('#toast-body');
+
+    // Set the message
+    $toastBody.text(message);
+
+    // Determine the level (success, error, warning)
+    let toastClass = 'bg-success';
+    if (level === 'error') {
+        toastClass = 'bg-danger';
+    } else if (level === 'warning') {
+        toastClass = 'bg-warning';
+    }
+    // Remove previous level classes and add the new one
+    $toastBody.removeClass('bg-success bg-danger bg-warning').addClass(toastClass);
+    // Show the toast
+    const toast = new bootstrap.Toast($toast[0]);
+    toast.show();
 }

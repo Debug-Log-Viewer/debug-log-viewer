@@ -58,7 +58,6 @@ class DBG_LV_HooksController
         // Include styles and scripts in Debug Log Viewer plugin page only
 
         if (strpos($hook_suffix, 'debug-log-viewer')  !== false) {
-            wp_enqueue_script('dbg_lv_toast_js',                  plugins_url('../public/assets/vendor/js/toast.js', __DIR__), array('jquery'));
             wp_enqueue_script('dbg_lv_bootstrap_js',              plugins_url('../public/assets/vendor/js/bootstrap.bundle.min.js', __DIR__));
             wp_enqueue_script('dbg_lv_bootstrap_switch_js',       plugins_url('../public/assets/vendor/js/bootstrap-switch.min.js', __DIR__, array('jquery')));
             wp_enqueue_script('dbg_lv_datatables_js',             plugins_url('../public/assets/vendor/js/jquery.dataTables.min.js', __DIR__), array('jquery'));
@@ -75,7 +74,6 @@ class DBG_LV_HooksController
                 'ajax_nonce'   => wp_create_nonce('ajax_nonce'),
             ]);
             wp_enqueue_style('dbg_lv_bootstrap_css',              plugins_url('../public/assets/vendor/css/bootstrap.min.css', __DIR__));
-            wp_enqueue_style('dbg_lv_toast_css   ',               plugins_url('../public/assets/vendor/css/toast.css', __DIR__));
             wp_enqueue_style('dbg_lv_now-ui_css',                 plugins_url('../public/assets/vendor/css/now-ui-kit.min.css', __DIR__), ['dbg_lv_bootstrap_css']);
             wp_enqueue_style('dbg_lv_datatables_css',             plugins_url('../public/assets/vendor/css/jquery.dataTables.min.css', __DIR__));
             wp_enqueue_style('dbg_lv_datatables_buttons_css',     plugins_url('../public/assets/vendor/css/buttons.dataTables.min.css', __DIR__));
