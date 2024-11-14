@@ -130,7 +130,7 @@ class DBG_LV_LogModel
                 return $filesize_in_bytes;
             }
             $filesize_in_mb = $filesize_in_bytes / 1024 / 1024;
-            return $with_measure_units 
+            return $with_measure_units
             ? round($filesize_in_mb, 2) . ' ' . __('Mb', 'debug-log-viewer') 
             : round($filesize_in_mb, 2);
         } else {

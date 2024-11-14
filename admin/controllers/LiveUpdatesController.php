@@ -55,7 +55,7 @@ class DBG_LV_LiveUpdatesController
         echo PHP_EOL;
     }
 
-    public static function dbg_lv_actualize_user_activity_time($response)
+    public static function actualizeUserActivityTime($response)
     {
         // Get the current screen
         if (is_admin()) {
