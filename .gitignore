@@ -1,0 +1,47 @@
+# Ignore system files
+.DS_Store
+Thumbs.db
+
+# Ignore log files and debug output
+*.log
+debug.log
+
+# Ignore local development environment files
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# Ignore compiled code and cache files
+node_modules/
+vendor/
+dist/
+build/
+cache/
+
+# Ignore dependency management files
+composer.lock
+package-lock.json
+yarn.lock
+
+# Ignore temporary files
+*.bak
+*.swp
+*.tmp
+*.temp
+*.orig
+
+# Ignore environment/configuration files
+.env
+.env.local
+.env.*.local
+
+# Ignore sensitive information
+*.key
+*.pem
+
+# Ignore WordPress-specific files if you're not modifying them
+wp-config.php
+
+# Ignore zip files (if you create plugin zip files for releases)
+*.zip

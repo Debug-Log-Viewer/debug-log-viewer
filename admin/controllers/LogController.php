@@ -5,6 +5,7 @@ if (!defined('ABSPATH')) {
 }
 
 require_once realpath(__DIR__) . '/../../vendor/autoload.php';
+require_once realpath(__DIR__) . '/LiveUpdatesController.php';
 require_once realpath(__DIR__) . '/../../admin/models/LogModel.php';
 require_once realpath(__DIR__) . '/../../public/views/pages/log.php';
 require_once realpath(__DIR__) . '/../../admin/helpers/utils.php';
@@ -47,7 +48,7 @@ class DBG_LV_LogController
 
     public static function dbg_lv_get_log_data()
     {
-        dbg_lv_verify_nonce(isset($_POST['wp_nonce']) ? sanitize_text_field(wp_unslash($_POST['wp_nonce'])) : '' );
+        dbg_lv_verify_nonce(isset($_POST['wp_nonce']) ? sanitize_text_field(wp_unslash($_POST['wp_nonce'])) : '');
 
         $draw = isset($_POST['draw']) ? (int) sanitize_text_field(wp_unslash($_POST['draw'])) : 0;
         $start = isset($_POST['start']) ? (int) sanitize_text_field(wp_unslash($_POST['start'])) : 1;
@@ -133,7 +134,7 @@ class DBG_LV_LogController
 
     public function dbg_lv_log_viewer_enable_logging()
     {
-        dbg_lv_verify_nonce(isset($_POST['wp_nonce']) ? sanitize_text_field(wp_unslash($_POST['wp_nonce'])) : '' );
+        dbg_lv_verify_nonce(isset($_POST['wp_nonce']) ? sanitize_text_field(wp_unslash($_POST['wp_nonce'])) : '');
 
         try {
 
@@ -164,7 +165,7 @@ class DBG_LV_LogController
 
     public function dbg_lv_toggle_debug_mode()
     {
-        dbg_lv_verify_nonce(isset($_POST['wp_nonce']) ? sanitize_text_field(wp_unslash($_POST['wp_nonce'])) : '' );
+        dbg_lv_verify_nonce(isset($_POST['wp_nonce']) ? sanitize_text_field(wp_unslash($_POST['wp_nonce'])) : '');
 
         $state = $this->dbg_lv_prepare_state();
 
@@ -187,7 +188,7 @@ class DBG_LV_LogController
 
     public function dbg_lv_toggle_debug_scripts()
     {
-        dbg_lv_verify_nonce(isset($_POST['wp_nonce']) ? sanitize_text_field(wp_unslash($_POST['wp_nonce'])) : '' );
+        dbg_lv_verify_nonce(isset($_POST['wp_nonce']) ? sanitize_text_field(wp_unslash($_POST['wp_nonce'])) : '');
         $state = $this->dbg_lv_prepare_state();
 
         try {
@@ -209,7 +210,7 @@ class DBG_LV_LogController
 
     public function dbg_lv_toggle_debug_log_scripts()
     {
-        dbg_lv_verify_nonce(isset($_POST['wp_nonce']) ? sanitize_text_field(wp_unslash($_POST['wp_nonce'])) : '' );
+        dbg_lv_verify_nonce(isset($_POST['wp_nonce']) ? sanitize_text_field(wp_unslash($_POST['wp_nonce'])) : '');
         $state = $this->dbg_lv_prepare_state();
 
         try {
@@ -235,7 +236,7 @@ class DBG_LV_LogController
 
     public function dbg_lv_toggle_display_errors()
     {
-        dbg_lv_verify_nonce(isset($_POST['wp_nonce']) ? sanitize_text_field(wp_unslash($_POST['wp_nonce'])) : '' );
+        dbg_lv_verify_nonce(isset($_POST['wp_nonce']) ? sanitize_text_field(wp_unslash($_POST['wp_nonce'])) : '');
         $state = $this->dbg_lv_prepare_state();
 
         try {
@@ -261,7 +262,7 @@ class DBG_LV_LogController
 
     public static function dbg_lv_clear_log()
     {
-        dbg_lv_verify_nonce(isset($_POST['wp_nonce']) ? sanitize_text_field(wp_unslash($_POST['wp_nonce'])) : '' );
+        dbg_lv_verify_nonce(isset($_POST['wp_nonce']) ? sanitize_text_field(wp_unslash($_POST['wp_nonce'])) : '');
 
         try {
             $debug_log_path = DBG_LV_LogController::dbg_lv_get_debug_file_path();
@@ -291,7 +292,7 @@ class DBG_LV_LogController
 
     public static function dbg_lv_download_log()
     {
-        dbg_lv_verify_nonce(isset($_POST['wp_nonce']) ? sanitize_text_field(wp_unslash($_POST['wp_nonce'])) : '' );
+        dbg_lv_verify_nonce(isset($_POST['wp_nonce']) ? sanitize_text_field(wp_unslash($_POST['wp_nonce'])) : '');
 
         try {
             $debug_log_path = DBG_LV_LogController::dbg_lv_get_debug_file_path();
@@ -328,7 +329,7 @@ class DBG_LV_LogController
 
     public static function dbg_lv_get_current_user_email()
     {
-        dbg_lv_verify_nonce(isset($_POST['wp_nonce']) ? sanitize_text_field(wp_unslash($_POST['wp_nonce'])) : '' );
+        dbg_lv_verify_nonce(isset($_POST['wp_nonce']) ? sanitize_text_field(wp_unslash($_POST['wp_nonce'])) : '');
 
         try {
             global $current_user;
@@ -350,7 +351,7 @@ class DBG_LV_LogController
 
     public function dbg_lv_prepare_state()
     {
-        dbg_lv_verify_nonce(isset($_POST['wp_nonce']) ? sanitize_text_field(wp_unslash($_POST['wp_nonce'])) : '' );
+        dbg_lv_verify_nonce(isset($_POST['wp_nonce']) ? sanitize_text_field(wp_unslash($_POST['wp_nonce'])) : '');
 
         if (!isset($_POST["state"])) {
             throw new \Exception('Empty state passed');
@@ -468,7 +469,7 @@ class DBG_LV_LogController
 
     public static function dbg_lv_change_log_notifications_status()
     {
-        dbg_lv_verify_nonce(isset($_POST['wp_nonce']) ? sanitize_text_field(wp_unslash($_POST['wp_nonce'])) : '' );
+        dbg_lv_verify_nonce(isset($_POST['wp_nonce']) ? sanitize_text_field(wp_unslash($_POST['wp_nonce'])) : '');
 
         $status = isset($_POST['status']) ? sanitize_text_field(wp_unslash($_POST['status'])) : null;
         if ($status) {
@@ -508,78 +509,35 @@ class DBG_LV_LogController
 
     public static function dbg_lv_live_update()
     {
-        $script_execution_time = 70;
 
-        // Remove any previously set headers to prevent conflicts.
-        header_remove();
+        // Cold run
+        $_SESSION['user_active'] = time();
+        $session_timeout = 130; // 60 * 2 + 10 seconds
 
-        // SSE headers.
-        header('Content-Type: text/event-stream');
-        header('Cache-Control: no-cache');
-        header('Connection: keep-alive');
-        header('Accept: application/json');
+        $liveUpdates = new DBG_LV_LiveUpdatesController();
+        $liveUpdates->applyHeaders();
+        $liveUpdates->setExecutionTimeLimit();
 
-        $start_time = time(); // Record the start time to manually manage the timeout.
-
-        // Loop to send updates every 5 seconds.
-        while (time() - $start_time < $script_execution_time - 10) {
-            clearstatcache();
-
-            // Get the current log file size.
-            $filesize = DBG_LV_LogModel::dbg_lv_get_log_filesize(['raw' => true]);
-
-            // Handle error if filesize is not available.
-            if ($filesize === false) {
-                $fields = [
-                    'id'    => time(),
-                    'event' => 'error',
-                    'data'  => wp_json_encode(['error' => 'Could not retrieve log file size']),
-                    'retry' => 5000,
-                ];
-
-                foreach ($fields as $field => $value) {
-                    echo esc_html("$field: $value" . PHP_EOL);
-                }
-                echo PHP_EOL;
-                flush();
-                sleep(5);
-                continue;
+        while (true){
+            if (empty($_SESSION['user_active']) || (time() - $_SESSION['user_active']) > $session_timeout) {
+                exit;
             }
 
-            $last_filesize = (int) get_option(DBG_LV_DEBUG_LOG_LAST_FILESIZE);
+            $liveUpdates->clearDebugLogFileStat();
+            // Get current log file size
+            $current_filesize = DBG_LV_LogModel::dbg_lv_get_log_filesize(['raw' => true]);
+            $latest_filesize = (int) get_option(DBG_LV_DEBUG_LOG_LAST_FILESIZE);
 
             // Only send an update if the filesize has changed.
-            if ($filesize !== $last_filesize) {
-
-                update_option(DBG_LV_DEBUG_LOG_LAST_FILESIZE, $filesize);
-
-                $fields = [
-                    'id'    => time(), // Use a timestamp as a unique event ID.
-                    'event' => 'updates',
-                    'data'  => wp_json_encode(['updated' => true]),
-                    'retry' => 5000,
-                ];
-
-                foreach ($fields as $field => $value) {
-                    echo esc_html("$field: $value" . PHP_EOL);
-                }
-
-                echo PHP_EOL;
+            if ($current_filesize !== $latest_filesize) {
+                update_option(DBG_LV_DEBUG_LOG_LAST_FILESIZE, $current_filesize);
+                $liveUpdates->notifyClientAboutUpdates();
             }
 
-            // Ensure output buffering is flushed.
-            while (ob_get_level() > 0) {
-                ob_end_flush();
-            }
-            flush();
-
+            $liveUpdates->flushingOutputBuffering();
             // Sleep for 5 seconds before the next update.
-            sleep(5);
+            sleep(DBG_LV_LIVE_UPDATE_INTERVAL);
 
-            // Manually break if execution time exceeds limits due to hosting limits.
-            if (connection_aborted()) {
-                break; // If the connection is closed by the client or server, exit the loop.
-            }
         }
     }
 }

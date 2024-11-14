@@ -7,6 +7,7 @@ global $wpdb;
 
 define('DBG_LV_LOG_FILE_LIMIT', 10 * 1024 * 1024);
 define('DBG_LV_DEBUG_LOG_LAST_FILESIZE', 'dbg_lv_dbg_log_last_filesize');
+define('DBG_LV_LIVE_UPDATE_INTERVAL', 5);
 
 class DBG_LV_Constants
 {

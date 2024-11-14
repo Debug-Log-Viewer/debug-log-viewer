@@ -109,6 +109,10 @@ import {
                 $('#dbg_lv_log-table').DataTable().draw();
             }, false);
 
+            window.addEventListener("beforeunload", () => {
+                source.close();
+            });
+
         } catch (error) {
             showToast(error, 'error');
         }
