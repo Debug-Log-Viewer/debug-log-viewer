@@ -348,7 +348,6 @@ class DBG_LV_LogController
         }
     }
 
-
     public function dbg_lv_prepare_state()
     {
         dbg_lv_verify_nonce(isset($_POST['wp_nonce']) ? sanitize_text_field(wp_unslash($_POST['wp_nonce'])) : '');
@@ -509,20 +508,11 @@ class DBG_LV_LogController
 
     public static function dbg_lv_live_update()
     {
-
-        // Cold run
-        $_SESSION['user_active'] = time();
-        $session_timeout = 130; // 60 * 2 + 10 seconds
-
         $liveUpdates = new DBG_LV_LiveUpdatesController();
         $liveUpdates->applyHeaders();
         $liveUpdates->setExecutionTimeLimit();
 
-        while (true){
-            if (empty($_SESSION['user_active']) || (time() - $_SESSION['user_active']) > $session_timeout) {
-                exit;
-            }
-
+        for ($i = 0; $i < DBG_LV_ITERATIONS_PER_SESSION; $i++) {
             $liveUpdates->clearDebugLogFileStat();
             // Get current log file size
             $current_filesize = DBG_LV_LogModel::dbg_lv_get_log_filesize(['raw' => true]);
@@ -533,11 +523,12 @@ class DBG_LV_LogController
                 update_option(DBG_LV_DEBUG_LOG_LAST_FILESIZE, $current_filesize);
                 $liveUpdates->notifyClientAboutUpdates();
             }
-
             $liveUpdates->flushingOutputBuffering();
             // Sleep for 5 seconds before the next update.
             sleep(DBG_LV_LIVE_UPDATE_INTERVAL);
-
         }
+        // Exit over iterations limit reached.
+        // After this auto-reconnect will be triggered om the front.
+        exit; 
     }
 }

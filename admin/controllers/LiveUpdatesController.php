@@ -22,9 +22,8 @@ class DBG_LV_LiveUpdatesController
 
     public function setExecutionTimeLimit()
     {
-        $executionTimeLimit = 60;
         if (function_exists('set_time_limit')) {
-            @set_time_limit($executionTimeLimit);
+            set_time_limit(DBG_LV_LIVE_UPDATE_INTERVAL * DBG_LV_ITERATIONS_PER_SESSION);
         }
     }
 
@@ -53,27 +52,5 @@ class DBG_LV_LiveUpdatesController
             echo esc_html("$field: $value" . PHP_EOL);
         }
         echo PHP_EOL;
-    }
-
-    public static function actualizeUserActivityTime($response)
-    {
-        // Get the current screen
-        if (is_admin()) {
-            global $pagenow;
-
-            // Check if on a plugin page and get the current plugin's slug
-            $page = isset($_GET['page']) ? sanitize_text_field($_GET['page']) : '';
-            $plugin_slug = 'debug-log-viewer';
-
-            // Check if current page matches the plugin's slug
-            if ($page === $plugin_slug && $pagenow === 'admin.php') {
-                // Update time when user was active
-                $_SESSION['user_active'] = time();
-            } else {
-                unset($_SESSION['user_active']);
-            }
-        }
-
-        return $response;
     }
 }

@@ -50,8 +50,6 @@ class DBG_LV_HooksController
             }
         });
         add_action('admin_init', ['DBG_LV_ReviewController', 'dbg_lv_review_handler']);
-
-        add_action('heartbeat_tick', 'my_plugin_heartbeat_tick', ['DBG_LV_LiveUpdatesController', 'actualizeUserActivityTime']);
     }
 
     public static function dbg_lv_admin_assets_enqueue($hook_suffix)
