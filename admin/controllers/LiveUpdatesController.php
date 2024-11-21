@@ -10,14 +10,11 @@ class DBG_LV_LiveUpdatesController
 
     public function applyHeaders(): void
     {
-        // Remove any previously set headers to prevent conflicts.
-        header_remove();
-
-        // SSE headers.
         header('Content-Type: text/event-stream');
         header('Cache-Control: no-cache');
         header('Connection: keep-alive');
-        header('X-Accel-Buffering: no'); // Disable buffering for Nginx
+        header('X-Accel-Buffering: no'); // Nginx: unbuffered responses suitable for Comet and HTTP streaming applications
+
     }
 
     public function setExecutionTimeLimit()
@@ -32,25 +29,24 @@ class DBG_LV_LiveUpdatesController
         clearstatcache();
     }
 
-    public function flushingOutputBuffering(): void
+    public function getUpdates($updates): string
     {
-        while (ob_get_level() > 0) {
-            ob_end_flush();
-        }
-        flush();
-    }
+        $formatted = array_map(function ($row) {
+            if (empty($row)) {
+                return;
+            }
+            return [
+                'datetime'    => DBG_LV_LogModel::dbg_lv_get_datetime_from_row($row),
+                'line'        => DBG_LV_LogModel::dbg_lv_get_line_from_log_row($row),
+                'file'        => DBG_LV_LogModel::dbg_lv_get_file_from_log_row($row),
+                'type'        => DBG_LV_LogModel::dbg_lv_get_type_from_row($row),
+                'description' => [
+                    'text' => DBG_LV_LogModel::dbg_lv_get_description_from_row($row),
+                    'stack_trace' => DBG_LV_LogModel::dbg_lv_get_stack_trace_for_row($row)
+                ]
+            ];
+        }, $updates['data']);
 
-    public function notifyClientAboutUpdates(): void
-    {
-        $fields = [
-            'id'    => time(), // Use a timestamp as a unique event ID.
-            'event' => 'updates',
-            'data'  => wp_json_encode(['updated' => true]),
-            'retry' => 5000,
-        ];
-        foreach ($fields as $field => $value) {
-            echo esc_html("$field: $value" . PHP_EOL);
-        }
-        echo PHP_EOL;
+        return json_encode(['action' => $updates['action'], 'data' => $formatted]);
     }
 }

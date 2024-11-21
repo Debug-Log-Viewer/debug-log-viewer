@@ -12,6 +12,9 @@ require_once realpath(__DIR__) . '/../../admin/helpers/utils.php';
 require_once realpath(__DIR__) . '/ScheduleTrait.php';
 require_once realpath(__DIR__) . '/../../admin/services/email.php';
 
+use Hhxsv5\SSE\Event;
+use Hhxsv5\SSE\SSE;
+
 class DBG_LV_LogController
 {
     use DBG_LV_ScheduleTrait;
@@ -46,92 +49,6 @@ class DBG_LV_LogController
         // @todo: return WP_DEBUG_LOG;
     }
 
-    public static function dbg_lv_get_log_data()
-    {
-        dbg_lv_verify_nonce(isset($_POST['wp_nonce']) ? sanitize_text_field(wp_unslash($_POST['wp_nonce'])) : '');
-
-        $draw = isset($_POST['draw']) ? (int) sanitize_text_field(wp_unslash($_POST['draw'])) : 0;
-        $start = isset($_POST['start']) ? (int) sanitize_text_field(wp_unslash($_POST['start'])) : 1;
-        $length = isset($_POST['length']) ? (int) sanitize_text_field(wp_unslash($_POST['length'])) : 25;
-        $search_value = isset($_POST['search']['value']) ? sanitize_text_field(wp_unslash($_POST['search']['value'])) : null;
-
-
-
-        $storage = [];
-
-        $rows = array_reverse(DBG_LV_LogModel::dbg_lv_parse_log_file());
-
-        if (!$rows) {
-            echo wp_json_encode([
-                'success' => true,
-                'data' => [],
-                'draw' => $draw,
-                'recordsTotal' => 0,
-                'recordsFiltered' => 0,
-            ]);
-            wp_die();
-        }
-
-        $storage = [];
-        $rows_count = 0;
-        foreach ($rows as $row) {
-
-            if (empty($row)) {
-                continue;
-            }
-
-            $storage[] = [
-                'datetime'    => DBG_LV_LogModel::dbg_lv_get_datetime_from_row($row),
-                'line'        => DBG_LV_LogModel::dbg_lv_get_line_from_log_row($row),
-                'file'        => DBG_LV_LogModel::dbg_lv_get_file_from_log_row($row),
-                'type'        => DBG_LV_LogModel::dbg_lv_get_type_from_row($row),
-                'description' => [
-                    'text' => DBG_LV_LogModel::dbg_lv_get_description_from_row($row),
-                    'stack_trace' => DBG_LV_LogModel::dbg_lv_get_stack_trace_for_row($row)
-                ]
-            ];
-
-            $rows_count++;
-        }
-
-        if ($search_value) {
-            $search_string = trim(strtolower($search_value));
-            $data = [];
-            foreach ($storage as $index => $row) {
-                $results = dbg_lv_find_string($row, $search_string);
-
-                if ($results) {
-                    $data[] = $storage[$index];
-                }
-            }
-
-            $search_results_length = count($data);
-
-            $storage = array_slice($data, $start, $length);
-        } else {
-            $storage = array_slice($storage, $start, $length);
-        }
-
-        $filesize = DBG_LV_LogModel::dbg_lv_get_log_filesize(['with_measure_units' => true]);
-
-        if (DBG_LV_LogModel::dbg_lv_is_debug_log_too_big()) {
-            $template = __("The debug log file is excessively large (%1\$s). We only parse the most recent %2\$d lines, starting from the date %3\$s.", 'debug-log-viewer');
-            $info = sprintf($template, $filesize, $rows_count, DBG_LV_LogModel::dbg_lv_get_datetime_from_row($rows[0]));
-        } else {
-            $info = null;
-        }
-
-        echo wp_json_encode([
-            'success' => true,
-            'data' => $storage ? $storage : [],
-            'draw' => $draw,
-            'recordsTotal' => $rows_count,
-            'recordsFiltered' => $search_value ? $search_results_length : $rows_count,
-            'info' => $info,
-        ]);
-        wp_die();
-    }
-
     public function dbg_lv_log_viewer_enable_logging()
     {
         dbg_lv_verify_nonce(isset($_POST['wp_nonce']) ? sanitize_text_field(wp_unslash($_POST['wp_nonce'])) : '');
@@ -142,7 +59,7 @@ class DBG_LV_LogController
             if (!is_file($path) || !file_exists($path)) {
                 // Create debug.log if missing
 
-                $message = 'This is a demo entry. Debugging is now enabled. If any notices, warnings, or errors occur on your site, they will appear here. Remember to refresh the table to view the latest entries';
+                $message = 'This is a demo entry. Debugging is now enabled. If any notices, warnings, or errors occur on your site, they will appear here';
                 $demo_string = "[" . gmdate('d-M-Y H:i:s T') . "] PHP Notice: <b>" . $message  . "</b>  in " . dbg_lv_get_document_root() . "/example.php on line 0\n";
                 file_put_contents($path, $demo_string);
             }
@@ -272,6 +189,8 @@ class DBG_LV_LogController
                 if (is_writable($debug_log_path)) {
                     file_put_contents($debug_log_path, '');
 
+                    update_option(DBG_LV_LogModel::DBG_LV_LAST_POSITION_OPTION_NAME, 0); // reset the stored position
+
                     echo wp_json_encode([
                         'success' => true
                     ]);
@@ -371,7 +290,7 @@ class DBG_LV_LogController
         global $DBG_LV_WP_CRON_SCHEDULE_INTERVALS;
         global $DBG_LV_LOG_VIEWER_EMAIL_LEVELS;
 
-        $rows = DBG_LV_LogModel::dbg_lv_parse_log_file();
+        $rows = DBG_LV_LogModel::dbg_lv_parse_whole_log_file();
 
         if (!$rows) {
             return;
@@ -510,25 +429,18 @@ class DBG_LV_LogController
     {
         $liveUpdates = new DBG_LV_LiveUpdatesController();
         $liveUpdates->applyHeaders();
-        $liveUpdates->setExecutionTimeLimit();
 
-        for ($i = 0; $i < DBG_LV_ITERATIONS_PER_SESSION; $i++) {
+        update_option(DBG_LV_LogModel::DBG_LV_LAST_POSITION_OPTION_NAME, 0);
+        $callback = function () use ($liveUpdates) {
+
             $liveUpdates->clearDebugLogFileStat();
-            // Get current log file size
-            $current_filesize = DBG_LV_LogModel::dbg_lv_get_log_filesize(['raw' => true]);
-            $latest_filesize = (int) get_option(DBG_LV_DEBUG_LOG_LAST_FILESIZE);
 
-            // Only send an update if the filesize has changed.
-            if ($current_filesize !== $latest_filesize) {
-                update_option(DBG_LV_DEBUG_LOG_LAST_FILESIZE, $current_filesize);
-                $liveUpdates->notifyClientAboutUpdates();
+            $updates = DBG_LV_LogModel::dbg_lv_get_new_log_content();
+
+            if (isset($updates['data'])) {
+                return $liveUpdates->getUpdates($updates);
             }
-            $liveUpdates->flushingOutputBuffering();
-            // Sleep for 5 seconds before the next update.
-            sleep(DBG_LV_LIVE_UPDATE_INTERVAL);
-        }
-        // Exit over iterations limit reached.
-        // After this auto-reconnect will be triggered om the front.
-        exit; 
+        };
+        (new SSE(new Event($callback, 'updates')))->start(DBG_LV_LIVE_UPDATE_INTERVAL);
     }
 }

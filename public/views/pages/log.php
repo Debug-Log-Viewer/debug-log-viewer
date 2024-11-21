@@ -23,7 +23,7 @@ class DBG_LV_LogView
                             <div class="buttons">
                                 <button class="btn btn-primary clear-log" title="<?php esc_attr_e('Clear', 'debug-log-viewer'); ?>"><i class="fa fa-solid fa-trash"></i></button>
                                 <button class="btn btn-primary download-log" title="<?php esc_attr_e('Download', 'debug-log-viewer'); ?>"><i class="fa-solid fa-cloud-arrow-down"></i></button>
-                                <button class="btn btn-success live-update" title="<?php esc_attr_e('Live log updates is active', 'debug-log-viewer'); ?>"><i class="fa-solid fa-tower-cell"></i></button>
+                                <!-- <button class="btn btn-success live-update" title="<?php esc_attr_e('Live log updates is active', 'debug-log-viewer'); ?>"><i class="fa-solid fa-tower-cell"></i></button> -->
                             </div>
                         </div>
                     <?php } ?>
@@ -48,6 +48,7 @@ class DBG_LV_LogView
                             <table id="dbg_lv_log-table" class="display" style="width:100%">
                                 <thead>
                                     <tr>
+                                        <th><?php esc_html_e('Timestamp', 'debug-log-viewer'); ?></th>
                                         <th><?php esc_html_e('Type', 'debug-log-viewer'); ?></th>
                                         <th><?php esc_html_e('Datetime', 'debug-log-viewer'); ?></th>
                                         <th><?php esc_html_e('Description', 'debug-log-viewer'); ?></th>
