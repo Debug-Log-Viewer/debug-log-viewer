@@ -6,7 +6,7 @@ if (!defined('ABSPATH')) {
 
 ?>
 <div class="log-not-found">
-  <img src="<?php echo esc_url(plugins_url('../assets/img/logo-broken.png', __DIR__)); ?>" alt="" style="margin:0 auto; display:block">
+  <img src="<?php echo esc_url(plugins_url('../assets/img/logo-colorful.svg', __DIR__)); ?>" alt="" style="margin:0 auto; display:block">
 
   <h5>
     Welcome!
