@@ -13,7 +13,11 @@ class DBG_LV_MenuController
         function dbg_lv_main_menu()
         {
             $role = 'edit_pages';
-            add_menu_page(__('Debug Log Viewer', 'debug-log-viewer'), __('Debug Log Viewer', 'debug-log-viewer'), $role, 'debug-log-viewer', ['DBG_LV_LogController', 'dbg_lv_render_view'],  plugin_dir_url(__FILE__) . '/../../../public/assets/img/logo.svg');
+            $name = __('Debug Log Viewer', 'debug-log-viewer');
+            $slug = 'debug-log-viewer';
+            $handler =  ['DBG_LV_LogController', 'dbg_lv_render_view'];
+            $icon = plugin_dir_url(__FILE__) . '/../../../public/assets/img/logo-grayscale.svg';
+            add_menu_page($name, $name, $role, $slug, $handler, $icon);
         }
     }
 }
