@@ -89,11 +89,6 @@ class DBG_LV_LogModel
     private static function resetLog($log_message = null)
     {
         update_option(self::DBG_LV_LAST_POSITION_OPTION_NAME, 0);
-
-        if ($log_message) {
-            file_put_contents(WP_CONTENT_DIR . '/log.txt', $log_message . PHP_EOL, FILE_APPEND);
-        }
-
         return ['action' => 'clear', 'data' => []];
     }
 
