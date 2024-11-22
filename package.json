@@ -5,7 +5,7 @@
     "main": "./assets/js/main.js",
     "scripts": {
         "build-js": "webpack",
-        "build-scss": "sass --watch assets/scss:assets/css"
+        "build-scss": "sass --watch public/assets/scss:public/assets/css"
     },
     "devDependencies": {
         "jquery": "^3.6.0",

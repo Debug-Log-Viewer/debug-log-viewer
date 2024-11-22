@@ -36,10 +36,31 @@
     padding: 15px;
     border-radius: 5px;
     box-shadow: $box-shadow;
-    margin-bottom: 30px;
+    margin-bottom: 25px;
 
     h5 {
         color: $dark-blue;
+        margin-bottom: 0;
+
+        .rotate-icon {
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .rotate-icon.expanded {
+            transform: rotate(90deg);
+        }
+
+        a {
+            color: $dark-blue;
+        }
+
+        a:active,
+        a:focus {
+            outline: none;
+            border: none;
+            box-shadow: none;
+            /* Prevents any shadow that could act like a border */
+        }
     }
 
     select {
