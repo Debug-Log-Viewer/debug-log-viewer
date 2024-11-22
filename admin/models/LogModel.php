@@ -48,7 +48,7 @@ class DBG_LV_LogModel
 
         $file = self::dbg_lv_get_log_content($path);
 
-        $pattern = '/\[.{1,}\](.*)( on line )\d*?/sU';
+        $pattern = '/\[[^\]]+\].*? on line \d+/s';
         $count = preg_match_all($pattern, $file, $matches);
 
         if (!$count) {
