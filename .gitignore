@@ -14,7 +14,6 @@ debug.log
 
 # Ignore compiled code and cache files
 node_modules/
-vendor/
 dist/
 build/
 cache/
