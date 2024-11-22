@@ -17,6 +17,13 @@ class DBG_LV_LiveUpdatesController
 
     }
 
+    public function setExecutionTimeLimit()
+    {
+        if (function_exists('set_time_limit')) {
+            set_time_limit(DBG_LV_LIVE_UPDATE_INTERVAL * (DBG_LV_ITERATIONS_PER_SESSION + 1));
+        }
+    }
+
     public function clearDebugLogFileStat(): void
     {
         clearstatcache();

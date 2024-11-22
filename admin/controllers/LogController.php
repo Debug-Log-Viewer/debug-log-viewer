@@ -22,6 +22,7 @@ class DBG_LV_LogController
     const SCHEDULE_MAIL_SEND = 'DBG_LV_NOTIFY_LOG_CONTROLLER';
 
     private $config_editor;
+    private static $firstRun = true;
 
     public function __construct()
     {
@@ -428,13 +429,17 @@ class DBG_LV_LogController
     public static function dbg_lv_live_update()
     {
         $liveUpdates = new DBG_LV_LiveUpdatesController();
+        $liveUpdates->setExecutionTimeLimit();
         $liveUpdates->applyHeaders();
 
-        update_option(DBG_LV_LogModel::DBG_LV_LAST_POSITION_OPTION_NAME, 0);
+        if (self::$firstRun) {
+            update_option(DBG_LV_LogModel::DBG_LV_LAST_POSITION_OPTION_NAME, 0);
+            self::$firstRun = false;
+        }
+
         $callback = function () use ($liveUpdates) {
 
             $liveUpdates->clearDebugLogFileStat();
-
             $updates = DBG_LV_LogModel::dbg_lv_get_new_log_content();
 
             if (isset($updates['data'])) {
