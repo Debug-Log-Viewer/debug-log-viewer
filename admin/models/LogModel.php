@@ -39,7 +39,7 @@ class DBG_LV_LogModel
         }
     }
 
-    public static function dbg_lv_get_new_log_content()
+    public static function getNewLogEntries()
     {
         $filename = DBG_LV_LogController::dbg_lv_get_debug_file_path();
 
@@ -73,7 +73,7 @@ class DBG_LV_LogModel
 
             return [
                 'action' => [],
-                'data' => self::dbg_lv_split_log_to_rows($content),
+                'data' => self::splitLogToRows($content),
             ];
         }
 
@@ -86,13 +86,13 @@ class DBG_LV_LogModel
         fclose($file_handle);
     }
 
-    private static function resetLog($log_message = null)
+    private static function resetLog()
     {
         update_option(self::DBG_LV_LAST_POSITION_OPTION_NAME, 0);
         return ['action' => 'clear', 'data' => []];
     }
 
-    public static function dbg_lv_parse_whole_log_file()
+    public static function parseWholeLogFile()
     {
         $path = DBG_LV_LogController::dbg_lv_get_debug_file_path();
 
@@ -101,10 +101,10 @@ class DBG_LV_LogModel
         }
 
         $content = self::dbg_lv_get_log_content($path);
-        return self::dbg_lv_split_log_to_rows($content);
+        return self::splitLogToRows($content);
     }
 
-    public static function dbg_lv_split_log_to_rows($content)
+    private static function splitLogToRows($content)
     {
         $pattern = '/\[.{1,20} \w{1,3}\](.*)( on line )\d*?/sU';
         $count = preg_match_all($pattern, $content, $matches);

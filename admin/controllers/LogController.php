@@ -291,7 +291,7 @@ class DBG_LV_LogController
         global $DBG_LV_WP_CRON_SCHEDULE_INTERVALS;
         global $DBG_LV_LOG_VIEWER_EMAIL_LEVELS;
 
-        $rows = DBG_LV_LogModel::dbg_lv_parse_whole_log_file();
+        $rows = DBG_LV_LogModel::parseWholeLogFile();
 
         if (!$rows) {
             return;
@@ -440,7 +440,7 @@ class DBG_LV_LogController
         $callback = function () use ($liveUpdates) {
 
             $liveUpdates->clearDebugLogFileStat();
-            $updates = DBG_LV_LogModel::dbg_lv_get_new_log_content();
+            $updates = DBG_LV_LogModel::getNewLogEntries();
 
             if (isset($updates['data'])) {
                 return $liveUpdates->getUpdates($updates);
