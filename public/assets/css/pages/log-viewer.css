@@ -1,86 +1,57 @@
-.base-table-viewer-structure,
-.dbg_lv-log-viewer {
+.base-table-viewer-structure, .dbg_lv-log-viewer {
   margin-top: 1rem;
 }
-
-.base-table-viewer-structure .dataTable[role=grid],
-.dbg_lv-log-viewer .dataTable[role=grid] {
+.base-table-viewer-structure .dataTable[role=grid], .dbg_lv-log-viewer .dataTable[role=grid] {
   border: 1px;
   border-radius: 5px;
   border-color: #ddd;
   border-style: solid;
 }
-
-.base-table-viewer-structure .dataTable[role=grid] thead,
-.dbg_lv-log-viewer .dataTable[role=grid] thead {
+.base-table-viewer-structure .dataTable[role=grid] thead, .dbg_lv-log-viewer .dataTable[role=grid] thead {
   background-color: #f8f9fa;
 }
-
-.base-table-viewer-structure .dataTable[role=grid] thead tr[role=row],
-.dbg_lv-log-viewer .dataTable[role=grid] thead tr[role=row] {
+.base-table-viewer-structure .dataTable[role=grid] thead tr[role=row], .dbg_lv-log-viewer .dataTable[role=grid] thead tr[role=row] {
   vertical-align: top;
 }
-
-.base-table-viewer-structure .dataTable[role=grid] thead tr[role=row] th:nth-child(1),
-.dbg_lv-log-viewer .dataTable[role=grid] thead tr[role=row] th:nth-child(1) {
+.base-table-viewer-structure .dataTable[role=grid] thead tr[role=row] th:nth-child(1), .dbg_lv-log-viewer .dataTable[role=grid] thead tr[role=row] th:nth-child(1) {
   text-align: left;
   padding-left: 10px;
 }
-
-.base-table-viewer-structure .dataTable[role=grid] thead tr[role=row] th,
-.dbg_lv-log-viewer .dataTable[role=grid] thead tr[role=row] th {
+.base-table-viewer-structure .dataTable[role=grid] thead tr[role=row] th, .dbg_lv-log-viewer .dataTable[role=grid] thead tr[role=row] th {
   padding-top: 15px;
   padding-bottom: 15px;
 }
-
-.base-table-viewer-structure .dataTable[role=grid] tbody tr.odd,
-.dbg_lv-log-viewer .dataTable[role=grid] tbody tr.odd {
+.base-table-viewer-structure .dataTable[role=grid] tbody tr.odd, .dbg_lv-log-viewer .dataTable[role=grid] tbody tr.odd {
   background-color: #ffffff;
 }
-
-.base-table-viewer-structure .dataTable[role=grid] tbody tr.odd:hover,
-.dbg_lv-log-viewer .dataTable[role=grid] tbody tr.odd:hover {
+.base-table-viewer-structure .dataTable[role=grid] tbody tr.odd:hover, .dbg_lv-log-viewer .dataTable[role=grid] tbody tr.odd:hover {
   background-color: #f8f9fa;
 }
-
-.base-table-viewer-structure .dataTable[role=grid] tbody tr.even:hover,
-.dbg_lv-log-viewer .dataTable[role=grid] tbody tr.even:hover {
+.base-table-viewer-structure .dataTable[role=grid] tbody tr.even:hover, .dbg_lv-log-viewer .dataTable[role=grid] tbody tr.even:hover {
   background-color: #f8f9fa;
 }
-
-.base-table-viewer-structure .dataTable[role=grid] tbody tr td:nth-child(1),
-.dbg_lv-log-viewer .dataTable[role=grid] tbody tr td:nth-child(1) {
+.base-table-viewer-structure .dataTable[role=grid] tbody tr td:nth-child(1), .dbg_lv-log-viewer .dataTable[role=grid] tbody tr td:nth-child(1) {
   text-align: left;
   padding-left: 20px;
 }
-
-.base-table-viewer-structure .dataTable[role=grid] tbody tr td,
-.dbg_lv-log-viewer .dataTable[role=grid] tbody tr td {
+.base-table-viewer-structure .dataTable[role=grid] tbody tr td, .dbg_lv-log-viewer .dataTable[role=grid] tbody tr td {
   border-bottom: 1px dashed rgba(178, 169, 255, 0.0588235294);
   padding-top: 15px;
   padding-bottom: 15px;
   padding-left: 5px !important;
 }
-
-.base-table-viewer-structure .dataTable[role=grid] tbody tr td .call-stack,
-.dbg_lv-log-viewer .dataTable[role=grid] tbody tr td .call-stack {
+.base-table-viewer-structure .dataTable[role=grid] tbody tr td .call-stack, .dbg_lv-log-viewer .dataTable[role=grid] tbody tr td .call-stack {
   color: #4f6df5;
   text-decoration: none;
   font-weight: bold;
 }
-
-.base-table-viewer-structure .dataTable[role=grid] tbody tr:hover,
-.dbg_lv-log-viewer .dataTable[role=grid] tbody tr:hover {
+.base-table-viewer-structure .dataTable[role=grid] tbody tr:hover, .dbg_lv-log-viewer .dataTable[role=grid] tbody tr:hover {
   --bs-table-accent-bg: #f8f9fa;
 }
-
-.base-table-viewer-structure .table-wrapper .dt-buttons,
-.dbg_lv-log-viewer .table-wrapper .dt-buttons {
+.base-table-viewer-structure .table-wrapper .dt-buttons, .dbg_lv-log-viewer .table-wrapper .dt-buttons {
   margin-left: 15px;
 }
-
-.base-table-viewer-structure .table-wrapper .dt-buttons .dt-action-button,
-.dbg_lv-log-viewer .table-wrapper .dt-buttons .dt-action-button {
+.base-table-viewer-structure .table-wrapper .dt-buttons .dt-action-button, .dbg_lv-log-viewer .table-wrapper .dt-buttons .dt-action-button {
   border-radius: 0.25rem;
   font-weight: 400;
   font-size: 14px;
@@ -94,16 +65,12 @@
   padding: 6px 22px;
   height: 30px;
 }
-
-.base-table-viewer-structure .table-wrapper .dt-buttons .dt-action-button:hover,
-.dbg_lv-log-viewer .table-wrapper .dt-buttons .dt-action-button:hover {
+.base-table-viewer-structure .table-wrapper .dt-buttons .dt-action-button:hover, .dbg_lv-log-viewer .table-wrapper .dt-buttons .dt-action-button:hover {
   filter: contrast(0.5);
   border: 1px solid #4bb5ff;
   background: transparent;
 }
-
-.base-table-viewer-structure .dataTables_paginate,
-.dbg_lv-log-viewer .dataTables_paginate {
+.base-table-viewer-structure .dataTables_paginate, .dbg_lv-log-viewer .dataTables_paginate {
   margin: 0px;
   margin-top: 10px;
   padding: 0px;
@@ -113,9 +80,7 @@
   border-color: #dddddd;
   overflow: hidden;
 }
-
-.base-table-viewer-structure .log-filesize-limitation,
-.dbg_lv-log-viewer .log-filesize-limitation {
+.base-table-viewer-structure .log-filesize-limitation, .dbg_lv-log-viewer .log-filesize-limitation {
   text-align: center;
   color: #fa9732;
 }
@@ -125,14 +90,12 @@
   font-weight: bold;
   text-align: center;
 }
-
 .dbg_lv-log-viewer .manual-debugging-instructions {
   text-align: center;
   display: block;
   margin: 10px auto;
   color: #4f6df5;
 }
-
 .dbg_lv-log-viewer .top-section {
   background-color: #fff;
   border-radius: 5px;
@@ -142,7 +105,6 @@
   justify-content: space-between;
   padding: 15px 25px;
 }
-
 .dbg_lv-log-viewer .top-section .log-filepath {
   width: 100%;
   background-color: #F0F0F0;
@@ -151,12 +113,10 @@
   border: 1px solid #ccc;
   padding-left: 15px;
 }
-
 .dbg_lv-log-viewer .top-section .buttons {
   padding-left: 15px;
   min-width: 130px;
 }
-
 .dbg_lv-log-viewer .top-section .buttons .clear-log,
 .dbg_lv-log-viewer .top-section .buttons .refresh-log,
 .dbg_lv-log-viewer .top-section .buttons .download-log,
@@ -167,40 +127,32 @@
   padding: 0;
   font-size: 14px;
 }
-
 .dbg_lv-log-viewer .top-section .buttons .live-update {
   animation: pulseAnimation 1s infinite;
 }
-
 @keyframes pulseAnimation {
   0% {
     transform: scale(1);
   }
-
   50% {
     transform: scale(1.04);
   }
-
   100% {
     transform: scale(1);
   }
 }
-
 .dbg_lv-log-viewer .top-section .buttons .refresh-log,
 .dbg_lv-log-viewer .top-section .buttons .download-log {
   background-color: #4f6df5;
 }
-
 .dbg_lv-log-viewer .top-section .buttons .clear-log {
   background-color: #f84042;
 }
-
 .dbg_lv-log-viewer pre {
   overflow-x: scroll;
   padding: 10px;
   background-color: #eee;
 }
-
 .dbg_lv-log-viewer .table-wrapper {
   background: #fff;
   margin-top: 25px;
@@ -208,43 +160,34 @@
   border-radius: 5px;
   box-shadow: 0 2px 4px #929ea9;
 }
-
 .dbg_lv-log-viewer .table-wrapper #dbg_lv_log-table {
   width: 100% !important;
 }
-
 .dbg_lv-log-viewer .table-wrapper #dbg_lv_log-table .badge {
   min-width: 65px;
 }
-
 .dbg_lv-log-viewer .bootstrap-switch {
   margin-right: 0;
 }
-
 .dbg_lv-log-viewer .bootstrap-switch-on {
   background: #4f6df5;
 }
-
 .dbg_lv-log-viewer .log-not-found {
   background: #fff;
   padding: 25px;
   border-radius: 5px;
   box-shadow: 0 2px 4px #929ea9;
 }
-
 .dbg_lv-log-viewer .log-not-found code {
   color: #4f6df5;
 }
-
 .dbg_lv-log-viewer .log-not-found h5 {
   text-align: center;
   padding: 20px;
 }
-
 .dbg_lv-log-viewer .log-not-found h5 span {
   font-weight: 300;
 }
-
 .dbg_lv-log-viewer .log-not-found button {
   margin: 0 auto;
   display: block;
@@ -252,7 +195,6 @@
   text-transform: uppercase;
   font-weight: 500;
 }
-
 .dbg_lv-log-viewer .log-not-found .card {
   max-width: 100%;
 }
