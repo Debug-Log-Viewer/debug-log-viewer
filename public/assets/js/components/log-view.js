@@ -3,7 +3,8 @@ import {
     initEmailNotificationsForm, 
     initScrollToTopButton, 
     generateUUID, 
-    showToast 
+    showToast,
+    t
 } from '../utils.js';
 
 (async ($) => {
@@ -14,9 +15,9 @@ import {
         bSort: false,
         processing: true,
         language: {
-            processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> ',
+            processing: `<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">${t('loading_in_process')}</span>`,
             search: '',
-            searchPlaceholder: 'Search',
+            searchPlaceholder: t('search'),
         },
         pageLength: 25,
         ajax: {
@@ -69,13 +70,11 @@ import {
                 } else {
                     const uniqueId = generateUUID();
                     return `<div>${description.text}</div>
-                       
-                        <a class="call-stack" href="${uniqueId}">Call stack</a>
+                        <a class="call-stack" href="${uniqueId}">${'call_stack'}</a>
                         
                         <div class="modal mt-5" tabindex="-1" id="${uniqueId}">
                             <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
-
                                     <div class="modal-body">
                                         <pre>${description.stack_trace}</pre>
                                     </div>
@@ -150,10 +149,9 @@ import {
             if (!response.success) {
                 throw new Error(response.error);
             }
-            showToast(`Debug mode: ${response.state}`, 'success');
+            showToast(`${t('debug_mode')} ${response.state}`, 'success');
 
         } catch (error) {
-            // toastr.error(error, 'Error', { timeOut: 5000 });
             showToast(error, 'error');
         }
     };
@@ -175,10 +173,9 @@ import {
             let response = JSON.parse(rawResponse);
 
             if (!response.success) {
-                throw new Error(`Request error: ${response.error}`);
+                throw new Error(`${t('request_error')} ${response.error}`);
             }
-
-            showToast(`Debug log scripts: ${response.state}`, 'success');
+            showToast(`${t('debug_log_scripts')} ${response.state}`, 'success');
 
         } catch (error) {
             showToast(error, 'error');
@@ -210,8 +207,7 @@ import {
             if (!response.success) {
                 throw new Error(response.error);
             }
-
-            showToast('Logging enabled successfully.', 'success');
+            showToast(t('logging_enabled_successfully'), 'success');
             setTimeout(function () {
                 location.reload();
             }, 1000);
@@ -237,8 +233,7 @@ import {
             if (!response.success) {
                 throw new Error(response.error);
             }
-
-            showToast(`Debug scripts: ${response.state}`, 'success');
+            showToast(`${t('debug_scripts')} ${response.state}`, 'success');
 
         } catch (error) {
             showToast(error, 'error');
@@ -266,8 +261,7 @@ import {
             if (!response.success) {
                 throw new Error(response.error);
             }
-
-            showToast(`Display errors: ${response.state}`, 'success');
+            showToast(`${t('display_errors')} ${response.state}`, 'success');
 
         } catch (error) {
             showToast(error, 'error');
@@ -289,7 +283,7 @@ import {
 
     $('.clear-log').on('click', async function () {
         try {
-            if (!confirm('Are you sure? After flushing the log, this action can\'t be undone')) {
+            if (!confirm(t('flush_log_confirmation'))) {
                 return;
             }
 
@@ -303,8 +297,7 @@ import {
             if (!response.success) {
                 throw new Error(response.error);
             }
-
-            showToast(`Log was cleared`, 'success');
+            showToast(t('log_was_cleared'), 'success');
 
             $('#dbg_lv_log-table').DataTable().ajax.reload();
 
