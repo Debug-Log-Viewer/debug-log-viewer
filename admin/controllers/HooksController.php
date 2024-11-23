@@ -71,7 +71,8 @@ class DBG_LV_HooksController
             wp_enqueue_script('dbg_lv_buttons_colvis_js',         plugins_url('../public/assets/vendor/js/buttons.colVis.min.js', __DIR__));
 
             wp_localize_script('dbg_lv_app_js', 'dbg_lv_backend_data', [
-                'ajax_nonce'   => wp_create_nonce('ajax_nonce'),
+                'ajax_nonce' => wp_create_nonce('ajax_nonce'),
+                'phrases'    => DBG_LV_Phrases::getAllPhrases(),
             ]);
             wp_enqueue_style('dbg_lv_bootstrap_css',              plugins_url('../public/assets/vendor/css/bootstrap.min.css', __DIR__));
             wp_enqueue_style('dbg_lv_now-ui_css',                 plugins_url('../public/assets/vendor/css/now-ui-kit.min.css', __DIR__), ['dbg_lv_bootstrap_css']);

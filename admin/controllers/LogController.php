@@ -47,7 +47,7 @@ class DBG_LV_LogController
 
     public static function dbg_lv_get_log_data()
     {
-        dbg_lv_verify_nonce(isset($_POST['wp_nonce']) ? sanitize_text_field(wp_unslash($_POST['wp_nonce'])) : '' );
+        dbg_lv_verify_nonce(isset($_POST['wp_nonce']) ? sanitize_text_field(wp_unslash($_POST['wp_nonce'])) : '');
 
         $draw = isset($_POST['draw']) ? (int) sanitize_text_field(wp_unslash($_POST['draw'])) : 0;
         $start = isset($_POST['start']) ? (int) sanitize_text_field(wp_unslash($_POST['start'])) : 1;
@@ -133,7 +133,7 @@ class DBG_LV_LogController
 
     public function dbg_lv_log_viewer_enable_logging()
     {
-        dbg_lv_verify_nonce(isset($_POST['wp_nonce']) ? sanitize_text_field(wp_unslash($_POST['wp_nonce'])) : '' );
+        dbg_lv_verify_nonce(isset($_POST['wp_nonce']) ? sanitize_text_field(wp_unslash($_POST['wp_nonce'])) : '');
 
         try {
 
@@ -164,7 +164,7 @@ class DBG_LV_LogController
 
     public function dbg_lv_toggle_debug_mode()
     {
-        dbg_lv_verify_nonce(isset($_POST['wp_nonce']) ? sanitize_text_field(wp_unslash($_POST['wp_nonce'])) : '' );
+        dbg_lv_verify_nonce(isset($_POST['wp_nonce']) ? sanitize_text_field(wp_unslash($_POST['wp_nonce'])) : '');
 
         $state = $this->dbg_lv_prepare_state();
 
@@ -173,7 +173,7 @@ class DBG_LV_LogController
 
             echo wp_json_encode([
                 'success' => true,
-                'state' => (int) $state ? "ON" : "OFF",
+                'state' => $this->getState($state),
             ]);
             wp_die();
         } catch (Exception $e) {
@@ -187,7 +187,7 @@ class DBG_LV_LogController
 
     public function dbg_lv_toggle_debug_scripts()
     {
-        dbg_lv_verify_nonce(isset($_POST['wp_nonce']) ? sanitize_text_field(wp_unslash($_POST['wp_nonce'])) : '' );
+        dbg_lv_verify_nonce(isset($_POST['wp_nonce']) ? sanitize_text_field(wp_unslash($_POST['wp_nonce'])) : '');
         $state = $this->dbg_lv_prepare_state();
 
         try {
@@ -195,7 +195,7 @@ class DBG_LV_LogController
 
             echo wp_json_encode([
                 'success' => true,
-                'state' => (int) $state ? "ON" : "OFF",
+                'state' => $this->getState($state),
             ]);
             wp_die();
         } catch (Exception $e) {
@@ -209,7 +209,7 @@ class DBG_LV_LogController
 
     public function dbg_lv_toggle_debug_log_scripts()
     {
-        dbg_lv_verify_nonce(isset($_POST['wp_nonce']) ? sanitize_text_field(wp_unslash($_POST['wp_nonce'])) : '' );
+        dbg_lv_verify_nonce(isset($_POST['wp_nonce']) ? sanitize_text_field(wp_unslash($_POST['wp_nonce'])) : '');
         $state = $this->dbg_lv_prepare_state();
 
         try {
@@ -221,7 +221,7 @@ class DBG_LV_LogController
 
             echo wp_json_encode([
                 'success' => true,
-                'state' => (int) $state ? "ON" : "OFF",
+                'state' => $this->getState($state),
             ]);
             wp_die();
         } catch (Exception $e) {
@@ -235,7 +235,7 @@ class DBG_LV_LogController
 
     public function dbg_lv_toggle_display_errors()
     {
-        dbg_lv_verify_nonce(isset($_POST['wp_nonce']) ? sanitize_text_field(wp_unslash($_POST['wp_nonce'])) : '' );
+        dbg_lv_verify_nonce(isset($_POST['wp_nonce']) ? sanitize_text_field(wp_unslash($_POST['wp_nonce'])) : '');
         $state = $this->dbg_lv_prepare_state();
 
         try {
@@ -247,7 +247,7 @@ class DBG_LV_LogController
 
             echo wp_json_encode([
                 'success' => true,
-                'state' => (int) $state ? "ON" : "OFF",
+                'state' => $this->getState($state),
             ]);
             wp_die();
         } catch (Exception $e) {
@@ -261,7 +261,7 @@ class DBG_LV_LogController
 
     public static function dbg_lv_clear_log()
     {
-        dbg_lv_verify_nonce(isset($_POST['wp_nonce']) ? sanitize_text_field(wp_unslash($_POST['wp_nonce'])) : '' );
+        dbg_lv_verify_nonce(isset($_POST['wp_nonce']) ? sanitize_text_field(wp_unslash($_POST['wp_nonce'])) : '');
 
         try {
             $debug_log_path = DBG_LV_LogController::dbg_lv_get_debug_file_path();
@@ -291,7 +291,7 @@ class DBG_LV_LogController
 
     public static function dbg_lv_download_log()
     {
-        dbg_lv_verify_nonce(isset($_POST['wp_nonce']) ? sanitize_text_field(wp_unslash($_POST['wp_nonce'])) : '' );
+        dbg_lv_verify_nonce(isset($_POST['wp_nonce']) ? sanitize_text_field(wp_unslash($_POST['wp_nonce'])) : '');
 
         try {
             $debug_log_path = DBG_LV_LogController::dbg_lv_get_debug_file_path();
@@ -328,7 +328,7 @@ class DBG_LV_LogController
 
     public static function dbg_lv_get_current_user_email()
     {
-        dbg_lv_verify_nonce(isset($_POST['wp_nonce']) ? sanitize_text_field(wp_unslash($_POST['wp_nonce'])) : '' );
+        dbg_lv_verify_nonce(isset($_POST['wp_nonce']) ? sanitize_text_field(wp_unslash($_POST['wp_nonce'])) : '');
 
         try {
             global $current_user;
@@ -350,7 +350,7 @@ class DBG_LV_LogController
 
     public function dbg_lv_prepare_state()
     {
-        dbg_lv_verify_nonce(isset($_POST['wp_nonce']) ? sanitize_text_field(wp_unslash($_POST['wp_nonce'])) : '' );
+        dbg_lv_verify_nonce(isset($_POST['wp_nonce']) ? sanitize_text_field(wp_unslash($_POST['wp_nonce'])) : '');
 
         if (!isset($_POST["state"])) {
             throw new \Exception('Empty state passed');
@@ -468,7 +468,7 @@ class DBG_LV_LogController
 
     public static function dbg_lv_change_log_notifications_status()
     {
-        dbg_lv_verify_nonce(isset($_POST['wp_nonce']) ? sanitize_text_field(wp_unslash($_POST['wp_nonce'])) : '' );
+        dbg_lv_verify_nonce(isset($_POST['wp_nonce']) ? sanitize_text_field(wp_unslash($_POST['wp_nonce'])) : '');
 
         $status = isset($_POST['status']) ? sanitize_text_field(wp_unslash($_POST['status'])) : null;
         if ($status) {
@@ -581,5 +581,10 @@ class DBG_LV_LogController
                 break; // If the connection is closed by the client or server, exit the loop.
             }
         }
+    }
+
+    private function getState($state): string
+    {
+        return (int) $state ? __('ON', 'debug-log-viewer') : __('OFF', 'debug-log-viewer');
     }
 }

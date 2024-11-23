@@ -19,8 +19,9 @@ if (!defined('ABSPATH')) {
 
 
 require_once realpath(__DIR__) . '/admin/helpers/constants.php';
+require_once realpath(__DIR__) . '/admin/translations/phrases.php';
 
-$controllers = [ 'Hooks', 'Menu', 'Log', 'Service', 'Notificator', 'Review'];
+$controllers = ['Hooks', 'Menu', 'Log', 'Service', 'Notificator', 'Review'];
 
 foreach ($controllers as $controller) {
     require_once realpath(__DIR__) . "/admin/controllers/{$controller}Controller.php";
