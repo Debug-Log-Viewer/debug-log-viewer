@@ -108,8 +108,9 @@ import {
                     table.order([[0, 'desc']]).draw(); // Reorder and redraw
                 }
             }, false);
-            window.addEventListener("beforeunload", () => {
-                source.close();
+
+            source.addEventListener('open', (event) => {
+                table.clear().draw();
             });
 
         } catch (error) {
