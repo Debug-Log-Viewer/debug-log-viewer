@@ -6,6 +6,7 @@ if (!defined('ABSPATH')) {
 
 class DBG_LV_LogModel
 {
+    const DBG_LV_LAST_POSITION_OPTION_NAME = 'dbg_lv_log_last_position';
 
     public static function dbg_lv_is_log_file_exists()
     {
@@ -38,7 +39,60 @@ class DBG_LV_LogModel
         }
     }
 
-    public static function dbg_lv_parse_log_file()
+    public static function getNewLogEntries()
+    {
+        $filename = DBG_LV_LogController::dbg_lv_get_debug_file_path();
+
+        // Handle missing file
+        if (!file_exists($filename)) {
+            return self::resetLog('File does not exist');
+        }
+
+        $file_size = filesize($filename);
+
+        // Handle empty file
+        if ($file_size === 0) {
+            return self::resetLog();
+        }
+
+        $file_handle = fopen($filename, 'r');
+        if (!$file_handle) {
+            return self::resetLog();
+        }
+
+        $last_position = get_option(self::DBG_LV_LAST_POSITION_OPTION_NAME, 0);
+
+        // Handle new or truncated content
+        if ($last_position === 0 || $file_size > $last_position) {
+            fseek($file_handle, $last_position, SEEK_SET);
+            $content = fread($file_handle, $file_size - $last_position);
+            $new_position = ftell($file_handle);
+            fclose($file_handle);
+
+            update_option(self::DBG_LV_LAST_POSITION_OPTION_NAME, $new_position);
+
+            return [
+                'action' => [],
+                'data' => self::splitLogToRows($content),
+            ];
+        }
+
+        // Handle file truncation
+        if ($file_size < $last_position) {
+            fclose($file_handle);
+            return self::resetLog();
+        }
+
+        fclose($file_handle);
+    }
+
+    private static function resetLog()
+    {
+        update_option(self::DBG_LV_LAST_POSITION_OPTION_NAME, 0);
+        return ['action' => 'clear', 'data' => []];
+    }
+
+    public static function parseWholeLogFile()
     {
         $path = DBG_LV_LogController::dbg_lv_get_debug_file_path();
 
@@ -46,10 +100,14 @@ class DBG_LV_LogModel
             return false;
         }
 
-        $file = self::dbg_lv_get_log_content($path);
+        $content = self::dbg_lv_get_log_content($path);
+        return self::splitLogToRows($content);
+    }
 
+    private static function splitLogToRows($content)
+    {
         $pattern = '/\[.{1,20} \w{1,3}\](.*)( on line )\d*?/sU';
-        $count = preg_match_all($pattern, $file, $matches);
+        $count = preg_match_all($pattern, $content, $matches);
 
         if (!$count) {
             return [];
@@ -130,7 +188,9 @@ class DBG_LV_LogModel
                 return $filesize_in_bytes;
             }
             $filesize_in_mb = $filesize_in_bytes / 1024 / 1024;
-            return $with_measure_units ? round($filesize_in_mb, 2) . ' ' . __('Mb', 'debug-log-viewer') :  round($filesize_in_mb, 2);
+            return $with_measure_units
+                ? round($filesize_in_mb, 2) . ' ' . __('Mb', 'debug-log-viewer')
+                : round($filesize_in_mb, 2);
         } else {
             return 0;
         }
