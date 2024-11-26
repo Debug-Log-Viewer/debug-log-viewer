@@ -106,7 +106,7 @@ class DBG_LV_LogModel
 
     private static function splitLogToRows($content)
     {
-        $pattern = '/\[.{1,20} \w{1,3}\](.*)( on line )\d*?/sU';
+        $pattern = '/\[[^\]]+\].*? on line \d+/s';
         $count = preg_match_all($pattern, $content, $matches);
 
         if (!$count) {
