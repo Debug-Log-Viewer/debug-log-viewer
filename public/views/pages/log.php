@@ -48,6 +48,7 @@ class DBG_LV_LogView
                             <table id="dbg_lv_log-table" class="display" style="width:100%">
                                 <thead>
                                     <tr>
+                                        <th><?php esc_html_e('Timestamp', 'debug-log-viewer'); ?></th>
                                         <th><?php esc_html_e('Type', 'debug-log-viewer'); ?></th>
                                         <th><?php esc_html_e('Datetime', 'debug-log-viewer'); ?></th>
                                         <th><?php esc_html_e('Description', 'debug-log-viewer'); ?></th>
@@ -119,4 +120,3 @@ class DBG_LV_LogView
 <?php
     }
 }
-?>

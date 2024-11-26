@@ -6,4 +6,5 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
+    'Hhxsv5\\SSE\\' => array($vendorDir . '/hhxsv5/php-sse/src'),
 );
