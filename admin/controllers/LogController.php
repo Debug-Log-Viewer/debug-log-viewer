@@ -5,11 +5,15 @@ if (!defined('ABSPATH')) {
 }
 
 require_once realpath(__DIR__) . '/../../vendor/autoload.php';
+require_once realpath(__DIR__) . '/LiveUpdatesController.php';
 require_once realpath(__DIR__) . '/../../admin/models/LogModel.php';
 require_once realpath(__DIR__) . '/../../public/views/pages/log.php';
 require_once realpath(__DIR__) . '/../../admin/helpers/utils.php';
 require_once realpath(__DIR__) . '/ScheduleTrait.php';
 require_once realpath(__DIR__) . '/../../admin/services/email.php';
+
+use Hhxsv5\SSE\Event;
+use Hhxsv5\SSE\SSE;
 
 class DBG_LV_LogController
 {
@@ -45,95 +49,9 @@ class DBG_LV_LogController
         // @todo: return WP_DEBUG_LOG;
     }
 
-    public static function dbg_lv_get_log_data()
-    {
-        dbg_lv_verify_nonce(isset($_POST['wp_nonce']) ? sanitize_text_field(wp_unslash($_POST['wp_nonce'])) : '' );
-
-        $draw = isset($_POST['draw']) ? (int) sanitize_text_field(wp_unslash($_POST['draw'])) : 0;
-        $start = isset($_POST['start']) ? (int) sanitize_text_field(wp_unslash($_POST['start'])) : 1;
-        $length = isset($_POST['length']) ? (int) sanitize_text_field(wp_unslash($_POST['length'])) : 25;
-        $search_value = isset($_POST['search']['value']) ? sanitize_text_field(wp_unslash($_POST['search']['value'])) : null;
-
-
-
-        $storage = [];
-
-        $rows = array_reverse(DBG_LV_LogModel::dbg_lv_parse_log_file());
-
-        if (!$rows) {
-            echo wp_json_encode([
-                'success' => true,
-                'data' => [],
-                'draw' => $draw,
-                'recordsTotal' => 0,
-                'recordsFiltered' => 0,
-            ]);
-            wp_die();
-        }
-
-        $storage = [];
-        $rows_count = 0;
-        foreach ($rows as $row) {
-
-            if (empty($row)) {
-                continue;
-            }
-
-            $storage[] = [
-                'datetime'    => DBG_LV_LogModel::dbg_lv_get_datetime_from_row($row),
-                'line'        => DBG_LV_LogModel::dbg_lv_get_line_from_log_row($row),
-                'file'        => DBG_LV_LogModel::dbg_lv_get_file_from_log_row($row),
-                'type'        => DBG_LV_LogModel::dbg_lv_get_type_from_row($row),
-                'description' => [
-                    'text' => DBG_LV_LogModel::dbg_lv_get_description_from_row($row),
-                    'stack_trace' => DBG_LV_LogModel::dbg_lv_get_stack_trace_for_row($row)
-                ]
-            ];
-
-            $rows_count++;
-        }
-
-        if ($search_value) {
-            $search_string = trim(strtolower($search_value));
-            $data = [];
-            foreach ($storage as $index => $row) {
-                $results = dbg_lv_find_string($row, $search_string);
-
-                if ($results) {
-                    $data[] = $storage[$index];
-                }
-            }
-
-            $search_results_length = count($data);
-
-            $storage = array_slice($data, $start, $length);
-        } else {
-            $storage = array_slice($storage, $start, $length);
-        }
-
-        $filesize = DBG_LV_LogModel::dbg_lv_get_log_filesize(['with_measure_units' => true]);
-
-        if (DBG_LV_LogModel::dbg_lv_is_debug_log_too_big()) {
-            $template = __("The debug log file is excessively large (%1\$s). We only parse the most recent %2\$d lines, starting from the date %3\$s.", 'debug-log-viewer');
-            $info = sprintf($template, $filesize, $rows_count, DBG_LV_LogModel::dbg_lv_get_datetime_from_row($rows[0]));
-        } else {
-            $info = null;
-        }
-
-        echo wp_json_encode([
-            'success' => true,
-            'data' => $storage ? $storage : [],
-            'draw' => $draw,
-            'recordsTotal' => $rows_count,
-            'recordsFiltered' => $search_value ? $search_results_length : $rows_count,
-            'info' => $info,
-        ]);
-        wp_die();
-    }
-
     public function dbg_lv_log_viewer_enable_logging()
     {
-        dbg_lv_verify_nonce(isset($_POST['wp_nonce']) ? sanitize_text_field(wp_unslash($_POST['wp_nonce'])) : '' );
+        dbg_lv_verify_nonce(isset($_POST['wp_nonce']) ? sanitize_text_field(wp_unslash($_POST['wp_nonce'])) : '');
 
         try {
 
@@ -141,7 +59,7 @@ class DBG_LV_LogController
             if (!is_file($path) || !file_exists($path)) {
                 // Create debug.log if missing
 
-                $message = 'This is a demo entry. Debugging is now enabled. If any notices, warnings, or errors occur on your site, they will appear here. Remember to refresh the table to view the latest entries';
+                $message = 'This is a demo entry. Debugging is now enabled. If any notices, warnings, or errors occur on your site, they will appear here';
                 $demo_string = "[" . gmdate('d-M-Y H:i:s T') . "] PHP Notice: <b>" . $message  . "</b>  in " . dbg_lv_get_document_root() . "/example.php on line 0\n";
                 file_put_contents($path, $demo_string);
             }
@@ -164,7 +82,7 @@ class DBG_LV_LogController
 
     public function dbg_lv_toggle_debug_mode()
     {
-        dbg_lv_verify_nonce(isset($_POST['wp_nonce']) ? sanitize_text_field(wp_unslash($_POST['wp_nonce'])) : '' );
+        dbg_lv_verify_nonce(isset($_POST['wp_nonce']) ? sanitize_text_field(wp_unslash($_POST['wp_nonce'])) : '');
 
         $state = $this->dbg_lv_prepare_state();
 
@@ -187,7 +105,7 @@ class DBG_LV_LogController
 
     public function dbg_lv_toggle_debug_scripts()
     {
-        dbg_lv_verify_nonce(isset($_POST['wp_nonce']) ? sanitize_text_field(wp_unslash($_POST['wp_nonce'])) : '' );
+        dbg_lv_verify_nonce(isset($_POST['wp_nonce']) ? sanitize_text_field(wp_unslash($_POST['wp_nonce'])) : '');
         $state = $this->dbg_lv_prepare_state();
 
         try {
@@ -209,7 +127,7 @@ class DBG_LV_LogController
 
     public function dbg_lv_toggle_debug_log_scripts()
     {
-        dbg_lv_verify_nonce(isset($_POST['wp_nonce']) ? sanitize_text_field(wp_unslash($_POST['wp_nonce'])) : '' );
+        dbg_lv_verify_nonce(isset($_POST['wp_nonce']) ? sanitize_text_field(wp_unslash($_POST['wp_nonce'])) : '');
         $state = $this->dbg_lv_prepare_state();
 
         try {
@@ -235,7 +153,7 @@ class DBG_LV_LogController
 
     public function dbg_lv_toggle_display_errors()
     {
-        dbg_lv_verify_nonce(isset($_POST['wp_nonce']) ? sanitize_text_field(wp_unslash($_POST['wp_nonce'])) : '' );
+        dbg_lv_verify_nonce(isset($_POST['wp_nonce']) ? sanitize_text_field(wp_unslash($_POST['wp_nonce'])) : '');
         $state = $this->dbg_lv_prepare_state();
 
         try {
@@ -261,7 +179,7 @@ class DBG_LV_LogController
 
     public static function dbg_lv_clear_log()
     {
-        dbg_lv_verify_nonce(isset($_POST['wp_nonce']) ? sanitize_text_field(wp_unslash($_POST['wp_nonce'])) : '' );
+        dbg_lv_verify_nonce(isset($_POST['wp_nonce']) ? sanitize_text_field(wp_unslash($_POST['wp_nonce'])) : '');
 
         try {
             $debug_log_path = DBG_LV_LogController::dbg_lv_get_debug_file_path();
@@ -270,6 +188,8 @@ class DBG_LV_LogController
 
                 if (is_writable($debug_log_path)) {
                     file_put_contents($debug_log_path, '');
+
+                    update_option(DBG_LV_LogModel::DBG_LV_LAST_POSITION_OPTION_NAME, 0); // reset the stored position
 
                     echo wp_json_encode([
                         'success' => true
@@ -291,7 +211,7 @@ class DBG_LV_LogController
 
     public static function dbg_lv_download_log()
     {
-        dbg_lv_verify_nonce(isset($_POST['wp_nonce']) ? sanitize_text_field(wp_unslash($_POST['wp_nonce'])) : '' );
+        dbg_lv_verify_nonce(isset($_POST['wp_nonce']) ? sanitize_text_field(wp_unslash($_POST['wp_nonce'])) : '');
 
         try {
             $debug_log_path = DBG_LV_LogController::dbg_lv_get_debug_file_path();
@@ -328,7 +248,7 @@ class DBG_LV_LogController
 
     public static function dbg_lv_get_current_user_email()
     {
-        dbg_lv_verify_nonce(isset($_POST['wp_nonce']) ? sanitize_text_field(wp_unslash($_POST['wp_nonce'])) : '' );
+        dbg_lv_verify_nonce(isset($_POST['wp_nonce']) ? sanitize_text_field(wp_unslash($_POST['wp_nonce'])) : '');
 
         try {
             global $current_user;
@@ -347,10 +267,9 @@ class DBG_LV_LogController
         }
     }
 
-
     public function dbg_lv_prepare_state()
     {
-        dbg_lv_verify_nonce(isset($_POST['wp_nonce']) ? sanitize_text_field(wp_unslash($_POST['wp_nonce'])) : '' );
+        dbg_lv_verify_nonce(isset($_POST['wp_nonce']) ? sanitize_text_field(wp_unslash($_POST['wp_nonce'])) : '');
 
         if (!isset($_POST["state"])) {
             throw new \Exception('Empty state passed');
@@ -371,7 +290,7 @@ class DBG_LV_LogController
         global $DBG_LV_WP_CRON_SCHEDULE_INTERVALS;
         global $DBG_LV_LOG_VIEWER_EMAIL_LEVELS;
 
-        $rows = DBG_LV_LogModel::dbg_lv_parse_log_file();
+        $rows = DBG_LV_LogModel::parseWholeLogFile();
 
         if (!$rows) {
             return;
@@ -468,7 +387,7 @@ class DBG_LV_LogController
 
     public static function dbg_lv_change_log_notifications_status()
     {
-        dbg_lv_verify_nonce(isset($_POST['wp_nonce']) ? sanitize_text_field(wp_unslash($_POST['wp_nonce'])) : '' );
+        dbg_lv_verify_nonce(isset($_POST['wp_nonce']) ? sanitize_text_field(wp_unslash($_POST['wp_nonce'])) : '');
 
         $status = isset($_POST['status']) ? sanitize_text_field(wp_unslash($_POST['status'])) : null;
         if ($status) {
@@ -508,78 +427,21 @@ class DBG_LV_LogController
 
     public static function dbg_lv_live_update()
     {
-        $script_execution_time = 70;
+        $liveUpdates = new DBG_LV_LiveUpdatesController();
+        $liveUpdates->setExecutionTimeLimit();
+        $liveUpdates->applyHeaders();
 
-        // Remove any previously set headers to prevent conflicts.
-        header_remove();
+        update_option(DBG_LV_LogModel::DBG_LV_LAST_POSITION_OPTION_NAME, 0);
 
-        // SSE headers.
-        header('Content-Type: text/event-stream');
-        header('Cache-Control: no-cache');
-        header('Connection: keep-alive');
-        header('Accept: application/json');
+        $callback = function () use ($liveUpdates) {
 
-        $start_time = time(); // Record the start time to manually manage the timeout.
+            $liveUpdates->clearDebugLogFileStat();
+            $updates = DBG_LV_LogModel::getNewLogEntries();
 
-        // Loop to send updates every 5 seconds.
-        while (time() - $start_time < $script_execution_time - 10) {
-            clearstatcache();
-
-            // Get the current log file size.
-            $filesize = DBG_LV_LogModel::dbg_lv_get_log_filesize(['raw' => true]);
-
-            // Handle error if filesize is not available.
-            if ($filesize === false) {
-                $fields = [
-                    'id'    => time(),
-                    'event' => 'error',
-                    'data'  => wp_json_encode(['error' => 'Could not retrieve log file size']),
-                    'retry' => 5000,
-                ];
-
-                foreach ($fields as $field => $value) {
-                    echo esc_html("$field: $value" . PHP_EOL);
-                }
-                echo PHP_EOL;
-                flush();
-                sleep(5);
-                continue;
+            if (isset($updates['data'])) {
+                return $liveUpdates->getUpdates($updates);
             }
-
-            $last_filesize = (int) get_option(DBG_LV_DEBUG_LOG_LAST_FILESIZE);
-
-            // Only send an update if the filesize has changed.
-            if ($filesize !== $last_filesize) {
-
-                update_option(DBG_LV_DEBUG_LOG_LAST_FILESIZE, $filesize);
-
-                $fields = [
-                    'id'    => time(), // Use a timestamp as a unique event ID.
-                    'event' => 'updates',
-                    'data'  => wp_json_encode(['updated' => true]),
-                    'retry' => 5000,
-                ];
-
-                foreach ($fields as $field => $value) {
-                    echo esc_html("$field: $value" . PHP_EOL);
-                }
-
-                echo PHP_EOL;
-            }
-
-            // Ensure output buffering is flushed.
-            while (ob_get_level() > 0) {
-                ob_end_flush();
-            }
-            flush();
-
-            // Sleep for 5 seconds before the next update.
-            sleep(5);
-
-            // Manually break if execution time exceeds limits due to hosting limits.
-            if (connection_aborted()) {
-                break; // If the connection is closed by the client or server, exit the loop.
-            }
-        }
+        };
+        (new SSE(new Event($callback, 'updates')))->start(DBG_LV_LIVE_UPDATE_INTERVAL);
     }
 }

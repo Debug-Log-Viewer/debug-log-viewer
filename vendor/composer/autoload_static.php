@@ -10,6 +10,20 @@ class ComposerStaticInit75720be6f5742d5ad3d3d8b26c1a707e
         'ac949ce40a981819ba132473518a9a31' => __DIR__ . '/..' . '/wp-cli/wp-config-transformer/src/WPConfigTransformer.php',
     );
 
+    public static $prefixLengthsPsr4 = array (
+        'H' => 
+        array (
+            'Hhxsv5\\SSE\\' => 11,
+        ),
+    );
+
+    public static $prefixDirsPsr4 = array (
+        'Hhxsv5\\SSE\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/hhxsv5/php-sse/src',
+        ),
+    );
+
     public static $classMap = array (
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
     );
@@ -17,6 +31,8 @@ class ComposerStaticInit75720be6f5742d5ad3d3d8b26c1a707e
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
+            $loader->prefixLengthsPsr4 = ComposerStaticInit75720be6f5742d5ad3d3d8b26c1a707e::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit75720be6f5742d5ad3d3d8b26c1a707e::$prefixDirsPsr4;
             $loader->classMap = ComposerStaticInit75720be6f5742d5ad3d3d8b26c1a707e::$classMap;
 
         }, null, ClassLoader::class);

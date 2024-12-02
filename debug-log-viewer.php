@@ -5,11 +5,11 @@
  * Description: Simplifies the process of reviewing and managing your WordPress debug.log file.
 
  * Author: lysyiweb
- * Version: 1.0.3
+ * Version: 1.1
  * Tags: debug, logging, WP_DEBUG, error-tracking
  * Requires PHP: 5.4
- * Tested up to: 6.6.2
- * Stable tag: 1.0.3
+ * Tested up to: 6.7.1
+ * Stable tag: 1.1
  * License: GPLv2 or later
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  */

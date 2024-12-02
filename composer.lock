@@ -4,8 +4,61 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "22ca5a406bbd6548813641f0ae3dbff4",
+    "content-hash": "8792d480f816e81c0ce27fd9a03d6c80",
     "packages": [
+        {
+            "name": "hhxsv5/php-sse",
+            "version": "v2.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hhxsv5/php-sse.git",
+                "reference": "4244e4e8b416103f585cafcf813cff81061c5752"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/hhxsv5/php-sse/zipball/4244e4e8b416103f585cafcf813cff81061c5752",
+                "reference": "4244e4e8b416103f585cafcf813cff81061c5752",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~6.0",
+                "swoole/ide-helper": "@dev"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Hhxsv5\\SSE\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Xie Biao",
+                    "email": "hhxsv5@sina.com"
+                }
+            ],
+            "description": "A simple and efficient library implemented HTML5's server-sent events by PHP, is used to real-time push events from server to client, and easier than Websocket, instead of AJAX request.",
+            "homepage": "https://github.com/hhxsv5/php-sse",
+            "keywords": [
+                "Server-Sent Events",
+                "event-stream",
+                "events",
+                "eventsource",
+                "sever-events",
+                "sse"
+            ],
+            "support": {
+                "issues": "https://github.com/hhxsv5/php-sse/issues",
+                "source": "https://github.com/hhxsv5/php-sse/tree/v2.0.2"
+            },
+            "time": "2021-03-04T09:49:27+00:00"
+        },
         {
             "name": "wp-cli/wp-config-transformer",
             "version": "v1.4.0",

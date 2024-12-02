@@ -48,6 +48,7 @@ class DBG_LV_LogView
                             <table id="dbg_lv_log-table" class="display" style="width:100%">
                                 <thead>
                                     <tr>
+                                        <th><?php esc_html_e('Timestamp', 'debug-log-viewer'); ?></th>
                                         <th><?php esc_html_e('Type', 'debug-log-viewer'); ?></th>
                                         <th><?php esc_html_e('Datetime', 'debug-log-viewer'); ?></th>
                                         <th><?php esc_html_e('Description', 'debug-log-viewer'); ?></th>
@@ -64,7 +65,7 @@ class DBG_LV_LogView
                     <div class="settings">
                         <h5><?php esc_html_e('Settings', 'debug-log-viewer') ?></h5>
 
-                        <div class="row log-viewer-row">
+                        <div class="row log-viewer-row mt-4">
                             <div class="log-info-block">
                                 <p><?php esc_html_e('Debug mode', 'debug-log-viewer'); ?></p>
                                 <input id="dbg_lv_toggle_debug_mode" type="checkbox" <?php checked(WP_DEBUG, true); ?> name="checkbox" class="bootstrap-switch" />
@@ -88,24 +89,40 @@ class DBG_LV_LogView
                     </div>
 
                     <div class="notifications">
-                        <h5><?php esc_html_e('Notifications', 'debug-log-viewer') ?></h5>
+                        <h5>
+                            <a
+                                class="d-flex align-items-center justify-content-between text-decoration-none"
+                                data-bs-toggle="collapse"
+                                href="#dbg_lv_notificationsContent"
+                                role="button"
+                                aria-expanded="true"
+                                aria-controls="dbg_lv_notificationsContent">
+                                <?php esc_html_e('Notifications', 'debug-log-viewer'); ?>
+                                <span class="caret">
+                                    <i class="fas fa-caret-right rotate-icon"></i>
+                                </span>
+                            </a>
+                        </h5>
 
-                        <?php $notificator = new DBG_LV_Notificator(new DBG_LV_LogController()); ?>
-                        <form class="form-group" id="dbg_lv_log_viewer_notifications_form" data-notifications-enabled="<?php echo esc_attr($notificator->dbg_lv_is_notification_enabled() ? 'true' : 'false'); ?>">
-                            <p><?php esc_html_e('You will receive an email notification in case a serious problem is detected on the website', 'debug-log-viewer') ?></p>
-                            <p><?php esc_html_e('Monitoring tracks database, fatal, deprecated and parse errors', 'debug-log-viewer') ?></p>
-                            <label for="email"><?php esc_html_e('Your Email:', 'debug-log-viewer') ?></label>
-                            <input type="email" id="email" value="<?php echo esc_attr($notificator->dbg_lv_get_notification_email()); ?>">
+                        <div class="collapse" id="dbg_lv_notificationsContent">
+                            <?php $notificator = new DBG_LV_Notificator(new DBG_LV_LogController()); ?>
+                            <form class="form-group mt-4" id="dbg_lv_log_viewer_notifications_form" data-notifications-enabled="<?php echo esc_attr($notificator->dbg_lv_is_notification_enabled() ? 'true' : 'false'); ?>">
+                                <p><?php esc_html_e('You will receive an email notification in case a serious problem is detected on the website', 'debug-log-viewer'); ?></p>
+                                <p><?php esc_html_e('Monitoring tracks database, fatal, deprecated and parse errors', 'debug-log-viewer'); ?></p>
+                                <label for="email"><?php esc_html_e('Your Email:', 'debug-log-viewer'); ?></label>
+                                <input type="email" id="email" value="<?php echo esc_attr($notificator->dbg_lv_get_notification_email()); ?>">
 
-                            <label for="recurrence"><?php esc_html_e('Periodicity:', 'debug-log-viewer') ?></label>
-                            <select name="recurrence" id="recurrence">
-                                <?php $notificator->dbg_lv_get_notification_recurrence(); ?>
-                            </select>
-                            <?php require_once realpath(__DIR__) . '/../components/send-test-email-checkbox.php'; ?>
+                                <label for="recurrence"><?php esc_html_e('Periodicity:', 'debug-log-viewer'); ?></label>
+                                <select name="recurrence" id="recurrence">
+                                    <?php $notificator->dbg_lv_get_notification_recurrence(); ?>
+                                </select>
+                                <?php require_once realpath(__DIR__) . '/../components/send-test-email-checkbox.php'; ?>
 
-                            <input type="submit" value="<?php esc_attr_e('Loading...', 'debug-log-viewer'); ?>" class="btn btn-secondary btn-sm" disabled>
-                        </form>
+                                <input type="submit" value="<?php esc_attr_e('Loading...', 'debug-log-viewer'); ?>" class="btn btn-secondary btn-sm" disabled>
+                            </form>
+                        </div>
                     </div>
+
                 </div>
             </div>
         </div>
@@ -119,4 +136,3 @@ class DBG_LV_LogView
 <?php
     }
 }
-?>

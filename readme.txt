@@ -3,8 +3,8 @@
 Contributors: lysyiweb
 Tags: debug, logs, error tracking, WP_DEBUG
 Requires at least: 4.6
-Tested up to: 6.6.2
-Stable tag: 1.0.3
+Tested up to: 6.7.1
+Stable tag: 1.1
 Requires PHP: 5.4
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -13,7 +13,7 @@ Effortlessly manage your WordPress debug.log. Features include email notificatio
 
 
 == Tested up to ==
-WordPress Version: 6.6.2
+WordPress Version: 6.7.1
 PHP Version: 8.2.0
 
 == Description ==
@@ -47,15 +47,22 @@ With Debug Log Viewer, developers can catch issues early, monitor their site mor
 1. **Debug Log Viewer** allows a convenient way to browse the debug.log file.
 
 == Changelog ==
-= 1.0.0 =
-* Initial release
 
-= 1.0.1 =
-* Fix UUID generation
-
-= 1.0.2 =
-* Added assets (logo)
+= 1.1 =
+* Fixed SSE streaming. Implemented incremental updates
+* Decreased log reading limit from 10Mb to 5Mb
+* Added ability to collapse Notification block in sidebar to make workspace more clear
+* Fixed regular expression to parse datetime with long timezones
 
 = 1.0.3 =
 * Removed Toast plugin, used Bootstrap toasts instead
 * Small refactoring
+
+= 1.0.2 =
+* Added assets (logo)
+
+= 1.0.1 =
+* Fix UUID generation
+
+= 1.0.0 =
+* Initial release

@@ -8,110 +8,122 @@ import {
 
 (async ($) => {
     const dataTableConfig = {
-        serverSide: true,
+        serverSide: false,
         stateSave: true,
         retrieve: true,
-        bSort: false,
+        bSort: true,
         processing: true,
         language: {
-            processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span> ',
+            processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>',
             search: '',
-            searchPlaceholder: 'Search',
+            searchPlaceholder: 'Search', // @translate
         },
         pageLength: 25,
-        ajax: {
-            url: `${ajaxurl}?action=dbg_lv_get_log_data`,
-            type: "POST",
-            data: function (d) {
-                d.wp_nonce = dbg_lv_backend_data.ajax_nonce
-            }
-        },
         dom: 'lBfrtip',
         buttons: [
             { extend: 'colvis', postfixButtons: ['colvisRestore'], className: 'dt-action-button' },
         ],
-        columns: [{
-            data: 'type',
-            render: function (data) {
-                let className = '';
-                switch (data) {
-                    case 'Notice':
-                        className = 'bg-dark';
-                        break;
-                    case 'Warning':
-                        className = 'bg-warning';
-                        break;
-                    case 'Fatal':
-                        className = 'bg-danger';
-                        break;
-                    case 'Database':
-                        className = 'bg-primary';
-                        break;
-                    case 'Parse':
-                        className = 'bg-info';
-                        break;
-                    default:
-                        className = 'bg-secondary';
-                }
-
-                return `<span class="badge ${className}">${data}</span>`
-            }
-        },
-        {
-            data: 'datetime',
-            className: 'datetime'
-        },
-        {
-            data: 'description',
-            render: function (description) {
-                if (!description.stack_trace) {
-                    return description.text;
-                } else {
-                    const uniqueId = generateUUID();
-                    return `<div>${description.text}</div>
-                       
-                        <a class="call-stack" href="${uniqueId}">Call stack</a>
-                        
-                        <div class="modal mt-5" tabindex="-1" id="${uniqueId}">
-                            <div class="modal-dialog modal-lg">
-                                <div class="modal-content">
-
-                                    <div class="modal-body">
-                                        <pre>${description.stack_trace}</pre>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>`;
-                }
-            }
-        },
-        {
-            data: 'file'
-        },
-        {
-            data: 'line'
-        }],
+        columns: [
+            { 
+                data: 'timestamp', 
+                visible: false,
+                render: function (data, type, row) {
+                // If timestamp is missing, calculate it from datetime
+                return data || convertToTimestamp(row.datetime);
+            }}, // Hidden sortable column for timestamp
+            { 
+                data: 'type', 
+                render: renderLogTypeBadge 
+            },
+            { data: 'datetime', className: 'datetime' }, // Visible datetime column
+            { data: 'description', render: renderDescription },
+            { data: 'file' },
+            { data: 'line' }
+        ],
+        order: [[0, 'desc']], // Order by the hidden timestamp column
         initComplete: function () {
             initScrollToTopButton();
             initLiveUpdates();
+            bindDynamicEventHandlers();
         }
+    };
+    
+    const table = $('#dbg_lv_log-table').DataTable(dataTableConfig);
+    
+    function renderLogTypeBadge(data) {
+        const typeClasses = {
+            'Notice': 'bg-dark',
+            'Warning': 'bg-warning',
+            'Fatal': 'bg-danger',
+            'Database': 'bg-primary',
+            'Parse': 'bg-info'
+        };
+        const className = typeClasses[data] || 'bg-secondary';
+        return `<span class="badge ${className}">${data}</span>`;
     }
 
-    $('#dbg_lv_log-table').DataTable(dataTableConfig);
+    function renderDescription(description) {
+        if (!description.stack_trace) {
+            return description.text;
+        } else {
+            const uniqueId = generateUUID();
+            return `
+                <div>${description.text}</div>
+                <a class="call-stack" href="#${uniqueId}" data-bs-toggle="modal">Call stack</a>
+                <div class="modal fade" tabindex="-1" id="${uniqueId}">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <pre>${description.stack_trace}</pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
+        }
+    }
+    
+    function convertToTimestamp(datetimeString) {
+        return new Date(datetimeString).getTime();
+    }
 
     function initLiveUpdates() {
         try {
-            const source = new EventSource(ajaxurl + '?action=dbg_lv_log_viewer_live_update', {
-                withCredentials: true,
+            const source = new EventSource(`${ajaxurl}?action=dbg_lv_log_viewer_live_update`, {
+                withCredentials: true
             });
-
+    
             source.addEventListener('updates', (event) => {
-                $('#dbg_lv_log-table').DataTable().draw();
+                if(!event.data){
+                    return;
+                }
+
+                const {action, data} = JSON.parse(event.data);
+                if(action === 'clear') {
+                    table.clear().draw();
+                    return;
+                }
+
+                if (data.length > 0) {
+                    table.rows.add(data); // Adds all rows at once
+                    table.order([[0, 'desc']]).draw(); // Reorder and redraw
+                }
             }, false);
+
+            source.addEventListener('open', (event) => {
+                table.clear().draw();
+            });
 
         } catch (error) {
             showToast(error, 'error');
         }
+    }
+
+    function bindDynamicEventHandlers() {
+        $('#dbg_lv_log-table tbody').on('click', '.call-stack', function (e) {
+            e.preventDefault();
+            const targetModal = $(this).attr('href');
+            $(targetModal).modal('show');
+        });
     }
 
     function autoEnableDebugMode() {
@@ -150,10 +162,10 @@ import {
             if (!response.success) {
                 throw new Error(response.error);
             }
+            // @translate
             showToast(`Debug mode: ${response.state}`, 'success');
 
         } catch (error) {
-            // toastr.error(error, 'Error', { timeOut: 5000 });
             showToast(error, 'error');
         }
     };
@@ -175,9 +187,10 @@ import {
             let response = JSON.parse(rawResponse);
 
             if (!response.success) {
+                // @translate
                 throw new Error(`Request error: ${response.error}`);
             }
-
+// @translate
             showToast(`Debug log scripts: ${response.state}`, 'success');
 
         } catch (error) {
@@ -210,7 +223,7 @@ import {
             if (!response.success) {
                 throw new Error(response.error);
             }
-
+// @translate
             showToast('Logging enabled successfully.', 'success');
             setTimeout(function () {
                 location.reload();
@@ -237,7 +250,7 @@ import {
             if (!response.success) {
                 throw new Error(response.error);
             }
-
+            // @translate
             showToast(`Debug scripts: ${response.state}`, 'success');
 
         } catch (error) {
@@ -266,7 +279,7 @@ import {
             if (!response.success) {
                 throw new Error(response.error);
             }
-
+            // @translate
             showToast(`Display errors: ${response.state}`, 'success');
 
         } catch (error) {
@@ -292,39 +305,23 @@ import {
             if (!confirm('Are you sure? After flushing the log, this action can\'t be undone')) {
                 return;
             }
-
             const rawResponse = await jQuery.post(ajaxurl, {
                 action: 'dbg_lv_log_viewer_clear_log',
                 wp_nonce: dbg_lv_backend_data.ajax_nonce,
             });
 
             let response = JSON.parse(rawResponse);
-
             if (!response.success) {
                 throw new Error(response.error);
             }
-
             showToast(`Log was cleared`, 'success');
-
-            $('#dbg_lv_log-table').DataTable().ajax.reload();
-
-        } catch (error) {
-            showToast(error, 'error');
-        }
-    });
-
-    $('.refresh-log').on('click', async function () {
-        try {
-            $('#dbg_lv_log-table').DataTable().ajax.reload();
-
-            showToast('Log was refreshed', 'success');
+            $('#dbg_lv_log-table').DataTable().clear().draw();
         } catch (error) {
             showToast(error, 'error');
         }
     });
 
     $('.download-log').on('click', async function () {
-
         jQuery.post({
             url: ajaxurl,
             data: {
