@@ -1,102 +1,132 @@
 @import "../constants.scss";
 
-.settings,
-.notifications {
-    .dbg_lv-pro-features {
-        background: $main-theme-color;
-        border: 0;
-        border-radius: 5px;
-        color: #fff;
-        text-decoration: none;
-        margin: 0 auto;
-        display: block;
-        text-align: center;
-        max-width: 130px;
-
-        img {
-            width: 32px;
-        }
-    }
-
-    .bootstrap-switch {
-        transform: scale(0.8);
-    }
-
-    font-family: Helvetica;
-
-    .log-info-block {
-        font-size: 14px;
-        margin-bottom: 0;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
-
+.sidebar {
+    position: absolute;
+    top: 15px;
+    right: -100%;
+    width: 20%;
+    max-width: 285px;
     background-color: #fff;
-    padding: 15px;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
     border-radius: 5px;
-    box-shadow: $box-shadow;
-    margin-bottom: 25px;
 
-    h5 {
-        color: $dark-blue;
-        margin-bottom: 0;
-
-        .rotate-icon {
-            transition: transform 0.3s ease-in-out;
-        }
-
-        .rotate-icon.expanded {
-            transform: rotate(90deg);
-        }
-
-        a {
-            color: $dark-blue;
-        }
-
-        a:active,
-        a:focus {
-            outline: none;
-            border: none;
-            box-shadow: none;
-            /* Prevents any shadow that could act like a border */
-        }
+    &.visible {
+        right: 25px; // Slide in
     }
 
-    select {
-        max-width: inherit;
+    .close-icon {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        font-size: 16px;
+        cursor: pointer;
     }
 
-    input[type="email"],
-    input[type="url"],
-    select {
-        margin-top: 5px;
-        margin-bottom: 24px;
-        width: 100%;
 
-        padding: 5px 10px;
-        border: 1px solid #cecece;
+    .hidden {
+        display: none; // Hide the sidebar for screens with insufficient JavaScript
+    }
 
-        &[disabled] {
-            background-color: #f6f7f7;
+    .settings,
+    .notifications {
+        .bootstrap-switch {
+            transform: scale(0.8);
         }
-    }
 
-    .form-check {
-        margin-top: 5px;
-        margin-bottom: 24px;
-    }
+        font-family: Helvetica;
 
-    input[type="submit"] {
-        padding: 10px 20px;
+        .log-info-block {
+            font-size: 14px;
+            margin-bottom: 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        background-color: #fff;
+        padding: 15px 10px;
         border-radius: 5px;
+        // box-shadow: $box-shadow;
+        // margin-bottom: 25px;
 
-        &.enable {
-            background-color: $main-theme-color;
+        h5 {
+            color: $dark-blue;
+            margin-bottom: 0;
+
+            .rotate-icon {
+                transition: transform 0.3s ease-in-out;
+            }
+
+            .rotate-icon.expanded {
+                transform: rotate(90deg);
+            }
+
+            a {
+                color: $dark-blue;
+            }
+
+            a:active,
+            a:focus {
+                outline: none;
+                border: none;
+                box-shadow: none;
+            }
         }
 
-        &.disable {
-            background-color: $danger-color;
+        select {
+            max-width: inherit;
+        }
+
+        input[type="email"],
+        input[type="url"],
+        select {
+            margin-top: 5px;
+            margin-bottom: 24px;
+            width: 100%;
+
+            padding: 5px 10px;
+            border: 1px solid #cecece;
+
+            &[disabled] {
+                background-color: #f6f7f7;
+            }
+        }
+
+        .form-check {
+            margin-top: 5px;
+            margin-bottom: 24px;
+        }
+
+        input[type="submit"] {
+            padding: 10px 20px;
+            border-radius: 5px;
+
+            &.enable {
+                background-color: $main-theme-color;
+            }
+
+            &.disable {
+                background-color: $danger-color;
+            }
+        }
+    }
+
+    .sidebar-toggle-btn {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 1100;
+        cursor: pointer;
+        background-color: $main-theme-color;
+        border: none;
+        color: #fff;
+        padding: 10px 15px;
+        border-radius: 5px;
+        box-shadow: $box-shadow;
+
+        &:hover {
+            background-color: darken($main-theme-color, 10%);
         }
     }
 }

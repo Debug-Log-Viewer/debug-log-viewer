@@ -1,8 +1,7 @@
 import { 
     updateEmailNotifications, 
     initEmailNotificationsForm, 
-    initScrollToTopButton, 
-    generateUUID, 
+    initScrollToTopButton,
     showToast 
 } from '../utils.js';
 
@@ -27,6 +26,7 @@ import {
             { 
                 data: 'timestamp', 
                 visible: false,
+                width: '15%',
                 render: function (data, type, row) {
                 // If timestamp is missing, calculate it from datetime
                 return data || convertToTimestamp(row.datetime);
@@ -36,11 +36,12 @@ import {
                 render: renderLogTypeBadge 
             },
             { data: 'datetime', className: 'datetime' }, // Visible datetime column
-            { data: 'description', render: renderDescription },
+            { data: 'description', render: renderDescription, width: '40%' },
             { data: 'file' },
-            { data: 'line' }
+            { data: 'line'}
         ],
         order: [[0, 'desc']], // Order by the hidden timestamp column
+        autoWidth: false, // Prevent DataTables from auto-calculating column widths
         initComplete: function () {
             initScrollToTopButton();
             initLiveUpdates();
@@ -63,23 +64,16 @@ import {
     }
 
     function renderDescription(description) {
-        if (!description.stack_trace) {
-            return description.text;
-        } else {
-            const uniqueId = generateUUID();
-            return `
-                <div>${description.text}</div>
-                <a class="call-stack" href="#${uniqueId}" data-bs-toggle="modal">Call stack</a>
-                <div class="modal fade" tabindex="-1" id="${uniqueId}">
-                    <div class="modal-dialog modal-lg">
-                        <div class="modal-content">
-                            <div class="modal-body">
-                                <pre>${description.stack_trace}</pre>
-                            </div>
-                        </div>
-                    </div>
-                </div>`;
-        }
+        const { text, stack_trace } = description;
+    
+        return stack_trace
+            ? `
+                <div>${text}</div>
+                <a class="call-stack" href="#">Call stack</a>
+                <div class="stack hidden">
+                    <pre>${stack_trace}</pre>
+                </div>`
+            : text;
     }
     
     function convertToTimestamp(datetimeString) {
@@ -121,8 +115,17 @@ import {
     function bindDynamicEventHandlers() {
         $('#dbg_lv_log-table tbody').on('click', '.call-stack', function (e) {
             e.preventDefault();
-            const targetModal = $(this).attr('href');
-            $(targetModal).modal('show');
+            const stackContent = $(this).next('.stack.hidden').html();
+            if (stackContent) {
+                const modalElement = $('.modal');
+                modalElement.find('.modal-body').html(stackContent);
+        
+                // Show the modal using Bootstrap's API
+                const bootstrapModal = bootstrap.Modal.getOrCreateInstance(modalElement[0]);
+                bootstrapModal.show();
+            } else {
+                console.error('No stack content found.');
+            }
         });
     }
 
@@ -349,14 +352,6 @@ import {
             }
         });
     });
-
-
-    $('table.dataTable').on('click', '.call-stack', function (e) {
-        e.preventDefault();
-
-        const elementUUID = $(this).attr('href');
-        new bootstrap.Modal(document.getElementById(elementUUID)).show()
-    })
 
     await initEmailNotificationsForm($('#dbg_lv_log_viewer_notifications_form'));
 
