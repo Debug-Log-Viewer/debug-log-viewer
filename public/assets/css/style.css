@@ -85,6 +85,12 @@
   color: #fa9732;
 }
 
+.dbg_lv-log-viewer .main-content .content-wrapper {
+  transition: all 0.3s ease;
+}
+.dbg_lv-log-viewer .main-content .content-wrapper.expanded {
+  width: calc(100% - 300px);
+}
 .dbg_lv-log-viewer .manual-debugging-instructions_or {
   margin-top: 30px;
   font-weight: bold;
@@ -115,20 +121,21 @@
 }
 .dbg_lv-log-viewer .top-section .buttons {
   padding-left: 15px;
-  min-width: 130px;
+  min-width: 170px;
 }
 .dbg_lv-log-viewer .top-section .buttons .clear-log,
 .dbg_lv-log-viewer .top-section .buttons .refresh-log,
 .dbg_lv-log-viewer .top-section .buttons .download-log,
-.dbg_lv-log-viewer .top-section .buttons .live-update {
+.dbg_lv-log-viewer .top-section .buttons .notification,
+.dbg_lv-log-viewer .top-section .buttons .toggle {
   margin: 0;
   width: 35px;
   height: 35px;
   padding: 0;
-  font-size: 14px;
+  font-size: 16px;
 }
-.dbg_lv-log-viewer .top-section .buttons .live-update {
-  animation: pulseAnimation 1s infinite;
+.dbg_lv-log-viewer .top-section .buttons .notification {
+  font-size: 17px;
 }
 @keyframes pulseAnimation {
   0% {
@@ -142,16 +149,23 @@
   }
 }
 .dbg_lv-log-viewer .top-section .buttons .refresh-log,
-.dbg_lv-log-viewer .top-section .buttons .download-log {
+.dbg_lv-log-viewer .top-section .buttons .download-log,
+.dbg_lv-log-viewer .top-section .buttons .notification,
+.dbg_lv-log-viewer .top-section .buttons .toggle {
   background-color: #4f6df5;
+}
+.dbg_lv-log-viewer .top-section .buttons .refresh-log:active,
+.dbg_lv-log-viewer .top-section .buttons .download-log:active,
+.dbg_lv-log-viewer .top-section .buttons .notification:active,
+.dbg_lv-log-viewer .top-section .buttons .toggle:active {
+  background-color: #6781f6;
 }
 .dbg_lv-log-viewer .top-section .buttons .clear-log {
   background-color: #f84042;
 }
 .dbg_lv-log-viewer pre {
   overflow-x: scroll;
-  padding: 10px;
-  background-color: #eee;
+  margin-bottom: 0;
 }
 .dbg_lv-log-viewer .table-wrapper {
   background: #fff;
@@ -162,6 +176,9 @@
 }
 .dbg_lv-log-viewer .table-wrapper #dbg_lv_log-table {
   width: 100% !important;
+}
+.dbg_lv-log-viewer .table-wrapper #dbg_lv_log-table tbody tr td {
+  word-break: break-all;
 }
 .dbg_lv-log-viewer .table-wrapper #dbg_lv_log-table .badge {
   min-width: 65px;
@@ -236,110 +253,131 @@
   color: #fff;
 }
 
-.settings,
-.notifications {
+.sidebar {
+  position: absolute;
+  top: 15px;
+  right: -100%;
+  width: 20%;
+  max-width: 285px;
+  background-color: #fff;
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  border-radius: 5px;
+}
+.sidebar.visible {
+  right: 25px;
+}
+.sidebar .close-icon {
+  position: absolute;
+  right: 15px;
+  top: 15px;
+  font-size: 16px;
+  cursor: pointer;
+}
+.sidebar .hidden {
+  display: none;
+}
+.sidebar .settings,
+.sidebar .notifications {
   font-family: Helvetica;
   background-color: #fff;
-  padding: 15px;
+  padding: 15px 10px;
   border-radius: 5px;
-  box-shadow: 0 2px 4px #929ea9;
-  margin-bottom: 25px;
 }
-.settings .dbg_lv-pro-features,
-.notifications .dbg_lv-pro-features {
-  background: #4f6df5;
-  border: 0;
-  border-radius: 5px;
-  color: #fff;
-  text-decoration: none;
-  margin: 0 auto;
-  display: block;
-  text-align: center;
-  max-width: 130px;
-}
-.settings .dbg_lv-pro-features img,
-.notifications .dbg_lv-pro-features img {
-  width: 32px;
-}
-.settings .bootstrap-switch,
-.notifications .bootstrap-switch {
+.sidebar .settings .bootstrap-switch,
+.sidebar .notifications .bootstrap-switch {
   transform: scale(0.8);
 }
-.settings .log-info-block,
-.notifications .log-info-block {
+.sidebar .settings .log-info-block,
+.sidebar .notifications .log-info-block {
   font-size: 14px;
   margin-bottom: 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
-.settings h5,
-.notifications h5 {
+.sidebar .settings h5,
+.sidebar .notifications h5 {
   color: #040047;
   margin-bottom: 0;
 }
-.settings h5 .rotate-icon,
-.notifications h5 .rotate-icon {
+.sidebar .settings h5 .rotate-icon,
+.sidebar .notifications h5 .rotate-icon {
   transition: transform 0.3s ease-in-out;
 }
-.settings h5 .rotate-icon.expanded,
-.notifications h5 .rotate-icon.expanded {
+.sidebar .settings h5 .rotate-icon.expanded,
+.sidebar .notifications h5 .rotate-icon.expanded {
   transform: rotate(90deg);
 }
-.settings h5 a,
-.notifications h5 a {
+.sidebar .settings h5 a,
+.sidebar .notifications h5 a {
   color: #040047;
 }
-.settings h5 a:active,
-.settings h5 a:focus,
-.notifications h5 a:active,
-.notifications h5 a:focus {
+.sidebar .settings h5 a:active,
+.sidebar .settings h5 a:focus,
+.sidebar .notifications h5 a:active,
+.sidebar .notifications h5 a:focus {
   outline: none;
   border: none;
   box-shadow: none;
-  /* Prevents any shadow that could act like a border */
 }
-.settings select,
-.notifications select {
+.sidebar .settings select,
+.sidebar .notifications select {
   max-width: inherit;
 }
-.settings input[type=email],
-.settings input[type=url],
-.settings select,
-.notifications input[type=email],
-.notifications input[type=url],
-.notifications select {
+.sidebar .settings input[type=email],
+.sidebar .settings input[type=url],
+.sidebar .settings select,
+.sidebar .notifications input[type=email],
+.sidebar .notifications input[type=url],
+.sidebar .notifications select {
   margin-top: 5px;
   margin-bottom: 24px;
   width: 100%;
   padding: 5px 10px;
   border: 1px solid #cecece;
 }
-.settings input[type=email][disabled],
-.settings input[type=url][disabled],
-.settings select[disabled],
-.notifications input[type=email][disabled],
-.notifications input[type=url][disabled],
-.notifications select[disabled] {
+.sidebar .settings input[type=email][disabled],
+.sidebar .settings input[type=url][disabled],
+.sidebar .settings select[disabled],
+.sidebar .notifications input[type=email][disabled],
+.sidebar .notifications input[type=url][disabled],
+.sidebar .notifications select[disabled] {
   background-color: #f6f7f7;
 }
-.settings .form-check,
-.notifications .form-check {
+.sidebar .settings .form-check,
+.sidebar .notifications .form-check {
   margin-top: 5px;
   margin-bottom: 24px;
 }
-.settings input[type=submit],
-.notifications input[type=submit] {
+.sidebar .settings input[type=submit],
+.sidebar .notifications input[type=submit] {
   padding: 10px 20px;
   border-radius: 5px;
 }
-.settings input[type=submit].enable,
-.notifications input[type=submit].enable {
+.sidebar .settings input[type=submit].enable,
+.sidebar .notifications input[type=submit].enable {
   background-color: #4f6df5;
 }
-.settings input[type=submit].disable,
-.notifications input[type=submit].disable {
+.sidebar .settings input[type=submit].disable,
+.sidebar .notifications input[type=submit].disable {
   background-color: #f84042;
+}
+.sidebar .sidebar-toggle-btn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1100;
+  cursor: pointer;
+  background-color: #4f6df5;
+  border: none;
+  color: #fff;
+  padding: 10px 15px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px #929ea9;
+}
+.sidebar .sidebar-toggle-btn:hover {
+  background-color: #1f45f2;
 }
 
 #dbg_lv-404-redirects-table_paginate,
