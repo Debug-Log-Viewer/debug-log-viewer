@@ -5,11 +5,11 @@
  * Description: Simplifies the process of reviewing and managing your WordPress debug.log file.
 
  * Author: lysyiweb
- * Version: 1.1
+ * Version: 1.1.1
  * Tags: debug, logging, WP_DEBUG, error-tracking
  * Requires PHP: 5.4
  * Tested up to: 6.7.1
- * Stable tag: 1.1
+ * Stable tag: 1.1.1
  * License: GPLv2 or later
  * License URI: http://www.gnu.org/licenses/gpl-2.0.html
  */
@@ -20,7 +20,7 @@ if (!defined('ABSPATH')) {
 
 require_once realpath(__DIR__) . '/admin/helpers/constants.php';
 
-$controllers = [ 'Hooks', 'Menu', 'Log', 'Service', 'Notificator', 'Review'];
+$controllers = [ 'Hooks', 'Menu', 'Log', 'Service', 'Notificator', 'Review', 'Freemius'];
 
 foreach ($controllers as $controller) {
     require_once realpath(__DIR__) . "/admin/controllers/{$controller}Controller.php";
@@ -28,3 +28,4 @@ foreach ($controllers as $controller) {
 
 DBG_LV_MenuController::dbg_lv_init();
 DBG_LV_HooksController::dbg_lv_init();
+DBG_LV_FreemiusController::dbg_lv_init();
