@@ -1,4 +1,4 @@
-<div class="notifications hidden">
+<div class="notifications section">
     <h5><?php esc_html_e('Notifications', 'debug-log-viewer'); ?></h5>
 
     <?php $notificator = new DBG_LV_Notificator(new DBG_LV_LogController()); ?>

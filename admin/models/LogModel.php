@@ -7,6 +7,7 @@ if (!defined('ABSPATH')) {
 class DBG_LV_LogModel
 {
     const DBG_LV_LAST_POSITION_OPTION_NAME = 'dbg_lv_log_last_position';
+    const DBG_LV_LOG_UPDATES_MODE_OPTION_NAME = 'dbg_lv_log_updates_mode';
 
     public static function dbg_lv_is_log_file_exists()
     {

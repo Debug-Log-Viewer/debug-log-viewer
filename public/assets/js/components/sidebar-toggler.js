@@ -1,10 +1,13 @@
 (($) => {
-    const sidebar = $('.sidebar');
-    const notificationsButton  = $('.buttons .notification');
-    const debugConstantsButton = $('.buttons .debug-constants');
-    const settingsButton       = $('.buttons .settings'); // New button for the settings section
     const contentWrapper = $('.content-wrapper');
-    const closeIcon = sidebar.find('.close-icon');
+    const sidebarWrapper = $('.sidebar-wrapper');
+    const closeIcon = sidebarWrapper.find('.close-icon');
+
+    const SECTIONS = {
+        '.notification': '.notifications',
+        '.debug-constants': '.debug-constants',
+        '.settings': '.settings'
+    };
 
     // Key for localStorage
     const SIDEBAR_ACTIVE_SECTION_KEY = 'dbg_lv_sidebarActiveSection';
@@ -17,72 +20,62 @@
     // Function to load and apply the sidebar state
     function loadSidebarState() {
         const activeSection = localStorage.getItem(SIDEBAR_ACTIVE_SECTION_KEY);
-
-        sidebar.find('.notifications, .debug-constants, .settings').addClass('hidden'); // Hide all sections
-        if (!activeSection || activeSection === 'debug-constants') {
-            sidebar.addClass('visible');
-            contentWrapper.addClass('expanded');
-            sidebar.find('.debug-constants').removeClass('hidden');
-        } else if (activeSection === 'notifications') {
-            // Notifications
-            sidebar.addClass('visible');
-            contentWrapper.addClass('expanded');
-            sidebar.find('.notifications').removeClass('hidden');
-        } else if (activeSection === 'settings') {
-            sidebar.addClass('visible');
-            contentWrapper.addClass('expanded');
-            sidebar.find('.settings').removeClass('hidden');
-        } else {
-            // Sidebar closed
-            sidebar.removeClass('visible');
-            contentWrapper.removeClass('expanded');
+        if (activeSection && activeSection !== 'empty') {
+            toggleSidebar(activeSection);
         }
     }
 
     // Function to toggle visibility
     function toggleSidebar(blockSelector) {
-        const block = sidebar.find(blockSelector);
-        const isAlreadyVisible = sidebar.hasClass('visible') && block.is(':visible');
+        const section = sidebarWrapper.find(blockSelector);
+        if (section.length === 0) {
+            console.error(`Section '${sectionSelector}' not found in DOM`);
+            return;
+        }
 
-        if (isAlreadyVisible) {
-            // Close the sidebar
-            sidebar.removeClass('visible');
-            contentWrapper.removeClass('expanded');
-            block.addClass('hidden');
+        const isVisible = section.hasClass('visible');
+        console.log(section, isVisible);
+        if (isVisible) {
+            console.log('if');
+            toggleSideBarSection(blockSelector, false);
             saveSidebarState('empty'); // Save empty value
         } else {
-            // Open and show the selected block
-            sidebar.addClass('visible');
-            contentWrapper.addClass('expanded');
-            sidebar.find('.notifications, .debug-constants, .settings').addClass('hidden'); // Hide all sections
-            block.removeClass('hidden'); // Show the selected block
-            const activeSection = 
-                blockSelector === '.notifications' ? 'notifications' : 
-                blockSelector === '.settings' ? 'settings' : 
-                'debug-constants';
-            saveSidebarState(activeSection); // Save active section
+            console.log('else');
+            toggleSideBarSection(blockSelector, true);
+            saveSidebarState(blockSelector); // Save active section
         }
     }
 
-    // Click event for notifications button
-    notificationsButton.on('click', function () {
-        toggleSidebar('.notifications');
-    });
+    function toggleSideBarSection(sectionName, isOpen) {
+        const section = $(sectionName);
+        if (!section.length) {
+            console.error(`Section with name '${sectionName}' not found in DOM`);
+            return;
+        }
 
-    // Click event for toggle button
-    debugConstantsButton.on('click', function () {
-        toggleSidebar('.debug-constants');
-    });
+        contentWrapper.toggleClass('expanded', isOpen);
+        sidebarWrapper.toggleClass('opened', isOpen);
 
-    // Click event for third button
-    settingsButton.on('click', function () {
-        toggleSidebar('.settings');
+        if (isOpen) {
+            sidebarWrapper.find('.section').removeClass('visible');
+            section.addClass('visible');
+        } else {
+            section.removeClass('visible');
+        }
+    }
+
+    // Attach click events to buttons to toggle their corresponding sidebar sections
+    $.each(SECTIONS, function (sectionClass, sectionSelector) {
+        $(`.buttons ${sectionClass}`).on('click', function () {
+            toggleSidebar(sectionSelector);
+        });
     });
 
     // Close icon click event
     closeIcon.on('click', function () {
-        sidebar.removeClass('visible');
-        contentWrapper.removeClass('expanded');
+        contentWrapper.toggleClass('expanded', false);
+        sidebarWrapper.toggleClass('opened', false);
+        sidebarWrapper.find('.section').removeClass('visible');
         saveSidebarState('empty'); // Save empty value
     });
 

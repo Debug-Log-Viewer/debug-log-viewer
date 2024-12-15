@@ -1,4 +1,4 @@
-<div class="debug-constants">
+<div class="debug-constants section">
     <h5><?php esc_html_e('Debug Constants', 'debug-log-viewer') ?></h5>
 
     <div class="row log-viewer-row mt-3">

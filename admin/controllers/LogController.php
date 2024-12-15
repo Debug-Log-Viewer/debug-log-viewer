@@ -12,8 +12,6 @@ require_once realpath(__DIR__) . '/../../admin/helpers/utils.php';
 require_once realpath(__DIR__) . '/ScheduleTrait.php';
 require_once realpath(__DIR__) . '/../../admin/services/email.php';
 
-use Hhxsv5\SSE\Event;
-use Hhxsv5\SSE\SSE;
 
 class DBG_LV_LogController
 {
@@ -438,9 +436,31 @@ class DBG_LV_LogController
 
         if (isset($updates['data'])) {
             echo $liveUpdates->getUpdates($updates);
-            // var_dump('1231');
         }
 
         wp_die();
     }
+
+    public static function dbg_lv_change_logs_update_mode()
+    {
+        dbg_lv_verify_nonce(isset($_POST['wp_nonce']) ? sanitize_text_field(wp_unslash($_POST['wp_nonce'])) : '');
+
+        $mode = isset($_POST['mode']) ? sanitize_text_field(wp_unslash($_POST['mode'])) : null;
+    
+        if (!$mode) {
+            wp_send_json_error(__('Mode not found in request body', 'debug-log-viewer'), 400);
+        }
+    
+        $allowed_modes = ['AUTO', 'MANUAL'];
+        if (!in_array($mode, $allowed_modes, true)) {
+            wp_send_json_error(__('Given unknown log updates mode', 'debug-log-viewer'), 400);
+        }
+
+        if (update_option(DBG_LV_LogModel::DBG_LV_LOG_UPDATES_MODE_OPTION_NAME, $mode)) {
+            wp_send_json_success(__('Updates mode updated successfully', 'debug-log-viewer'));
+        } else {
+            wp_send_json_error(__('Failed to update updates mode', 'debug-log-viewer'), 500);
+        }
+    }
+    
 }

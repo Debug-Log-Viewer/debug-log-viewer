@@ -9,8 +9,16 @@
 		.content-wrapper {
 			transition: all 0.3s ease;
 
-			&.expanded {
-				width: calc(100% - 300px); // Shrink when sidebar is visible
+			&.main-table {
+				&.expanded {
+					flex: 0 0 auto; // col-9
+					max-width: 75%;
+
+					@media (min-width: 992px) {
+						flex: 0 0 auto; // col-lg-10
+						max-width: 83.333%;
+					}
+				}
 			}
 		}
 	}

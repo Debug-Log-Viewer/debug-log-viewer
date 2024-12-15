@@ -6,6 +6,9 @@ import {
 } from '../utils.js';
 
 (async ($) => {
+    const logsUpdatesIcon = $('.refresh-log i');
+    let logsUpdateInterval;
+
     const dataTableConfig = {
         serverSide: false,
         stateSave: true,
@@ -194,9 +197,8 @@ import {
         }
     }
 
-    $('.refresh-log').on('click', async function () {
+    async function updateLogs() {
         try {
-
             const rawResponse = await jQuery.post(ajaxurl, {
                 action: 'dbg_lv_log_viewer_live_update',
                 wp_nonce: dbg_lv_backend_data.ajax_nonce,
@@ -206,23 +208,34 @@ import {
                 return;
             }
 
-            let response = JSON.parse(rawResponse);
-
-
+            const response = JSON.parse(rawResponse);
             if(response.data.length > 0) {
                 table.rows.add(response.data).draw();
             }
 
-
-            // $('#istkr_log-table').DataTable().ajax.reload();
-
-            // toastr.success(`Log was refreshed`, 'Success', { timeOut: 5000 });
-
         } catch (error) {
             showToast(error, 'error');
         }
-    });
+    }
 
+    function startLiveUpdateLogs() {
+        const timeout = dbg_lv_backend_data.log_updates_interval * 1000;
+        logsUpdateInterval = setInterval(updateLogs, timeout);
+        logsUpdatesIcon.addClass('fa-spin');
+    }
+
+    function stopLiveUpdateLogs() {
+        if (logsUpdateInterval) {
+            clearInterval(logsUpdateInterval);
+        }
+        logsUpdatesIcon.removeClass('fa-spin');
+    }
+
+    $('.refresh-log').on('click', function () {
+        updateLogs();
+        logsUpdatesIcon.addClass('rotate-animation');
+        setTimeout(() => logsUpdatesIcon.removeClass('rotate-animation'), 1500);
+    });
 
     $('#dbg_lv_log-table').on('xhr.dt', function (e, settings, json, xhr) {
         if (json.info) {
@@ -391,4 +404,37 @@ import {
             autoEnableDebugLog();
         }
     });
+
+    $('input[name="UpdatesModeRadioOptions"]').on('change', function () {
+        const selectedMode = $('input[name="UpdatesModeRadioOptions"]:checked').val();
+
+        try {
+            jQuery.post({
+                url: ajaxurl,
+                data: {
+                    action: 'dbg_lv_change_logs_update_mode',
+                    mode: selectedMode,
+                    wp_nonce: dbg_lv_backend_data.ajax_nonce,
+                },
+                success: (response) => {
+                    if (selectedMode === 'AUTO') {
+                        stopLiveUpdateLogs(); // Reset old timer
+                        startLiveUpdateLogs();
+                    } else {
+                        stopLiveUpdateLogs();
+                    }
+                    showToast(response.data, 'success');
+                },
+                error: (xhr, status, error) => {
+                   showToast(error, 'error');
+                }
+            });
+        } catch (error) {
+            showToast(error, 'error');
+        }
+    });
+
+    if (dbg_lv_backend_data.log_updates_mode == "AUTO") {
+        startLiveUpdateLogs();
+    }
 })(jQuery)

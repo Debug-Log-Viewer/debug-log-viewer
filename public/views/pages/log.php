@@ -11,7 +11,7 @@ class DBG_LV_LogView
         $path = DBG_LV_LogController::dbg_lv_get_debug_file_path(); ?>
         <div class="container dbg_lv-log-viewer">
             <div class="row main-content">
-                <div class="col-md-12 content-wrapper">
+                <div class="main-table content-wrapper">
                     <?php if ($path && file_exists($path) && is_file($path)) {
                         require_once realpath(__DIR__) . '/../components/control-bar.tpl.php';
                     } ?>
@@ -24,7 +24,7 @@ class DBG_LV_LogView
                     } ?>
                 </div>
 
-                <div class="col-md-3 sidebar">
+                <div class="sidebar sidebar-wrapper">
                     <div class="close-icon"><i class="fa fa-times"></i></div>
                     <?php require_once realpath(__DIR__) . '/../components/sidebar/togglers.tpl.php'; ?>
                     <?php require_once realpath(__DIR__) . '/../components/sidebar/notification.tpl.php'; ?>

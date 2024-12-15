@@ -24,6 +24,7 @@ class DBG_LV_HooksController
         add_action('wp_ajax_dbg_lv_change_log_viewer_notifications_status', ['DBG_LV_LogController', 'dbg_lv_change_log_notifications_status']);
         add_action('wp_ajax_dbg_lv_get_current_user_email',                 ['DBG_LV_LogController', 'dbg_lv_get_current_user_email']);
         add_action('wp_ajax_dbg_lv_log_viewer_live_update',                 ['DBG_LV_LogController', 'dbg_lv_live_update']);
+        add_action('wp_ajax_dbg_lv_change_logs_update_mode',                ['DBG_LV_LogController', 'dbg_lv_change_logs_update_mode']);
 
         add_action('wp_ajax_dbg_lv_log_viewer_enable_logging', function () use ($log_controller) {
             $log_controller->dbg_lv_log_viewer_enable_logging();
@@ -71,7 +72,9 @@ class DBG_LV_HooksController
             wp_enqueue_script('dbg_lv_buttons_colvis_js',         plugins_url('../public/assets/vendor/js/buttons.colVis.min.js', __DIR__));
 
             wp_localize_script('dbg_lv_app_js', 'dbg_lv_backend_data', [
-                'ajax_nonce'   => wp_create_nonce('ajax_nonce'),
+                'ajax_nonce'           => wp_create_nonce('ajax_nonce'),
+                'log_updates_mode'     => get_option(DBG_LV_LogModel::DBG_LV_LOG_UPDATES_MODE_OPTION_NAME),
+                'log_updates_interval' => DBG_LV_LOG_UPDATES_INTERVAL,
             ]);
             wp_enqueue_style('dbg_lv_bootstrap_css',              plugins_url('../public/assets/vendor/css/bootstrap.min.css', __DIR__));
             wp_enqueue_style('dbg_lv_now-ui_css',                 plugins_url('../public/assets/vendor/css/now-ui-kit.min.css', __DIR__), ['dbg_lv_bootstrap_css']);
