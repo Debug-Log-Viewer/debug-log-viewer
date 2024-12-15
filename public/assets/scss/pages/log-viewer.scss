@@ -4,6 +4,17 @@
 .dbg_lv-log-viewer {
 	@extend .base-table-viewer-structure;
 
+
+	.main-content {
+		.content-wrapper {
+			transition: all 0.3s ease;
+
+			&.expanded {
+				width: calc(100% - 300px); // Shrink when sidebar is visible
+			}
+		}
+	}
+
 	.manual-debugging-instructions_or {
 		margin-top: 30px;
 		font-weight: bold;
@@ -37,21 +48,22 @@
 
 		.buttons {
 			padding-left: 15px;
-			min-width: 130px;
+			min-width: 170px;
 
 			.clear-log,
 			.refresh-log,
 			.download-log,
-			.live-update {
+			.notification,
+			.toggle {
 				margin: 0;
 				width: 35px;
 				height: 35px;
 				padding: 0;
-				font-size: 14px;
+				font-size: 16px;
 			}
 
-			.live-update {
-				animation: pulseAnimation 1s infinite;
+			.notification {
+				font-size: 17px;
 			}
 
 			@keyframes pulseAnimation {
@@ -69,8 +81,14 @@
 			}
 
 			.refresh-log,
-			.download-log {
+			.download-log,
+			.notification,
+			.toggle {
 				background-color: $main-theme-color;
+
+				&:active {
+					background-color: lighten($main-theme-color, 5%);
+				}
 			}
 
 			.clear-log {
@@ -81,8 +99,7 @@
 
 	pre {
 		overflow-x: scroll;
-		padding: 10px;
-		background-color: #eee;
+		margin-bottom: 0;
 	}
 
 	.table-wrapper {
@@ -94,6 +111,14 @@
 
 		#dbg_lv_log-table {
 			width: 100% !important;
+
+			tbody {
+				tr {
+					td {
+						word-break: break-all;
+					}
+				}
+			}
 
 			.badge {
 				min-width: 65px;
