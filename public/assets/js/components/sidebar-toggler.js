@@ -34,13 +34,10 @@
         }
 
         const isVisible = section.hasClass('visible');
-        console.log(section, isVisible);
         if (isVisible) {
-            console.log('if');
             toggleSideBarSection(blockSelector, false);
             saveSidebarState('empty'); // Save empty value
         } else {
-            console.log('else');
             toggleSideBarSection(blockSelector, true);
             saveSidebarState(blockSelector); // Save active section
         }
