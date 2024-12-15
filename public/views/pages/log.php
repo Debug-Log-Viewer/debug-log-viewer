@@ -28,6 +28,7 @@ class DBG_LV_LogView
                     <div class="close-icon"><i class="fa fa-times"></i></div>
                     <?php require_once realpath(__DIR__) . '/../components/sidebar/togglers.tpl.php'; ?>
                     <?php require_once realpath(__DIR__) . '/../components/sidebar/notification.tpl.php'; ?>
+                    <?php require_once realpath(__DIR__) . '/../components/sidebar/settings.tpl.php'; ?>
                 </div>
             </div>
         </div>

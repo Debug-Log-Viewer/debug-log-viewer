@@ -44,7 +44,7 @@ import {
         autoWidth: false, // Prevent DataTables from auto-calculating column widths
         initComplete: function () {
             initScrollToTopButton();
-            initLiveUpdates();
+            fillInitialData();
             bindDynamicEventHandlers();
         }
     };
@@ -80,32 +80,25 @@ import {
         return new Date(datetimeString).getTime();
     }
 
-    function initLiveUpdates() {
+    async function fillInitialData() {
         try {
-            const source = new EventSource(`${ajaxurl}?action=dbg_lv_log_viewer_live_update`, {
-                withCredentials: true
+
+            const rawResponse = await jQuery.post(ajaxurl, {
+                action: 'dbg_lv_log_viewer_live_update',
+                initial: true,
+                wp_nonce: dbg_lv_backend_data.ajax_nonce,
             });
-    
-            source.addEventListener('updates', (event) => {
-                if(!event.data){
-                    return;
-                }
 
-                const {action, data} = JSON.parse(event.data);
-                if(action === 'clear') {
-                    table.clear().draw();
-                    return;
-                }
+            if(!rawResponse){
+                return;
+            }
 
-                if (data.length > 0) {
-                    table.rows.add(data); // Adds all rows at once
-                    table.order([[0, 'desc']]).draw(); // Reorder and redraw
-                }
-            }, false);
+            let response = JSON.parse(rawResponse);
 
-            source.addEventListener('open', (event) => {
-                table.clear().draw();
-            });
+
+            if(response.data.length > 0) {
+                table.rows.add(response.data).draw();
+            }
 
         } catch (error) {
             showToast(error, 'error');
@@ -200,6 +193,36 @@ import {
             showToast(error, 'error');
         }
     }
+
+    $('.refresh-log').on('click', async function () {
+        try {
+
+            const rawResponse = await jQuery.post(ajaxurl, {
+                action: 'dbg_lv_log_viewer_live_update',
+                wp_nonce: dbg_lv_backend_data.ajax_nonce,
+            });
+
+            if(!rawResponse){
+                return;
+            }
+
+            let response = JSON.parse(rawResponse);
+
+
+            if(response.data.length > 0) {
+                table.rows.add(response.data).draw();
+            }
+
+
+            // $('#istkr_log-table').DataTable().ajax.reload();
+
+            // toastr.success(`Log was refreshed`, 'Success', { timeOut: 5000 });
+
+        } catch (error) {
+            showToast(error, 'error');
+        }
+    });
+
 
     $('#dbg_lv_log-table').on('xhr.dt', function (e, settings, json, xhr) {
         if (json.info) {

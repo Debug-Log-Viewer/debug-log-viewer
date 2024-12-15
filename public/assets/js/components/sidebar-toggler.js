@@ -1,7 +1,8 @@
 (($) => {
     const sidebar = $('.sidebar');
-    const notificationsButton = $('.buttons .notification');
-    const toggleButton = $('.toggle');
+    const notificationsButton  = $('.buttons .notification');
+    const debugConstantsButton = $('.buttons .debug-constants');
+    const settingsButton       = $('.buttons .settings'); // New button for the settings section
     const contentWrapper = $('.content-wrapper');
     const closeIcon = sidebar.find('.close-icon');
 
@@ -17,17 +18,20 @@
     function loadSidebarState() {
         const activeSection = localStorage.getItem(SIDEBAR_ACTIVE_SECTION_KEY);
 
-        sidebar.find('.notifications, .settings').addClass('hidden'); // Hide all sections
-        if (!activeSection || activeSection === 'settings') {
-            // Default or settings
+        sidebar.find('.notifications, .debug-constants, .settings').addClass('hidden'); // Hide all sections
+        if (!activeSection || activeSection === 'debug-constants') {
             sidebar.addClass('visible');
             contentWrapper.addClass('expanded');
-            sidebar.find('.settings').removeClass('hidden');
+            sidebar.find('.debug-constants').removeClass('hidden');
         } else if (activeSection === 'notifications') {
             // Notifications
             sidebar.addClass('visible');
             contentWrapper.addClass('expanded');
             sidebar.find('.notifications').removeClass('hidden');
+        } else if (activeSection === 'settings') {
+            sidebar.addClass('visible');
+            contentWrapper.addClass('expanded');
+            sidebar.find('.settings').removeClass('hidden');
         } else {
             // Sidebar closed
             sidebar.removeClass('visible');
@@ -50,9 +54,12 @@
             // Open and show the selected block
             sidebar.addClass('visible');
             contentWrapper.addClass('expanded');
-            sidebar.find('.notifications, .settings').addClass('hidden'); // Hide all sections
+            sidebar.find('.notifications, .debug-constants, .settings').addClass('hidden'); // Hide all sections
             block.removeClass('hidden'); // Show the selected block
-            const activeSection = blockSelector === '.notifications' ? 'notifications' : 'settings';
+            const activeSection = 
+                blockSelector === '.notifications' ? 'notifications' : 
+                blockSelector === '.settings' ? 'settings' : 
+                'debug-constants';
             saveSidebarState(activeSection); // Save active section
         }
     }
@@ -63,7 +70,12 @@
     });
 
     // Click event for toggle button
-    toggleButton.on('click', function () {
+    debugConstantsButton.on('click', function () {
+        toggleSidebar('.debug-constants');
+    });
+
+    // Click event for third button
+    settingsButton.on('click', function () {
         toggleSidebar('.settings');
     });
 

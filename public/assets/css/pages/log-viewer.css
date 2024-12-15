@@ -121,13 +121,14 @@
 }
 .dbg_lv-log-viewer .top-section .buttons {
   padding-left: 15px;
-  min-width: 170px;
+  min-width: 245px;
 }
 .dbg_lv-log-viewer .top-section .buttons .clear-log,
 .dbg_lv-log-viewer .top-section .buttons .refresh-log,
 .dbg_lv-log-viewer .top-section .buttons .download-log,
 .dbg_lv-log-viewer .top-section .buttons .notification,
-.dbg_lv-log-viewer .top-section .buttons .toggle {
+.dbg_lv-log-viewer .top-section .buttons .debug-constants,
+.dbg_lv-log-viewer .top-section .buttons .settings {
   margin: 0;
   width: 35px;
   height: 35px;
@@ -151,17 +152,30 @@
 .dbg_lv-log-viewer .top-section .buttons .refresh-log,
 .dbg_lv-log-viewer .top-section .buttons .download-log,
 .dbg_lv-log-viewer .top-section .buttons .notification,
-.dbg_lv-log-viewer .top-section .buttons .toggle {
+.dbg_lv-log-viewer .top-section .buttons .debug-constants,
+.dbg_lv-log-viewer .top-section .buttons .settings {
   background-color: #4f6df5;
 }
 .dbg_lv-log-viewer .top-section .buttons .refresh-log:active,
 .dbg_lv-log-viewer .top-section .buttons .download-log:active,
 .dbg_lv-log-viewer .top-section .buttons .notification:active,
-.dbg_lv-log-viewer .top-section .buttons .toggle:active {
+.dbg_lv-log-viewer .top-section .buttons .debug-constants:active,
+.dbg_lv-log-viewer .top-section .buttons .settings:active {
   background-color: #6781f6;
 }
 .dbg_lv-log-viewer .top-section .buttons .clear-log {
   background-color: #f84042;
+}
+.dbg_lv-log-viewer .top-section .buttons .rotate-animation {
+  animation: rotate 1s linear 1;
+}
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 .dbg_lv-log-viewer pre {
   overflow-x: scroll;

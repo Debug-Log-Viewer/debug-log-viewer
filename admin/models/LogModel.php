@@ -42,14 +42,12 @@ class DBG_LV_LogModel
     public static function getNewLogEntries()
     {
         $filename = DBG_LV_LogController::dbg_lv_get_debug_file_path();
-
         // Handle missing file
         if (!file_exists($filename)) {
             return self::resetLog('File does not exist');
         }
 
         $file_size = filesize($filename);
-
         // Handle empty file
         if ($file_size === 0) {
             return self::resetLog();
@@ -59,7 +57,6 @@ class DBG_LV_LogModel
         if (!$file_handle) {
             return self::resetLog();
         }
-
         $last_position = get_option(self::DBG_LV_LAST_POSITION_OPTION_NAME, 0);
 
         // Handle new or truncated content

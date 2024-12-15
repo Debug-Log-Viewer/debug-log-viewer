@@ -1,5 +1,5 @@
-<div class="settings">
-    <h5><?php esc_html_e('Settings', 'debug-log-viewer') ?></h5>
+<div class="debug-constants">
+    <h5><?php esc_html_e('Debug Constants', 'debug-log-viewer') ?></h5>
 
     <div class="row log-viewer-row mt-3">
         <div class="log-info-block">

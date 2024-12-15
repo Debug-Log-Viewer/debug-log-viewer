@@ -428,20 +428,19 @@ class DBG_LV_LogController
     public static function dbg_lv_live_update()
     {
         $liveUpdates = new DBG_LV_LiveUpdatesController();
-        $liveUpdates->setExecutionTimeLimit();
-        $liveUpdates->applyHeaders();
 
-        update_option(DBG_LV_LogModel::DBG_LV_LAST_POSITION_OPTION_NAME, 0);
+        if (isset($_POST['initial']) && $_POST['initial'] === 'true') {
+            update_option(DBG_LV_LogModel::DBG_LV_LAST_POSITION_OPTION_NAME, 0);
+        }
 
-        $callback = function () use ($liveUpdates) {
+        $liveUpdates->clearDebugLogFileStat();
+        $updates = DBG_LV_LogModel::getNewLogEntries();
 
-            $liveUpdates->clearDebugLogFileStat();
-            $updates = DBG_LV_LogModel::getNewLogEntries();
+        if (isset($updates['data'])) {
+            echo $liveUpdates->getUpdates($updates);
+            // var_dump('1231');
+        }
 
-            if (isset($updates['data'])) {
-                return $liveUpdates->getUpdates($updates);
-            }
-        };
-        (new SSE(new Event($callback, 'updates')))->start(DBG_LV_LIVE_UPDATE_INTERVAL);
+        wp_die();
     }
 }

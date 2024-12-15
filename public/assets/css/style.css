@@ -121,13 +121,14 @@
 }
 .dbg_lv-log-viewer .top-section .buttons {
   padding-left: 15px;
-  min-width: 170px;
+  min-width: 245px;
 }
 .dbg_lv-log-viewer .top-section .buttons .clear-log,
 .dbg_lv-log-viewer .top-section .buttons .refresh-log,
 .dbg_lv-log-viewer .top-section .buttons .download-log,
 .dbg_lv-log-viewer .top-section .buttons .notification,
-.dbg_lv-log-viewer .top-section .buttons .toggle {
+.dbg_lv-log-viewer .top-section .buttons .debug-constants,
+.dbg_lv-log-viewer .top-section .buttons .settings {
   margin: 0;
   width: 35px;
   height: 35px;
@@ -151,17 +152,30 @@
 .dbg_lv-log-viewer .top-section .buttons .refresh-log,
 .dbg_lv-log-viewer .top-section .buttons .download-log,
 .dbg_lv-log-viewer .top-section .buttons .notification,
-.dbg_lv-log-viewer .top-section .buttons .toggle {
+.dbg_lv-log-viewer .top-section .buttons .debug-constants,
+.dbg_lv-log-viewer .top-section .buttons .settings {
   background-color: #4f6df5;
 }
 .dbg_lv-log-viewer .top-section .buttons .refresh-log:active,
 .dbg_lv-log-viewer .top-section .buttons .download-log:active,
 .dbg_lv-log-viewer .top-section .buttons .notification:active,
-.dbg_lv-log-viewer .top-section .buttons .toggle:active {
+.dbg_lv-log-viewer .top-section .buttons .debug-constants:active,
+.dbg_lv-log-viewer .top-section .buttons .settings:active {
   background-color: #6781f6;
 }
 .dbg_lv-log-viewer .top-section .buttons .clear-log {
   background-color: #f84042;
+}
+.dbg_lv-log-viewer .top-section .buttons .rotate-animation {
+  animation: rotate 1s linear 1;
+}
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 .dbg_lv-log-viewer pre {
   overflow-x: scroll;
@@ -254,10 +268,11 @@
 }
 
 .sidebar {
-  position: absolute;
-  top: 15px;
+  position: relative;
   right: -100%;
   width: 20%;
+  left: 10px;
+  height: 100%;
   max-width: 285px;
   background-color: #fff;
   box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
@@ -278,6 +293,7 @@
   display: none;
 }
 .sidebar .settings,
+.sidebar .debug-constants,
 .sidebar .notifications {
   font-family: Helvetica;
   background-color: #fff;
@@ -285,10 +301,12 @@
   border-radius: 5px;
 }
 .sidebar .settings .bootstrap-switch,
+.sidebar .debug-constants .bootstrap-switch,
 .sidebar .notifications .bootstrap-switch {
   transform: scale(0.8);
 }
 .sidebar .settings .log-info-block,
+.sidebar .debug-constants .log-info-block,
 .sidebar .notifications .log-info-block {
   font-size: 14px;
   margin-bottom: 0;
@@ -297,24 +315,30 @@
   justify-content: space-between;
 }
 .sidebar .settings h5,
+.sidebar .debug-constants h5,
 .sidebar .notifications h5 {
   color: #040047;
   margin-bottom: 0;
 }
 .sidebar .settings h5 .rotate-icon,
+.sidebar .debug-constants h5 .rotate-icon,
 .sidebar .notifications h5 .rotate-icon {
   transition: transform 0.3s ease-in-out;
 }
 .sidebar .settings h5 .rotate-icon.expanded,
+.sidebar .debug-constants h5 .rotate-icon.expanded,
 .sidebar .notifications h5 .rotate-icon.expanded {
   transform: rotate(90deg);
 }
 .sidebar .settings h5 a,
+.sidebar .debug-constants h5 a,
 .sidebar .notifications h5 a {
   color: #040047;
 }
 .sidebar .settings h5 a:active,
 .sidebar .settings h5 a:focus,
+.sidebar .debug-constants h5 a:active,
+.sidebar .debug-constants h5 a:focus,
 .sidebar .notifications h5 a:active,
 .sidebar .notifications h5 a:focus {
   outline: none;
@@ -322,12 +346,16 @@
   box-shadow: none;
 }
 .sidebar .settings select,
+.sidebar .debug-constants select,
 .sidebar .notifications select {
   max-width: inherit;
 }
 .sidebar .settings input[type=email],
 .sidebar .settings input[type=url],
 .sidebar .settings select,
+.sidebar .debug-constants input[type=email],
+.sidebar .debug-constants input[type=url],
+.sidebar .debug-constants select,
 .sidebar .notifications input[type=email],
 .sidebar .notifications input[type=url],
 .sidebar .notifications select {
@@ -340,26 +368,33 @@
 .sidebar .settings input[type=email][disabled],
 .sidebar .settings input[type=url][disabled],
 .sidebar .settings select[disabled],
+.sidebar .debug-constants input[type=email][disabled],
+.sidebar .debug-constants input[type=url][disabled],
+.sidebar .debug-constants select[disabled],
 .sidebar .notifications input[type=email][disabled],
 .sidebar .notifications input[type=url][disabled],
 .sidebar .notifications select[disabled] {
   background-color: #f6f7f7;
 }
 .sidebar .settings .form-check,
+.sidebar .debug-constants .form-check,
 .sidebar .notifications .form-check {
   margin-top: 5px;
   margin-bottom: 24px;
 }
 .sidebar .settings input[type=submit],
+.sidebar .debug-constants input[type=submit],
 .sidebar .notifications input[type=submit] {
   padding: 10px 20px;
   border-radius: 5px;
 }
 .sidebar .settings input[type=submit].enable,
+.sidebar .debug-constants input[type=submit].enable,
 .sidebar .notifications input[type=submit].enable {
   background-color: #4f6df5;
 }
 .sidebar .settings input[type=submit].disable,
+.sidebar .debug-constants input[type=submit].disable,
 .sidebar .notifications input[type=submit].disable {
   background-color: #f84042;
 }

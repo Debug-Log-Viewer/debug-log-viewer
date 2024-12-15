@@ -48,13 +48,14 @@
 
 		.buttons {
 			padding-left: 15px;
-			min-width: 170px;
+			min-width: 245px;
 
 			.clear-log,
 			.refresh-log,
 			.download-log,
 			.notification,
-			.toggle {
+			.debug-constants,
+			.settings {
 				margin: 0;
 				width: 35px;
 				height: 35px;
@@ -83,7 +84,8 @@
 			.refresh-log,
 			.download-log,
 			.notification,
-			.toggle {
+			.debug-constants,
+			.settings {
 				background-color: $main-theme-color;
 
 				&:active {
@@ -93,6 +95,20 @@
 
 			.clear-log {
 				background-color: $danger-color;
+			}
+
+			.rotate-animation {
+				// anumation one time
+				animation: rotate 1s linear 1;
+			}
+			
+			@keyframes rotate {
+				from {
+					transform: rotate(0deg);
+				}
+				to {
+					transform: rotate(360deg);
+				}
 			}
 		}
 	}
