@@ -24,10 +24,10 @@ class DBG_LV_FreemiusController
                 DBG_LV_FreemiusController::include_sdk();
 
                 $dbg_lv = fs_dynamic_init(array(
-                    'id'                  => '16754',
+                    'id'                  => '17350',
                     'slug'                => 'debug-log-viewer',
                     'type'                => 'plugin',
-                    'public_key'          => 'pk_7913af98817845dc6dbd55e48669d',
+                    'public_key'          => 'pk_d456c712f16510d920c9f4ba4880a',
                     'is_premium'          => false,
                     'has_addons'          => false,
                     'has_paid_plans'      => false,
