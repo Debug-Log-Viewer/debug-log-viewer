@@ -92,12 +92,6 @@
   flex: 0 0 auto;
   max-width: 75%;
 }
-@media (min-width: 992px) {
-  .dbg_lv-log-viewer .main-content .content-wrapper.main-table.expanded {
-    flex: 0 0 auto;
-    max-width: 83.333%;
-  }
-}
 .dbg_lv-log-viewer .manual-debugging-instructions_or {
   margin-top: 30px;
   font-weight: bold;
@@ -128,7 +122,7 @@
 }
 .dbg_lv-log-viewer .top-section .buttons {
   padding-left: 15px;
-  min-width: 245px;
+  min-width: 255px;
 }
 .dbg_lv-log-viewer .top-section .buttons .clear-log,
 .dbg_lv-log-viewer .top-section .buttons .refresh-log,
@@ -144,6 +138,7 @@
 }
 .dbg_lv-log-viewer .top-section .buttons .notification {
   font-size: 17px;
+  margin-left: 10px;
 }
 @keyframes pulseAnimation {
   0% {
@@ -168,7 +163,7 @@
 .dbg_lv-log-viewer .top-section .buttons .notification:active,
 .dbg_lv-log-viewer .top-section .buttons .debug-constants:active,
 .dbg_lv-log-viewer .top-section .buttons .settings:active {
-  background-color: rgb(103.1290322581, 129.0161290323, 246.3709677419);
+  background-color: #6781f6;
 }
 .dbg_lv-log-viewer .top-section .buttons .clear-log {
   background-color: #f84042;
@@ -203,6 +198,7 @@
 }
 .dbg_lv-log-viewer .table-wrapper #dbg_lv_log-table .badge {
   min-width: 65px;
+  border-radius: 4px;
 }
 .dbg_lv-log-viewer .bootstrap-switch {
   margin-right: 0;
@@ -282,7 +278,7 @@
   height: 100%;
   max-width: 285px;
   background-color: #fff;
-  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px #929ea9;
   transition: all 0.3s ease;
   border-radius: 5px;
 }
@@ -295,13 +291,7 @@
 .sidebar.opened {
   display: block;
   flex: 0 0 auto;
-  max-width: 25%;
-}
-@media (min-width: 992px) {
-  .sidebar.opened {
-    flex: 0 0 auto;
-    max-width: 16.667%;
-  }
+  max-width: 24%;
 }
 .sidebar .close-icon {
   position: absolute;
@@ -431,13 +421,19 @@
   box-shadow: 0 2px 4px #929ea9;
 }
 .sidebar .sidebar-toggle-btn:hover {
-  background-color: rgb(30.7419354839, 68.9677419355, 242.2580645161);
+  background-color: #1f45f2;
 }
-.sidebar .settings .settings-group .settings-group-title {
-  margin-bottom: 0;
+.sidebar .settings .settings-group legend {
+  font-size: 15px;
 }
 .sidebar .settings .settings-group .form-check {
   margin-bottom: 0;
+  display: flex;
+  align-items: center;
+  margin-left: 20px;
+}
+.sidebar .settings .settings-group .form-check label {
+  padding-left: 10px;
 }
 
 #dbg_lv-404-redirects-table_paginate,

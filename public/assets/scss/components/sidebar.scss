@@ -8,7 +8,7 @@
     height: 100%;
     max-width: 285px;
     background-color: #fff;
-    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 4px #929ea9;
     transition: all 0.3s ease;
     border-radius: 5px;
 
@@ -23,12 +23,7 @@
     &.opened {
         display: block;
         flex: 0 0 auto; // col-3
-        max-width: 25%;
-
-        @media (min-width: 992px) {
-            flex: 0 0 auto; // col-lg-2
-            max-width: 16.667%;
-        }
+        max-width: 24%;
     }
 
     .close-icon {
@@ -60,8 +55,6 @@
         background-color: #fff;
         padding: 15px 10px;
         border-radius: 5px;
-        // box-shadow: $box-shadow;
-        // margin-bottom: 25px;
 
         h5 {
             color: $dark-blue;
@@ -145,12 +138,19 @@
 
     .settings {
         .settings-group {
-            .settings-group-title {
-                margin-bottom: 0;
+            legend {
+                font-size: 15px;
             }
 
             .form-check {
                 margin-bottom: 0;
+                display: flex;
+                align-items: center;
+                margin-left: 20px;
+
+                label {
+                    padding-left: 10px;
+                }
             }
         }
     }

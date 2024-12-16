@@ -448,19 +448,26 @@ class DBG_LV_LogController
         $mode = isset($_POST['mode']) ? sanitize_text_field(wp_unslash($_POST['mode'])) : null;
     
         if (!$mode) {
-            wp_send_json_error(__('Mode not found in request body', 'debug-log-viewer'), 400);
+            wp_send_json_error(__('The "mode" parameter is missing from the request', 'debug-log-viewer'), 400);
         }
     
         $allowed_modes = ['AUTO', 'MANUAL'];
         if (!in_array($mode, $allowed_modes, true)) {
-            wp_send_json_error(__('Given unknown log updates mode', 'debug-log-viewer'), 400);
+            wp_send_json_error(__('The specified mode is invalid. Please select either "AUTO" or "MANUAL"', 'debug-log-viewer'), 400);
         }
-
+    
+        // Retrieve the current mode setting
+        $current_mode = get_option(DBG_LV_LogModel::DBG_LV_LOG_UPDATES_MODE_OPTION_NAME);
+        if ($current_mode === $mode) {
+            // If the current value matches the new value, consider it a success
+            wp_send_json_success(__('The updates mode has been successfully updated', 'debug-log-viewer'));
+        }
+    
+        // Attempt to update the mode setting
         if (update_option(DBG_LV_LogModel::DBG_LV_LOG_UPDATES_MODE_OPTION_NAME, $mode)) {
-            wp_send_json_success(__('Updates mode updated successfully', 'debug-log-viewer'));
+            wp_send_json_success(__('The updates mode has been successfully updated', 'debug-log-viewer'));
         } else {
-            wp_send_json_error(__('Failed to update updates mode', 'debug-log-viewer'), 500);
+            wp_send_json_error(__('An error occurred while updating the updates mode. Please try again', 'debug-log-viewer'), 500);
         }
     }
-    
 }

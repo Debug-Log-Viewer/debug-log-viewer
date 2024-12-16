@@ -12,16 +12,24 @@
     // Key for localStorage
     const SIDEBAR_ACTIVE_SECTION_KEY = 'dbg_lv_sidebarActiveSection';
 
+    // Default section if none is saved
+    const DEFAULT_SECTION = '.debug-constants';
+
     // Function to save the active section
     function saveSidebarState(activeSection) {
-        localStorage.setItem(SIDEBAR_ACTIVE_SECTION_KEY, activeSection || '');
+        localStorage.setItem(SIDEBAR_ACTIVE_SECTION_KEY, activeSection);
     }
 
     // Function to load and apply the sidebar state
     function loadSidebarState() {
         const activeSection = localStorage.getItem(SIDEBAR_ACTIVE_SECTION_KEY);
-        if (activeSection && activeSection !== 'empty') {
-            toggleSidebar(activeSection);
+        if (activeSection) {
+            if(activeSection !== 'none') {
+                toggleSidebar(activeSection);
+            }
+        } else {
+            // Show default section if no state is saved
+            toggleSidebar(DEFAULT_SECTION);
         }
     }
 
@@ -29,14 +37,14 @@
     function toggleSidebar(blockSelector) {
         const section = sidebarWrapper.find(blockSelector);
         if (section.length === 0) {
-            console.error(`Section '${sectionSelector}' not found in DOM`);
+            console.error(`Section '${blockSelector}' not found in DOM`);
             return;
         }
 
         const isVisible = section.hasClass('visible');
         if (isVisible) {
             toggleSideBarSection(blockSelector, false);
-            saveSidebarState('empty'); // Save empty value
+            saveSidebarState('none'); // Save empty value
         } else {
             toggleSideBarSection(blockSelector, true);
             saveSidebarState(blockSelector); // Save active section
@@ -73,7 +81,7 @@
         contentWrapper.toggleClass('expanded', false);
         sidebarWrapper.toggleClass('opened', false);
         sidebarWrapper.find('.section').removeClass('visible');
-        saveSidebarState('empty'); // Save empty value
+        saveSidebarState('none'); // Save empty value
     });
 
     // Load saved state on page load

@@ -29,7 +29,6 @@ import {
             { 
                 data: 'timestamp', 
                 visible: false,
-                width: '15%',
                 render: function (data, type, row) {
                 // If timestamp is missing, calculate it from datetime
                 return data || convertToTimestamp(row.datetime);
@@ -39,7 +38,7 @@ import {
                 render: renderLogTypeBadge 
             },
             { data: 'datetime', className: 'datetime' }, // Visible datetime column
-            { data: 'description', render: renderDescription, width: '40%' },
+            { data: 'description', render: renderDescription, width: '60%' },
             { data: 'file' },
             { data: 'line'}
         ],
@@ -199,11 +198,12 @@ import {
 
     async function updateLogs() {
         try {
+            logsUpdatesIcon.addClass('rotate-animation');
             const rawResponse = await jQuery.post(ajaxurl, {
                 action: 'dbg_lv_log_viewer_live_update',
                 wp_nonce: dbg_lv_backend_data.ajax_nonce,
             });
-
+            logsUpdatesIcon.removeClass('rotate-animation');
             if(!rawResponse){
                 return;
             }
@@ -221,14 +221,12 @@ import {
     function startLiveUpdateLogs() {
         const timeout = dbg_lv_backend_data.log_updates_interval * 1000;
         logsUpdateInterval = setInterval(updateLogs, timeout);
-        logsUpdatesIcon.addClass('fa-spin');
     }
 
     function stopLiveUpdateLogs() {
         if (logsUpdateInterval) {
             clearInterval(logsUpdateInterval);
         }
-        logsUpdatesIcon.removeClass('fa-spin');
     }
 
     $('.refresh-log').on('click', function () {

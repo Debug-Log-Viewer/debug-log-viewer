@@ -4,37 +4,40 @@
     <?php
         $selected_mode = get_option(DBG_LV_LogModel::DBG_LV_LOG_UPDATES_MODE_OPTION_NAME);
     ?>
-    <div class="row log-viewer-row mt-3">
-        <div class="form-group settings-group">
-            <p class="settings-group-title"><?php esc_html_e('Logs updates mode:', 'debug-log-viewer'); ?></p>
-
-            <div class="form-check form-check-radio">
-                <label class="form-check-label">
-                    <input 
-                        class="form-check-input" 
-                        type="radio" 
-                        name="UpdatesModeRadioOptions" 
-                        value="MANUAL" 
-                        <?php checked($selected_mode, 'MANUAL'); ?>
-                    >
-                    <span class="form-check-sign"></span>
-                    <?php esc_html_e('Manual updates', 'debug-log-viewer'); ?>
+   <div class="row log-viewer-row mt-3">
+    <div class="form-group settings-group">
+        <fieldset>
+            <legend class="settings-group-title"><?php esc_html_e('The log update mode', 'debug-log-viewer'); ?></legend>
+            
+            <div class="form-check">
+                <input 
+                    class="form-check-input" 
+                    value="<?php echo esc_attr('MANUAL'); ?>" 
+                    <?php checked($selected_mode, 'MANUAL'); ?> 
+                    type="radio" 
+                    name="UpdatesModeRadioOptions" 
+                    id="<?php echo esc_attr('UpdatesModeRadioOptionsManual'); ?>"
+                >
+                <label class="form-check-label" for="<?php echo esc_attr('UpdatesModeRadioOptionsManual'); ?>">
+                    <?php esc_html_e('Manual', 'debug-log-viewer'); ?>
                 </label>
             </div>
 
-            <div class="form-check form-check-radio">
-                <label class="form-check-label">
-                    <input 
-                        class="form-check-input" 
-                        type="radio" 
-                        name="UpdatesModeRadioOptions" 
-                        value="AUTO" 
-                        <?php checked($selected_mode, 'AUTO'); ?>
-                    >
-                    <span class="form-check-sign"></span>
-                    <?php esc_html_e('Auto updates', 'debug-log-viewer'); ?>
+            <div class="form-check">
+                <input 
+                    class="form-check-input" 
+                    value="<?php echo esc_attr('AUTO'); ?>" 
+                    <?php checked($selected_mode, 'AUTO'); ?> 
+                    type="radio" 
+                    name="UpdatesModeRadioOptions" 
+                    id="<?php echo esc_attr('UpdatesModeRadioOptionsAuto'); ?>"
+                >
+                <label class="form-check-label" for="<?php echo esc_attr('UpdatesModeRadioOptionsAuto'); ?>">
+                    <?php esc_html_e('Auto', 'debug-log-viewer'); ?>
                 </label>
             </div>
-        </div>
+        </fieldset>
     </div>
+</div>
+
 </div>

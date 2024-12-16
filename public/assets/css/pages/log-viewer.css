@@ -92,12 +92,6 @@
   flex: 0 0 auto;
   max-width: 75%;
 }
-@media (min-width: 992px) {
-  .dbg_lv-log-viewer .main-content .content-wrapper.main-table.expanded {
-    flex: 0 0 auto;
-    max-width: 83.333%;
-  }
-}
 .dbg_lv-log-viewer .manual-debugging-instructions_or {
   margin-top: 30px;
   font-weight: bold;
@@ -128,7 +122,7 @@
 }
 .dbg_lv-log-viewer .top-section .buttons {
   padding-left: 15px;
-  min-width: 245px;
+  min-width: 255px;
 }
 .dbg_lv-log-viewer .top-section .buttons .clear-log,
 .dbg_lv-log-viewer .top-section .buttons .refresh-log,
@@ -144,6 +138,7 @@
 }
 .dbg_lv-log-viewer .top-section .buttons .notification {
   font-size: 17px;
+  margin-left: 10px;
 }
 @keyframes pulseAnimation {
   0% {
@@ -168,7 +163,7 @@
 .dbg_lv-log-viewer .top-section .buttons .notification:active,
 .dbg_lv-log-viewer .top-section .buttons .debug-constants:active,
 .dbg_lv-log-viewer .top-section .buttons .settings:active {
-  background-color: rgb(103.1290322581, 129.0161290323, 246.3709677419);
+  background-color: #6781f6;
 }
 .dbg_lv-log-viewer .top-section .buttons .clear-log {
   background-color: #f84042;
@@ -203,6 +198,7 @@
 }
 .dbg_lv-log-viewer .table-wrapper #dbg_lv_log-table .badge {
   min-width: 65px;
+  border-radius: 4px;
 }
 .dbg_lv-log-viewer .bootstrap-switch {
   margin-right: 0;

@@ -150,7 +150,7 @@ export function initScrollToTopButton() {
     });
 
     $('#dbg_lv_scrollToTopButton').on('click', function() {
-        $('html, body').animate({scrollTop: 0}, 800, 'linear');
+        $('html, body').animate({scrollTop: 0}, 500, 'linear');
         return false;
     });
 };
