@@ -2,7 +2,8 @@ import {
     updateEmailNotifications, 
     initEmailNotificationsForm, 
     initScrollToTopButton,
-    showToast 
+    showToast,
+    t
 } from '../utils.js';
 
 (async ($) => {
@@ -16,9 +17,9 @@ import {
         bSort: true,
         processing: true,
         language: {
-            processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">Loading...</span>',
+            processing: `<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i><span class="sr-only">${t('loading_in_process')}</span>`,
             search: '',
-            searchPlaceholder: 'Search', // @translate
+            searchPlaceholder: t('search'),
         },
         pageLength: 25,
         dom: 'lBfrtip',
@@ -39,7 +40,7 @@ import {
             },
             { data: 'datetime', className: 'datetime' }, // Visible datetime column
             { data: 'description', render: renderDescription, width: '60%' },
-            { data: 'file' },
+            { data: 'file', width: '25%' },
             { data: 'line'}
         ],
         order: [[0, 'desc']], // Order by the hidden timestamp column
@@ -71,7 +72,7 @@ import {
         return stack_trace
             ? `
                 <div>${text}</div>
-                <a class="call-stack" href="#">Call stack</a>
+                <a class="call-stack" href="#">${t('call_stack')}</a>
                 <div class="stack hidden">
                     <pre>${stack_trace}</pre>
                 </div>`
@@ -96,7 +97,6 @@ import {
             }
 
             let response = JSON.parse(rawResponse);
-
 
             if(response.data.length > 0) {
                 table.rows.add(response.data).draw();
@@ -160,8 +160,7 @@ import {
             if (!response.success) {
                 throw new Error(response.error);
             }
-            // @translate
-            showToast(`Debug mode: ${response.state}`, 'success');
+            showToast(`${t('debug_mode')} ${response.state}`, 'success');
 
         } catch (error) {
             showToast(error, 'error');
@@ -185,11 +184,9 @@ import {
             let response = JSON.parse(rawResponse);
 
             if (!response.success) {
-                // @translate
-                throw new Error(`Request error: ${response.error}`);
+                throw new Error(`${t('request_error')} ${response.error}`);
             }
-// @translate
-            showToast(`Debug log scripts: ${response.state}`, 'success');
+            showToast(`${t('debug_log_scripts')} ${response.state}`, 'success');
 
         } catch (error) {
             showToast(error, 'error');
@@ -266,8 +263,7 @@ import {
             if (!response.success) {
                 throw new Error(response.error);
             }
-// @translate
-            showToast('Logging enabled successfully.', 'success');
+            showToast(t('logging_enabled_successfully'), 'success');
             setTimeout(function () {
                 location.reload();
             }, 1000);
@@ -293,8 +289,7 @@ import {
             if (!response.success) {
                 throw new Error(response.error);
             }
-            // @translate
-            showToast(`Debug scripts: ${response.state}`, 'success');
+            showToast(`${t('debug_scripts')} ${response.state}`, 'success');
 
         } catch (error) {
             showToast(error, 'error');
@@ -322,8 +317,7 @@ import {
             if (!response.success) {
                 throw new Error(response.error);
             }
-            // @translate
-            showToast(`Display errors: ${response.state}`, 'success');
+            showToast(`${t('display_errors')} ${response.state}`, 'success');
 
         } catch (error) {
             showToast(error, 'error');
@@ -345,7 +339,7 @@ import {
 
     $('.clear-log').on('click', async function () {
         try {
-            if (!confirm('Are you sure? After flushing the log, this action can\'t be undone')) {
+            if (!confirm(t('flush_log_confirmation'))) {
                 return;
             }
             const rawResponse = await jQuery.post(ajaxurl, {
@@ -357,8 +351,10 @@ import {
             if (!response.success) {
                 throw new Error(response.error);
             }
-            showToast(`Log was cleared`, 'success');
-            $('#dbg_lv_log-table').DataTable().clear().draw();
+            showToast(t('log_was_cleared'), 'success');
+
+            $('#dbg_lv_log-table').DataTable().ajax.reload();
+
         } catch (error) {
             showToast(error, 'error');
         }

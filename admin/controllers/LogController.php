@@ -57,7 +57,7 @@ class DBG_LV_LogController
             if (!is_file($path) || !file_exists($path)) {
                 // Create debug.log if missing
 
-                $message = 'This is a demo entry. Debugging is now enabled. If any notices, warnings, or errors occur on your site, they will appear here';
+                $message = __('This is a demo entry. Debugging is now enabled. If any notices, warnings, or errors occur on your site, they will appear here', `debug-log-viewer`);
                 $demo_string = "[" . gmdate('d-M-Y H:i:s T') . "] PHP Notice: <b>" . $message  . "</b>  in " . dbg_lv_get_document_root() . "/example.php on line 0\n";
                 file_put_contents($path, $demo_string);
             }
@@ -89,7 +89,7 @@ class DBG_LV_LogController
 
             echo wp_json_encode([
                 'success' => true,
-                'state' => (int) $state ? "ON" : "OFF",
+                'state' => $this->getState($state),
             ]);
             wp_die();
         } catch (Exception $e) {
@@ -111,7 +111,7 @@ class DBG_LV_LogController
 
             echo wp_json_encode([
                 'success' => true,
-                'state' => (int) $state ? "ON" : "OFF",
+                'state' => $this->getState($state),
             ]);
             wp_die();
         } catch (Exception $e) {
@@ -137,7 +137,7 @@ class DBG_LV_LogController
 
             echo wp_json_encode([
                 'success' => true,
-                'state' => (int) $state ? "ON" : "OFF",
+                'state' => $this->getState($state),
             ]);
             wp_die();
         } catch (Exception $e) {
@@ -163,7 +163,7 @@ class DBG_LV_LogController
 
             echo wp_json_encode([
                 'success' => true,
-                'state' => (int) $state ? "ON" : "OFF",
+                'state' => $this->getState($state),
             ]);
             wp_die();
         } catch (Exception $e) {
@@ -195,9 +195,9 @@ class DBG_LV_LogController
                     wp_die();
                 }
 
-                throw new \Exception('Log file was found but can not to be cleared due to missing write permissions');
+                throw new \Exception(__('Log file was found but can not to be cleared due to missing write permissions', 'debug-log-viewer'));
             }
-            throw new \Exception('Log file is not found and can not to be removed');
+            throw new \Exception(__('Log file is not found and can not to be removed', 'debug-log-viewer'));
         } catch (Exception $e) {
             echo wp_json_encode([
                 'success' => false,
@@ -233,7 +233,7 @@ class DBG_LV_LogController
                 wp_die();
             }
 
-            throw new \Exception('Log file is not found and can not to be removed');
+            throw new \Exception(__('Log file is not found and can not to be removed', 'debug-log-viewer'));
         } catch (Exception $e) {
             echo wp_json_encode([
                 'success' => false,
@@ -279,7 +279,7 @@ class DBG_LV_LogController
             case 1:
                 return (string) $state;
             default:
-                throw new \Exception('Incorrect state value passed');
+                throw new \Exception(__('Incorrect state value passed'), 'debug-log-viewer');
         }
     }
 
@@ -352,17 +352,17 @@ class DBG_LV_LogController
         $options = get_option($event);
 
         if (!$options) {
-            error_log('Options not found for event ' . $event);
+            error_log(__('Options not found for event ', 'debug-log-viewer') . $event);
             wp_die();
         }
 
         if (!array_key_exists('dbg_lv_notifications_email', $options)) {
-            error_log('Notification email not found in options for event ' . $event);
+            error_log(__('Notification email not found in options for event ', 'debug-log-viewer') . $event);
             wp_die();
         }
 
         if (!array_key_exists('dbg_lv_notifications_email_recurrence', $options)) {
-            error_log('Notification email recurrence not found in options for event ' . $event);
+            error_log(__('Notification email recurrence not found in options for event ', 'debug-log-viewer') . $event);
             wp_die();
         }
 
@@ -373,7 +373,7 @@ class DBG_LV_LogController
         if ($notification_email && $errors) {
             dbg_lv_send_log_viewer_email(
                 $notification_email,
-                'Debug Log Viewer: Monitoring detected some problems on the website',
+                __('Debug Log Viewer: Monitoring detected some problems on your website', 'debug-log-viewer'),
                 realpath(__DIR__) . '/../templates/email/log_viewer.tpl',
                 [
                     'website' => get_site_url(),
@@ -469,5 +469,10 @@ class DBG_LV_LogController
         } else {
             wp_send_json_error(__('An error occurred while updating the updates mode. Please try again', 'debug-log-viewer'), 500);
         }
+    }
+
+    private function getState($state): string
+    {
+        return (int) $state ? __('ON', 'debug-log-viewer') : __('OFF', 'debug-log-viewer');
     }
 }

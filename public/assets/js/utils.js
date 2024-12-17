@@ -9,7 +9,7 @@ export async function updateEmailNotifications(form, action) {
     const submitButton       = form.find('input[type="submit"]');
 
     if (!emailFiled?.val()) {
-        showToast('Email is not specified', 'warning');
+        showToast(t('email_is_not_specified'), 'warning');
         return
     }
 
@@ -27,7 +27,7 @@ export async function updateEmailNotifications(form, action) {
             const notificationResponse = JSON.parse(rawNotificationResponse);
 
             if (!notificationResponse.success) {
-                throw new Error(notificationResponse.error || 'Request error');
+                throw new Error(notificationResponse.error || t('request_error'));
             }
 
             form.attr('data-notifications-enabled', 'false');
@@ -36,7 +36,7 @@ export async function updateEmailNotifications(form, action) {
                 .addClass('enable')
                 .val('Enable');
 
-            showToast('Notifications disabled', 'success');
+            showToast(t('notifications_disabled'), 'success');
 
             const rawUserEmailResponse = await jQuery.post(ajaxurl, {
                 action: 'dbg_lv_get_current_user_email',
@@ -46,7 +46,7 @@ export async function updateEmailNotifications(form, action) {
             let userEmailResponse = JSON.parse(rawUserEmailResponse);
 
             if (!userEmailResponse.success) {
-                throw new Error(userEmailResponse.error || 'Request error');
+                throw new Error(userEmailResponse.error || t('request_error'));
             }
 
             emailFiled.val(userEmailResponse.data).prop('disabled', false);;
@@ -66,7 +66,7 @@ export async function updateEmailNotifications(form, action) {
             let response = JSON.parse(rawResponse);
 
             if (!response.success) {
-                throw new Error(response.error || 'Request error');
+                throw new Error(response.error || t('request_error'));
             }
 
             emailFiled.prop('disabled', true);
@@ -76,11 +76,11 @@ export async function updateEmailNotifications(form, action) {
             submitButton
                 .removeClass('enable')
                 .addClass('disable')
-                .val('Disable')
+                .val(t('disable'));
 
             form.attr('data-notifications-enabled', 'true');
 
-            showToast('Notifications enabled', 'success');
+            showToast(t('notifications_enabled'), 'success');
         }
     } catch (error) {
         showToast(error, 'error');
@@ -105,7 +105,7 @@ export async function initEmailNotificationsForm(form) {
                 .prop('disabled', false)
                 .removeClass('enabled')
                 .addClass('disable')
-                .val('Disable');
+                .val(t('disable'));
         } else {
             const rawResponse = await jQuery.post(ajaxurl, { 
                 action: 'dbg_lv_get_current_user_email',
@@ -115,7 +115,7 @@ export async function initEmailNotificationsForm(form) {
             let response = JSON.parse(rawResponse);
 
             if (!response.success) {
-                throw new Error(response.error || 'Request error');
+                throw new Error(response.error || t('request_error'));
             }
 
             emailFiled.val(response.data);
@@ -124,7 +124,7 @@ export async function initEmailNotificationsForm(form) {
             submitButton
                 .prop('disabled', false)
                 .removeClass('disable')
-                .addClass('enable').val('Enable');
+                .addClass('enable').val(t('enable'));
         }
     } catch (error) {
         showToast(error, 'error');
@@ -174,4 +174,14 @@ export function showToast(message, level) {
     // Show the toast
     const toast = new bootstrap.Toast($toast[0]);
     toast.show();
+}
+
+export function t(key) {
+    const {phrases} = dbg_lv_backend_data;
+
+    if( phrases[key]){
+        return phrases[key];
+    }
+    console.warn(`Phrase ${key} not found`);
+    return  key;
 }

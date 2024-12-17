@@ -21,6 +21,7 @@ class DBG_LV_Phrases
                 'display_errors' => __('Display errors:', self::$domain),
                 'flush_log_confirmation' => __('Are you sure? After flushing the log, this action can\'t be undone', self::$domain),
                 'log_was_cleared' => __('Log was cleared', self::$domain),
+                'log_was_refreshed' => __('Log was refreshed', self::$domain),
                 'email_is_not_specified' => __('Email is not specified', self::$domain),
                 'request_error' => __('Request error', self::$domain),
                 'notifications_disabled' => __('Notifications disabled', self::$domain),

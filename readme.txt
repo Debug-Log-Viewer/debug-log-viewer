@@ -4,7 +4,7 @@ Contributors: lysyiweb
 Tags: debug, logs, error tracking, WP_DEBUG
 Requires at least: 4.6
 Tested up to: 6.7.1
-Stable tag: 1.1
+Stable tag: 1.2
 Requires PHP: 5.4
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -47,6 +47,12 @@ With Debug Log Viewer, developers can catch issues early, monitor their site mor
 1. **Debug Log Viewer** allows a convenient way to browse the debug.log file.
 
 == Changelog ==
+= 1.2 =
+* Removed SSE implementation for live updates, because of unstable behaviour in some cases
+* Implemented automatic live updates based on incremental AJAX ping requests.
+* Added translations for the front-end phrases
+* Implemented full-container width mode with ability to hide sidebar
+* Intergated Freemius to become closer to users: contact us, forum, small quiz
 
 = 1.1 =
 * Fixed SSE streaming. Implemented incremental updates

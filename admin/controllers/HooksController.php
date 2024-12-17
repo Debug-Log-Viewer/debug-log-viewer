@@ -73,6 +73,7 @@ class DBG_LV_HooksController
 
             wp_localize_script('dbg_lv_app_js', 'dbg_lv_backend_data', [
                 'ajax_nonce'           => wp_create_nonce('ajax_nonce'),
+                'phrases'              => DBG_LV_Phrases::getAllPhrases(),
                 'log_updates_mode'     => get_option(DBG_LV_LogModel::DBG_LV_LOG_UPDATES_MODE_OPTION_NAME),
                 'log_updates_interval' => DBG_LV_LOG_UPDATES_INTERVAL,
             ]);
