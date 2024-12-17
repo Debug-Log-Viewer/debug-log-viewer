@@ -209,6 +209,12 @@ import {
             }
 
             const response = JSON.parse(rawResponse);
+
+            if(response.action === 'clear') {
+                table.clear().draw();
+                return;
+            }
+
             if(response.data.length > 0) {
                 table.rows.add(response.data).draw();
             }

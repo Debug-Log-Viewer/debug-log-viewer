@@ -488,7 +488,6 @@
 .dbg_lv-log-viewer,
 .dbg_lv-404-redirects,
 .dbg_lv-advisor {
-  max-width: 1800px;
   padding-left: 30px;
   padding-right: 30px;
 }
