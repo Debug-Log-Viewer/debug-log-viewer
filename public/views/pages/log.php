@@ -10,7 +10,7 @@ class DBG_LV_LogView
     {
         $path = DBG_LV_LogController::dbg_lv_get_debug_file_path(); ?>
         <div class="container dbg_lv-log-viewer">
-            <div class="main-content">
+            <div class="main-content expanded">
                 <div class="main-table content-wrapper">
                     <?php if ($path && file_exists($path) && is_file($path)) {
                         require_once realpath(__DIR__) . '/../components/control-bar.tpl.php';

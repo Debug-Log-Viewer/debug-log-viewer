@@ -7,12 +7,12 @@
 
 	.main-content {
 		display: grid;
-		grid-template-columns: 1fr;
+		grid-template-columns: 9fr 3fr;
 		align-items: start;
 		gap: 25px;
 
 		&.expanded {
-			grid-template-columns: 9fr 3fr;
+			grid-template-columns: 1fr;
 		}
 
 		.content-wrapper {

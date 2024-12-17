@@ -58,7 +58,7 @@
             return;
         }
 
-        content.toggleClass('expanded', isOpen);
+        content.toggleClass('expanded', !isOpen);
         sidebar.toggleClass('opened', isOpen);
 
         if (isOpen) {
@@ -78,7 +78,7 @@
 
     // Close icon click event
     closeIcon.on('click', function () {
-        content.toggleClass('expanded', false);
+        content.toggleClass('expanded', true);
         sidebar.toggleClass('opened', false);
         sidebar.find('.section').removeClass('visible');
         saveSidebarState('none'); // Save empty value
