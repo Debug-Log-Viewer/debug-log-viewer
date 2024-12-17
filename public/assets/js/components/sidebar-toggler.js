@@ -1,7 +1,7 @@
 (($) => {
-    const contentWrapper = $('.content-wrapper');
-    const sidebarWrapper = $('.sidebar-wrapper');
-    const closeIcon = sidebarWrapper.find('.close-icon');
+    const content = $('.main-content');
+    const sidebar = $('.sidebar');
+    const closeIcon = sidebar.find('.close-icon');
 
     const SECTIONS = {
         '.notification': '.notifications',
@@ -35,7 +35,7 @@
 
     // Function to toggle visibility
     function toggleSidebar(blockSelector) {
-        const section = sidebarWrapper.find(blockSelector);
+        const section = sidebar.find(blockSelector);
         if (section.length === 0) {
             console.error(`Section '${blockSelector}' not found in DOM`);
             return;
@@ -58,11 +58,11 @@
             return;
         }
 
-        contentWrapper.toggleClass('expanded', isOpen);
-        sidebarWrapper.toggleClass('opened', isOpen);
+        content.toggleClass('expanded', isOpen);
+        sidebar.toggleClass('opened', isOpen);
 
         if (isOpen) {
-            sidebarWrapper.find('.section').removeClass('visible');
+            sidebar.find('.section').removeClass('visible');
             section.addClass('visible');
         } else {
             section.removeClass('visible');
@@ -78,9 +78,9 @@
 
     // Close icon click event
     closeIcon.on('click', function () {
-        contentWrapper.toggleClass('expanded', false);
-        sidebarWrapper.toggleClass('opened', false);
-        sidebarWrapper.find('.section').removeClass('visible');
+        content.toggleClass('expanded', false);
+        sidebar.toggleClass('opened', false);
+        sidebar.find('.section').removeClass('visible');
         saveSidebarState('none'); // Save empty value
     });
 

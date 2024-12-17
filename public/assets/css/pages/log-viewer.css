@@ -85,12 +85,17 @@
   color: #fa9732;
 }
 
+.dbg_lv-log-viewer .main-content {
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: start;
+  gap: 25px;
+}
+.dbg_lv-log-viewer .main-content.expanded {
+  grid-template-columns: 9fr 3fr;
+}
 .dbg_lv-log-viewer .main-content .content-wrapper {
   transition: all 0.3s ease;
-}
-.dbg_lv-log-viewer .main-content .content-wrapper.main-table.expanded {
-  flex: 0 0 auto;
-  max-width: 75%;
 }
 .dbg_lv-log-viewer .manual-debugging-instructions_or {
   margin-top: 30px;
@@ -163,7 +168,7 @@
 .dbg_lv-log-viewer .top-section .buttons .notification:active,
 .dbg_lv-log-viewer .top-section .buttons .debug-constants:active,
 .dbg_lv-log-viewer .top-section .buttons .settings:active {
-  background-color: #6781f6;
+  background-color: rgb(103.1290322581, 129.0161290323, 246.3709677419);
 }
 .dbg_lv-log-viewer .top-section .buttons .clear-log {
   background-color: #f84042;

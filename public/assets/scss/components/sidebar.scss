@@ -3,9 +3,6 @@
 .sidebar {
     display: none;
     position: relative;
-    right: -100%;
-    left: 10px;
-    height: 100%;
     max-width: 285px;
     background-color: #fff;
     box-shadow: 0 2px 4px #929ea9;
@@ -21,9 +18,7 @@
     }
 
     &.opened {
-        display: block;
-        flex: 0 0 auto; // col-3
-        max-width: 24%;
+        display: flex;
     }
 
     .close-icon {

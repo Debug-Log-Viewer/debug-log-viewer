@@ -85,12 +85,17 @@
   color: #fa9732;
 }
 
+.dbg_lv-log-viewer .main-content {
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: start;
+  gap: 25px;
+}
+.dbg_lv-log-viewer .main-content.expanded {
+  grid-template-columns: 9fr 3fr;
+}
 .dbg_lv-log-viewer .main-content .content-wrapper {
   transition: all 0.3s ease;
-}
-.dbg_lv-log-viewer .main-content .content-wrapper.main-table.expanded {
-  flex: 0 0 auto;
-  max-width: 75%;
 }
 .dbg_lv-log-viewer .manual-debugging-instructions_or {
   margin-top: 30px;
@@ -163,7 +168,7 @@
 .dbg_lv-log-viewer .top-section .buttons .notification:active,
 .dbg_lv-log-viewer .top-section .buttons .debug-constants:active,
 .dbg_lv-log-viewer .top-section .buttons .settings:active {
-  background-color: #6781f6;
+  background-color: rgb(103.1290322581, 129.0161290323, 246.3709677419);
 }
 .dbg_lv-log-viewer .top-section .buttons .clear-log {
   background-color: #f84042;
@@ -273,9 +278,6 @@
 .sidebar {
   display: none;
   position: relative;
-  right: -100%;
-  left: 10px;
-  height: 100%;
   max-width: 285px;
   background-color: #fff;
   box-shadow: 0 2px 4px #929ea9;
@@ -289,9 +291,7 @@
   display: block;
 }
 .sidebar.opened {
-  display: block;
-  flex: 0 0 auto;
-  max-width: 24%;
+  display: flex;
 }
 .sidebar .close-icon {
   position: absolute;
@@ -421,7 +421,7 @@
   box-shadow: 0 2px 4px #929ea9;
 }
 .sidebar .sidebar-toggle-btn:hover {
-  background-color: #1f45f2;
+  background-color: rgb(30.7419354839, 68.9677419355, 242.2580645161);
 }
 .sidebar .settings .settings-group legend {
   font-size: 15px;
