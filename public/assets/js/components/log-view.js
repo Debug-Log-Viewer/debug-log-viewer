@@ -39,7 +39,7 @@ import {
             },
             { data: 'datetime', className: 'datetime' }, // Visible datetime column
             { data: 'description', render: renderDescription, width: '60%' },
-            { data: 'file' },
+            { data: 'file', width: '20%' },
             { data: 'line'}
         ],
         order: [[0, 'desc']], // Order by the hidden timestamp column
