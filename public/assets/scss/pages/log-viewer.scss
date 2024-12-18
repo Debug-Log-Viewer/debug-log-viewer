@@ -6,15 +6,17 @@
 
 
 	.main-content {
+		display: grid;
+		grid-template-columns: 9fr 3fr;
+		align-items: start;
+		gap: 25px;
+
+		&.expanded {
+			grid-template-columns: 1fr;
+		}
+
 		.content-wrapper {
 			transition: all 0.3s ease;
-
-			&.main-table {
-				&.expanded {
-					flex: 0 0 auto; // col-9
-					max-width: 75%;
-				}
-			}
 		}
 	}
 

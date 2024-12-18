@@ -1,9 +1,6 @@
 .sidebar {
   display: none;
   position: relative;
-  right: -100%;
-  left: 10px;
-  height: 100%;
   max-width: 285px;
   background-color: #fff;
   box-shadow: 0 2px 4px #929ea9;
@@ -17,9 +14,7 @@
   display: block;
 }
 .sidebar.opened {
-  display: block;
-  flex: 0 0 auto;
-  max-width: 24%;
+  display: flex;
 }
 .sidebar .close-icon {
   position: absolute;
@@ -149,7 +144,7 @@
   box-shadow: 0 2px 4px #929ea9;
 }
 .sidebar .sidebar-toggle-btn:hover {
-  background-color: #1f45f2;
+  background-color: rgb(30.7419354839, 68.9677419355, 242.2580645161);
 }
 .sidebar .settings .settings-group legend {
   font-size: 15px;
