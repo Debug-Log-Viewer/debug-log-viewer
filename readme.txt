@@ -52,7 +52,7 @@ With Debug Log Viewer, developers can catch issues early, monitor their site mor
 * Implemented automatic live updates based on incremental AJAX ping requests.
 * Added translations for the front-end phrases
 * Implemented full-container width mode with ability to hide sidebar
-* Intergated Freemius to become closer to users: contact us, forum, small quiz
+* Intergated Freemius to become closer to users: contact us, forum links are added
 
 = 1.1 =
 * Fixed SSE streaming. Implemented incremental updates

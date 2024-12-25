@@ -195,12 +195,11 @@ import {
 
     async function updateLogs() {
         try {
-            logsUpdatesIcon.addClass('rotate-animation');
+			animateRefreshButton();
             const rawResponse = await jQuery.post(ajaxurl, {
                 action: 'dbg_lv_log_viewer_live_update',
                 wp_nonce: dbg_lv_backend_data.ajax_nonce,
             });
-            logsUpdatesIcon.removeClass('rotate-animation');
             if(!rawResponse){
                 return;
             }
@@ -231,11 +230,15 @@ import {
             clearInterval(logsUpdateInterval);
         }
     }
+	
+	function animateRefreshButton() {
+		logsUpdatesIcon.removeClass('rotate-animation');
+        setTimeout(() => logsUpdatesIcon.addClass('rotate-animation'), 100);
+	}
 
     $('.refresh-log').on('click', function () {
         updateLogs();
-        logsUpdatesIcon.addClass('rotate-animation');
-        setTimeout(() => logsUpdatesIcon.removeClass('rotate-animation'), 1500);
+		animateRefreshButton();
     });
 
     $('#dbg_lv_log-table').on('xhr.dt', function (e, settings, json, xhr) {
