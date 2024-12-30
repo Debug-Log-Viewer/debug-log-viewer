@@ -54,7 +54,6 @@
 .base-table-viewer-structure .table-wrapper .dt-buttons .dt-action-button, .dbg_lv-log-viewer .table-wrapper .dt-buttons .dt-action-button {
   border-radius: 0.25rem;
   font-weight: 400;
-  font-size: 14px;
   line-height: 1.35em;
   margin: 5px 0 10px 0;
   color: #4bb5ff;
@@ -127,7 +126,7 @@
 }
 .dbg_lv-log-viewer .top-section .buttons {
   padding-left: 15px;
-  min-width: 255px;
+  min-width: 258px;
 }
 .dbg_lv-log-viewer .top-section .buttons .clear-log,
 .dbg_lv-log-viewer .top-section .buttons .refresh-log,
@@ -140,6 +139,8 @@
   height: 35px;
   padding: 0;
   font-size: 16px;
+  border: none;
+  border-radius: 5px;
 }
 .dbg_lv-log-viewer .top-section .buttons .notification {
   font-size: 17px;
@@ -168,7 +169,7 @@
 .dbg_lv-log-viewer .top-section .buttons .notification:active,
 .dbg_lv-log-viewer .top-section .buttons .debug-constants:active,
 .dbg_lv-log-viewer .top-section .buttons .settings:active {
-  background-color: rgb(103.1290322581, 129.0161290323, 246.3709677419);
+  background-color: #6781f6;
 }
 .dbg_lv-log-viewer .top-section .buttons .clear-log {
   background-color: #f84042;
@@ -389,7 +390,9 @@
 .sidebar .debug-constants .form-check,
 .sidebar .notifications .form-check {
   margin-top: 5px;
-  margin-bottom: 24px;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
 }
 .sidebar .settings input[type=submit],
 .sidebar .debug-constants input[type=submit],
@@ -421,7 +424,7 @@
   box-shadow: 0 2px 4px #929ea9;
 }
 .sidebar .sidebar-toggle-btn:hover {
-  background-color: rgb(30.7419354839, 68.9677419355, 242.2580645161);
+  background-color: #1f45f2;
 }
 .sidebar .settings .settings-group legend {
   font-size: 15px;
@@ -483,25 +486,13 @@
 #wpbody-content {
   background-color: #F0F0F0;
 }
-
-.dbg_lv-dashboard,
-.dbg_lv-log-viewer,
-.dbg_lv-404-redirects,
-.dbg_lv-advisor {
-  padding-left: 30px;
-  padding-right: 30px;
+#wpbody-content input[type=checkbox].form-check-input {
+  background-repeat: no-repeat;
+  margin: 0px 10px 0px -30px;
+  transform: scale(1.2);
 }
-.dbg_lv-dashboard p,
-.dbg_lv-log-viewer p,
-.dbg_lv-404-redirects p,
-.dbg_lv-advisor p {
-  font-size: 15px;
-}
-.dbg_lv-dashboard .datetime,
-.dbg_lv-log-viewer .datetime,
-.dbg_lv-404-redirects .datetime,
-.dbg_lv-advisor .datetime {
-  min-width: 180px;
+#wpbody-content input[type=checkbox].form-check-input:before {
+  content: "";
 }
 
 #wpcontent,
@@ -539,12 +530,6 @@
 .dbg_lv-404-redirects .dataTables_wrapper .dataTables_info,
 .dbg_lv-advisor .dataTables_wrapper .dataTables_info {
   margin-top: 4px;
-}
-
-@media print, not screen {
-  .no-print {
-    display: none;
-  }
 }
 
 /*# sourceMappingURL=style.css.map */

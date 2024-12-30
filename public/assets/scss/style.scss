@@ -8,24 +8,16 @@
 @import "./components/sidebar.scss";
 @import "./components/table-pagination.scss";
 
-
 #wpbody-content {
     background-color: $body-color;
-}
 
-.dbg_lv-dashboard,
-.dbg_lv-log-viewer,
-.dbg_lv-404-redirects,
-.dbg_lv-advisor {
-    padding-left: 30px;
-    padding-right: 30px;
-
-    p {
-        font-size: 15px;
-    }
-
-    .datetime {
-        min-width: 180px;
+    input[type="checkbox"].form-check-input {
+        background-repeat: no-repeat;
+        margin: 0px 10px 0px -30px;
+        transform: scale(1.2);
+        &:before {
+            content: "";
+        }
     }
 }
 
@@ -59,13 +51,5 @@
         .dataTables_info {
             margin-top: 4px;
         }
-    }
-}
-
-
-@media print,
-not screen {
-    .no-print {
-        display: none;
     }
 }

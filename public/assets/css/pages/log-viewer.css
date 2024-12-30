@@ -54,7 +54,6 @@
 .base-table-viewer-structure .table-wrapper .dt-buttons .dt-action-button, .dbg_lv-log-viewer .table-wrapper .dt-buttons .dt-action-button {
   border-radius: 0.25rem;
   font-weight: 400;
-  font-size: 14px;
   line-height: 1.35em;
   margin: 5px 0 10px 0;
   color: #4bb5ff;
@@ -127,7 +126,7 @@
 }
 .dbg_lv-log-viewer .top-section .buttons {
   padding-left: 15px;
-  min-width: 255px;
+  min-width: 258px;
 }
 .dbg_lv-log-viewer .top-section .buttons .clear-log,
 .dbg_lv-log-viewer .top-section .buttons .refresh-log,
@@ -140,6 +139,8 @@
   height: 35px;
   padding: 0;
   font-size: 16px;
+  border: none;
+  border-radius: 5px;
 }
 .dbg_lv-log-viewer .top-section .buttons .notification {
   font-size: 17px;
@@ -168,7 +169,7 @@
 .dbg_lv-log-viewer .top-section .buttons .notification:active,
 .dbg_lv-log-viewer .top-section .buttons .debug-constants:active,
 .dbg_lv-log-viewer .top-section .buttons .settings:active {
-  background-color: rgb(103.1290322581, 129.0161290323, 246.3709677419);
+  background-color: #6781f6;
 }
 .dbg_lv-log-viewer .top-section .buttons .clear-log {
   background-color: #f84042;
