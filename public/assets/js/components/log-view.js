@@ -355,8 +355,7 @@ import {
                 throw new Error(response.error);
             }
             showToast(t('log_was_cleared'), 'success');
-
-            $('#dbg_lv_log-table').DataTable().ajax.reload();
+            location.reload();
 
         } catch (error) {
             showToast(error, 'error');
