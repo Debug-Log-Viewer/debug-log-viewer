@@ -136,7 +136,7 @@ import {
     }
 
     function autoEnableDebugLog() {
-        const target = $('#dbg_lv_toggle_debug_log_scripts');
+        const target = $('#wp_ajax_dbg_lv_toggle_log_in_file');
 
         if (target.is(':checked')) {
             return;
@@ -176,7 +176,7 @@ import {
             }
 
             const rawResponse = await jQuery.post(ajaxurl, {
-                action: 'dbg_lv_toggle_debug_log_scripts',
+                action: 'wp_ajax_dbg_lv_toggle_log_in_file',
                 state,
                 wp_nonce: dbg_lv_backend_data.ajax_nonce,
             });
@@ -299,7 +299,7 @@ import {
         }
     });
 
-    $('#dbg_lv_toggle_debug_log_scripts').on('switchChange.bootstrapSwitch', toggleDebugLogHandler);
+    $('#wp_ajax_dbg_lv_toggle_log_in_file').on('switchChange.bootstrapSwitch', toggleDebugLogHandler);
 
     $('#dbg_lv_toggle_display_errors').on('switchChange.bootstrapSwitch', async function () {
         try {

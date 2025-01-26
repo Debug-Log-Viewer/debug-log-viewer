@@ -15,7 +15,7 @@ class DBG_LV_Phrases
                 'call_stack' => __('Call stack', self::$domain),
                 'debug_mode' => __('Debug mode:', self::$domain),
                 'request_error' => __('Request error:', self::$domain),
-                'debug_log_scripts' => __('Debug log script:', self::$domain),
+                'log_in_file' => __('Log in file:', self::$domain),
                 'logging_enabled_successfully' => __('Logging enabled successfully', self::$domain),
                 'debug_scripts' => __('Debug scripts:', self::$domain),
                 'display_errors' => __('Display errors:', self::$domain),

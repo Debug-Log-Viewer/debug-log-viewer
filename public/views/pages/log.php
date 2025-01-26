@@ -17,7 +17,7 @@ class DBG_LV_LogView
                     } ?>
 
                     <?php
-                    if (!DBG_LV_LogModel::dbg_lv_is_log_file_exists()) {
+                    if (!is_file($path)) {
                         require_once realpath(__DIR__) . '/../components/log-missing-debug-file.tpl.php';
                     } else {
                         require_once realpath(__DIR__) . '/../components/log-table.tpl.php';
