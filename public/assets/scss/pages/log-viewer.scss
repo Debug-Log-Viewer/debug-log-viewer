@@ -53,7 +53,7 @@
 
 		.buttons {
 			padding-left: 15px;
-			min-width: 255px;
+			min-width: 258px;
 
 			.clear-log,
 			.refresh-log,
@@ -66,6 +66,8 @@
 				height: 35px;
 				padding: 0;
 				font-size: 16px;
+				border: none;
+				border-radius: 5px;
 			}
 
 			.notification {

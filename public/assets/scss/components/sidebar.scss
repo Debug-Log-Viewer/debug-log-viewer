@@ -96,7 +96,9 @@
 
         .form-check {
             margin-top: 5px;
-            margin-bottom: 24px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
         }
 
         input[type="submit"] {

@@ -130,9 +130,9 @@ import {
         if (target.is(':checked')) {
             return;
         }
-        target.off('switchChange.bootstrapSwitch', toggleDebugModeHandler);
+        target.off('change', toggleDebugModeHandler);
         target.bootstrapSwitch('state', true);
-        target.on('switchChange.bootstrapSwitch', toggleDebugModeHandler);
+        target.on('change', toggleDebugModeHandler);
     }
 
     function autoEnableDebugLog() {
@@ -141,9 +141,9 @@ import {
         if (target.is(':checked')) {
             return;
         }
-        target.off('switchChange.bootstrapSwitch', toggleDebugLogHandler);
+        target.off('change', toggleDebugLogHandler);
         target.bootstrapSwitch('state', true);
-        target.on('switchChange.bootstrapSwitch', toggleDebugLogHandler);
+        target.on('change', toggleDebugLogHandler);
     }
 
     async function toggleDebugModeHandler() {
@@ -276,9 +276,9 @@ import {
         }
     });
 
-    $('#dbg_lv_toggle_debug_mode').on('switchChange.bootstrapSwitch', toggleDebugModeHandler);
+    $('#dbg_lv_toggle_debug_mode').on('change', toggleDebugModeHandler);
 
-    $('#dbg_lv_toggle_debug_scripts').on('switchChange.bootstrapSwitch', async function () {
+    $('#dbg_lv_toggle_debug_scripts').on('change', async function () {
 
         try {
             const rawResponse = await jQuery.post(ajaxurl, {
@@ -299,9 +299,9 @@ import {
         }
     });
 
-    $('#dbg_lv_toggle_debug_log_scripts').on('switchChange.bootstrapSwitch', toggleDebugLogHandler);
+    $('#dbg_lv_toggle_debug_log_scripts').on('change', toggleDebugLogHandler);
 
-    $('#dbg_lv_toggle_display_errors').on('switchChange.bootstrapSwitch', async function () {
+    $('#dbg_lv_toggle_display_errors').on('change', async function () {
         try {
             const state = +$(this).is(':checked');
 

@@ -112,7 +112,9 @@
 .sidebar .debug-constants .form-check,
 .sidebar .notifications .form-check {
   margin-top: 5px;
-  margin-bottom: 24px;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
 }
 .sidebar .settings input[type=submit],
 .sidebar .debug-constants input[type=submit],
@@ -144,7 +146,7 @@
   box-shadow: 0 2px 4px #929ea9;
 }
 .sidebar .sidebar-toggle-btn:hover {
-  background-color: rgb(30.7419354839, 68.9677419355, 242.2580645161);
+  background-color: #1f45f2;
 }
 .sidebar .settings .settings-group legend {
   font-size: 15px;

@@ -66,7 +66,6 @@ class DBG_LV_HooksController
 
             // Enqueue scripts
             wp_enqueue_script('dbg_lv_bootstrap_js', plugins_url('../public/assets/vendor/js/bootstrap.bundle.min.js', __DIR__), [], $version, true);
-            wp_enqueue_script('dbg_lv_bootstrap_switch_js', plugins_url('../public/assets/vendor/js/bootstrap-switch.min.js', __DIR__), ['jquery'], $version, true);
             wp_enqueue_script('dbg_lv_datatables_js', plugins_url('../public/assets/vendor/js/jquery.dataTables.min.js', __DIR__), ['jquery'], $version, true);
             wp_enqueue_script('dbg_lv_app_js', plugins_url('../public/assets/js/app.js', __DIR__), ['jquery'], $version, true);
             wp_enqueue_script('dbg_lv_font-awesome_js', plugins_url('../public/assets/vendor/js/font-awesome.js', __DIR__), [], $version, true);
@@ -86,7 +85,6 @@ class DBG_LV_HooksController
 
             // Enqueue styles
             wp_enqueue_style('dbg_lv_bootstrap_css', plugins_url('../public/assets/vendor/css/bootstrap.min.css', __DIR__), [], $version);
-            wp_enqueue_style('dbg_lv_now-ui_css', plugins_url('../public/assets/vendor/css/now-ui-kit.min.css', __DIR__), ['dbg_lv_bootstrap_css'], $version);
             wp_enqueue_style('dbg_lv_datatables_css', plugins_url('../public/assets/vendor/css/jquery.dataTables.min.css', __DIR__), [], $version);
             wp_enqueue_style('dbg_lv_datatables_buttons_css', plugins_url('../public/assets/vendor/css/buttons.dataTables.min.css', __DIR__), [], $version);
             wp_enqueue_style('dbg_lv_style', plugins_url('../public/assets/css/style.css', __DIR__), [], $version);
