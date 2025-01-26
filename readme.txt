@@ -4,7 +4,7 @@ Contributors: lysyiweb
 Tags: debug, logs, error tracking, WP_DEBUG
 Requires at least: 4.6
 Tested up to: 6.7.1
-Stable tag: 1.2
+Stable tag: 1.2.1
 Requires PHP: 5.4
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -14,7 +14,7 @@ Effortlessly manage your WordPress debug.log. Features include email notificatio
 
 == Tested up to ==
 WordPress Version: 6.7.1
-PHP Version: 8.2.0
+PHP Version: 8.2.20
 
 == Description ==
 
@@ -47,6 +47,11 @@ With Debug Log Viewer, developers can catch issues early, monitor their site mor
 1. **Debug Log Viewer** allows a convenient way to browse the debug.log file.
 
 == Changelog ==
+
+= 1.2.1 =
+* Added handling for a custom log file location. Now, you can set something like ` define( 'WP_DEBUG_LOG', ABSPATH . 'wp-content/logs/debug.log' );` in `wp-config.php` and the plugin will read data from that custom path
+* Freemius and WP-Config-Transformer update
+
 = 1.2 =
 * Removed SSE implementation for live updates, because of unstable behaviour in some cases
 * Implemented automatic live updates based on incremental AJAX ping requests.

@@ -18,6 +18,7 @@ class DBG_LV_Phrases
                 'log_in_file' => __('Log in file:', self::$domain),
                 'logging_enabled_successfully' => __('Logging enabled successfully', self::$domain),
                 'debug_scripts' => __('Debug scripts:', self::$domain),
+                'debug_log_scripts' => __('Debug log scripts:', self::$domain),
                 'display_errors' => __('Display errors:', self::$domain),
                 'flush_log_confirmation' => __('Are you sure? After flushing the log, this action can\'t be undone', self::$domain),
                 'log_was_cleared' => __('Log was cleared', self::$domain),
