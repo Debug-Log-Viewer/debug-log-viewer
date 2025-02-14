@@ -104,7 +104,7 @@ class DBG_LV_LogModel
 
     private static function splitLogToRows($content)
     {
-        $pattern = '/\[[^\]]+\].*? on line \d+/s';
+        $pattern = '/\[[^\]]+\].*?(?=\n\[|$)/s';
         $count = preg_match_all($pattern, $content, $matches);
 
         if (!$count) {
@@ -117,19 +117,19 @@ class DBG_LV_LogModel
     public static function dbg_lv_get_datetime_from_row($row)
     {
         preg_match_all('/\[(.*?)\]/m', $row, $matches, PREG_SET_ORDER, 0);
-        return isset($matches[0][1]) ? $matches[0][1] : __('N/A', 'debug-log-viewer');
+        return isset($matches[0][1]) ? $matches[0][1] : '';
     }
 
     public static function dbg_lv_get_line_from_log_row($row)
     {
         preg_match_all('/(on line |php:)(\d{1,})/m', $row, $matches, PREG_SET_ORDER, 0);
-        return isset($matches[0][2]) ? $matches[0][2] : __('N/A', 'debug-log-viewer');
+        return isset($matches[0][2]) ? $matches[0][2] : '';
     }
 
     public static function dbg_lv_get_file_from_log_row($row)
     {
         preg_match_all('/ in ' . preg_quote(dbg_lv_get_document_root(), '/') . '(.*?)( on line |:)\d{1,}/m', $row, $matches, PREG_SET_ORDER, 0);
-        return isset($matches[0][1]) ? $matches[0][1] : __('N/A', 'debug-log-viewer');
+        return isset($matches[0][1]) ? $matches[0][1] : '';
     }
 
     public static function dbg_lv_get_type_from_row($row)
@@ -146,6 +146,8 @@ class DBG_LV_LogModel
             return DBG_LV_LogLevelStatuses::PARSE;
         } elseif (strpos($row, 'PHP Deprecated:') !== false) {
             return DBG_LV_LogLevelStatuses::DEPRECATED;
+        } else {
+            return DBG_LV_LogLevelStatuses::CUSTOM;
         }
     }
 
@@ -170,7 +172,7 @@ class DBG_LV_LogModel
 
         $re = '/ (PHP Notice:|PHP Warning:|PHP Fatal error:|PHP Parse error:|PHP Deprecated:)(.*?)(\[ | in |on line)/m';
         preg_match_all($re, $row, $matches, PREG_SET_ORDER, 0);
-        return isset($matches[0]) && $matches[0][2] ? $matches[0][2] : __('N/A', 'debug-log-viewer');
+        return isset($matches[0]) && $matches[0][2] ? $matches[0][2] : trim(str_replace('[' . self::dbg_lv_get_datetime_from_row($row) . ']', '', $row));
     }
 
     public static function dbg_lv_get_log_filesize($params)
