@@ -13,7 +13,7 @@
 
     input[type="checkbox"].form-check-input {
         background-repeat: no-repeat;
-        margin: 0px 10px 0px -30px;
+        margin: 0px 10px 0 0;
         transform: scale(1.2);
         &:before {
             content: "";
@@ -32,8 +32,9 @@
 .dbg_lv-404-redirects,
 .dbg_lv-advisor {
     .dataTables_wrapper {
+        padding-top: 10px;
         .dataTables_length {
-            margin: 5px 0 10px 0;
+            margin-top: 3px;
 
             select {
                 padding: 0 24px 0 8px;
@@ -49,7 +50,7 @@
         }
 
         .dataTables_info {
-            margin-top: 4px;
+            margin-top: 28px;
         }
     }
 }

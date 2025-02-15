@@ -21,11 +21,34 @@ import {
             search: '',
             searchPlaceholder: t('search'),
         },
-        pageLength: 25,
-        dom: 'lBfrtip',
-        buttons: [
-            { extend: 'colvis', postfixButtons: ['colvisRestore'], className: 'dt-action-button' },
-        ],
+        pageLength: 10,
+
+        layout: {
+
+            topStart: null, //remove pageLength from top default position
+            topEnd: null, //remove search from top default position
+            top8Start: [
+                    'pageLength',
+            
+                     $(`<div class="datetime-ragne-buttons">
+                        <button class="btn btn-sm btn-outline-primary active" value="all">All</button>
+                        <button class="btn btn-sm btn-outline-primary" value="12h">12h</button>
+                        <button class="btn btn-sm btn-outline-primary" value="1h">1h</button>
+                        <button class="btn btn-sm btn-outline-primary" value="30m">30m</button>
+                        <button class="btn btn-sm btn-outline-primary" value="5m">5m</button>
+                    </div>`),
+                {
+                    'search': {
+                        rowId: 'hello',
+                        placeholder: t('search'),
+                        className: 'layout-end',
+                    }
+                },
+                
+            ],
+           
+        },
+
         columns: [
             { 
                 data: 'timestamp', 
@@ -56,11 +79,14 @@ import {
     
     function renderLogTypeBadge(data) {
         const typeClasses = {
-            'Notice': 'bg-dark',
-            'Warning': 'bg-warning',
-            'Fatal': 'bg-danger',
-            'Database': 'bg-primary',
-            'Parse': 'bg-info'
+            'Notice': 'notice-bg',
+            'Warning': 'warning-bg',
+            'Fatal': 'fatal-bg',
+            'Database': 'database-bg',
+            'Parse': 'parse-bg',
+            'Deprecated': 'deprecated-bg',
+            'Custom': 'custom-bg'
+
         };
         const className = typeClasses[data] || 'bg-secondary';
         return `<span class="badge ${className}">${data}</span>`;
@@ -440,4 +466,48 @@ import {
     if (dbg_lv_backend_data.log_updates_mode == "AUTO") {
         startLiveUpdateLogs();
     }
+    
+    // Filter Functionn
+    // document ready
+    $(document).ready(function () {
+        $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
+            var filter = $('.datetime-ragne-buttons .btn.active').val(); // Get the active filter
+
+           
+            if (filter === "all") {
+                return true; // Show all rows
+            }
+
+            var now = new Date();
+            var timestamp = new Date(Number(data[0])); // Assuming the first column is the timestamp
+            if (isNaN(timestamp)) {
+                // If timestamp parsing fails, exclude the row
+                return false;
+            }
+    
+            var timeDiff = now - timestamp; // Time difference in milliseconds
+    
+            if (filter === "5m" && timeDiff <= 5 * 60 * 1000) return true;
+            if (filter === "30m" && timeDiff <= 30 * 60 * 1000) return true;
+            if (filter === "1h" && timeDiff <= 60 * 60 * 1000) return true;
+            if (filter === "12h" && timeDiff <= 12 * 60 * 60 * 1000) return true;
+            return false; // Exclude the row if no condition matches
+        });
+
+        // Filter Button Click Event
+        $('html').on('click', '.datetime-ragne-buttons .btn', function () {
+            // Remove 'active' class from all buttons
+            $('.datetime-ragne-buttons .btn').removeClass('active');
+            
+            // Add 'active' class to the clicked button
+            $(this).addClass('active');
+
+            // Get the value of the clicked button
+            var filter = $(this).val();
+
+            // Trigger the DataTables redraw
+            table.draw();
+        });
+    });
+    
 })(jQuery)

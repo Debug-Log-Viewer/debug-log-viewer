@@ -135,6 +135,7 @@
 
 		#dbg_lv_log-table {
 			width: 100% !important;
+			padding-top: 10px;
 
 			tbody {
 				tr {
@@ -147,6 +148,15 @@
 			.badge {
 				min-width: 65px;
 				border-radius: 4px;
+				font-weight: 500;
+				
+				&.notice-bg {background-color: #007bff; color: #fff; }
+				&.warning-bg {background-color: #ff9800;	color: #fff; }
+				&.fatal-bg {background-color: #dc3545;	color: #fff; }
+				&.database-bg {background-color: #6f42c1;	color: #fff; }
+				&.parse-bg {background-color: #343a40;	color: #fff; }
+				&.deprecated-bg {background-color: #ffc107;	color: #000; }
+				&.custom-bg {background-color: #6c757d;	color: #fff; }
 			}
 		}
 	}

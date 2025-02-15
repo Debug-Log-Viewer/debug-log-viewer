@@ -97,9 +97,6 @@
   color: #fa9732;
 }
 
-.dbg_lv-log-viewer {
-  font-size: 14px;
-}
 .dbg_lv-log-viewer .main-content {
   display: grid;
   grid-template-columns: 9fr 3fr;
