@@ -4,11 +4,13 @@
 .base-table-viewer-structure .dataTable[role=grid], .dbg_lv-log-viewer .dataTable[role=grid] {
   border: 1px;
   border-radius: 5px;
-  border-color: #ddd;
-  border-style: solid;
+  border: none;
+  top: 10px;
+  position: relative;
 }
 .base-table-viewer-structure .dataTable[role=grid] thead, .dbg_lv-log-viewer .dataTable[role=grid] thead {
-  background-color: #f8f9fa;
+  background-color: rgba(0, 39, 255, 0.1490196078);
+  border-radius: 5px 5px 0 0;
 }
 .base-table-viewer-structure .dataTable[role=grid] thead tr[role=row], .dbg_lv-log-viewer .dataTable[role=grid] thead tr[role=row] {
   vertical-align: top;
@@ -16,10 +18,15 @@
 .base-table-viewer-structure .dataTable[role=grid] thead tr[role=row] th:nth-child(1), .dbg_lv-log-viewer .dataTable[role=grid] thead tr[role=row] th:nth-child(1) {
   text-align: left;
   padding-left: 10px;
+  border-radius: 5px 0 0 0;
 }
 .base-table-viewer-structure .dataTable[role=grid] thead tr[role=row] th, .dbg_lv-log-viewer .dataTable[role=grid] thead tr[role=row] th {
   padding-top: 15px;
   padding-bottom: 15px;
+  border-bottom: 0;
+}
+.base-table-viewer-structure .dataTable[role=grid] thead tr[role=row] th:last-child, .dbg_lv-log-viewer .dataTable[role=grid] thead tr[role=row] th:last-child {
+  border-radius: 0 5px 0 0;
 }
 .base-table-viewer-structure .dataTable[role=grid] tbody tr.odd, .dbg_lv-log-viewer .dataTable[role=grid] tbody tr.odd {
   background-color: #ffffff;
@@ -35,9 +42,8 @@
   padding-left: 20px;
 }
 .base-table-viewer-structure .dataTable[role=grid] tbody tr td, .dbg_lv-log-viewer .dataTable[role=grid] tbody tr td {
-  border-bottom: 1px dashed rgba(178, 169, 255, 0.0588235294);
-  padding-top: 15px;
-  padding-bottom: 15px;
+  padding-top: 10px;
+  padding-bottom: 10px;
   padding-left: 5px !important;
 }
 .base-table-viewer-structure .dataTable[role=grid] tbody tr td .call-stack, .dbg_lv-log-viewer .dataTable[role=grid] tbody tr td .call-stack {
@@ -54,8 +60,9 @@
 .base-table-viewer-structure .table-wrapper .dt-buttons .dt-action-button, .dbg_lv-log-viewer .table-wrapper .dt-buttons .dt-action-button {
   border-radius: 0.25rem;
   font-weight: 400;
+  font-size: 14px;
   line-height: 1.35em;
-  margin: 5px 0 10px 0;
+  margin: 10px 0 10px 0;
   color: #4bb5ff;
   border-radius: 0.1875rem;
   cursor: pointer;
@@ -69,9 +76,15 @@
   border: 1px solid #4bb5ff;
   background: transparent;
 }
+.base-table-viewer-structure .table-wrapper .datetime-ragne-buttons .btn.active, .dbg_lv-log-viewer .table-wrapper .datetime-ragne-buttons .btn.active {
+  background-color: #4f6df5;
+}
+.base-table-viewer-structure .table-wrapper .datetime-ragne-buttons .btn:hover, .dbg_lv-log-viewer .table-wrapper .datetime-ragne-buttons .btn:hover {
+  background-color: #6781f6;
+}
 .base-table-viewer-structure .dataTables_paginate, .dbg_lv-log-viewer .dataTables_paginate {
-  margin: 0px;
-  margin-top: 10px;
+  margin: 0;
+  margin-top: 30px;
   padding: 0px;
   border: 1px;
   border-radius: 5px;
@@ -84,6 +97,9 @@
   color: #fa9732;
 }
 
+.dbg_lv-log-viewer {
+  font-size: 14px;
+}
 .dbg_lv-log-viewer .main-content {
   display: grid;
   grid-template-columns: 9fr 3fr;
@@ -198,6 +214,7 @@
 }
 .dbg_lv-log-viewer .table-wrapper #dbg_lv_log-table {
   width: 100% !important;
+  padding-top: 10px;
 }
 .dbg_lv-log-viewer .table-wrapper #dbg_lv_log-table tbody tr td {
   word-break: break-all;
@@ -205,6 +222,35 @@
 .dbg_lv-log-viewer .table-wrapper #dbg_lv_log-table .badge {
   min-width: 65px;
   border-radius: 4px;
+  font-weight: 500;
+}
+.dbg_lv-log-viewer .table-wrapper #dbg_lv_log-table .badge.notice-bg {
+  background-color: #007bff;
+  color: #fff;
+}
+.dbg_lv-log-viewer .table-wrapper #dbg_lv_log-table .badge.warning-bg {
+  background-color: #ff9800;
+  color: #fff;
+}
+.dbg_lv-log-viewer .table-wrapper #dbg_lv_log-table .badge.fatal-bg {
+  background-color: #dc3545;
+  color: #fff;
+}
+.dbg_lv-log-viewer .table-wrapper #dbg_lv_log-table .badge.database-bg {
+  background-color: #6f42c1;
+  color: #fff;
+}
+.dbg_lv-log-viewer .table-wrapper #dbg_lv_log-table .badge.parse-bg {
+  background-color: #343a40;
+  color: #fff;
+}
+.dbg_lv-log-viewer .table-wrapper #dbg_lv_log-table .badge.deprecated-bg {
+  background-color: #ffc107;
+  color: #000;
+}
+.dbg_lv-log-viewer .table-wrapper #dbg_lv_log-table .badge.custom-bg {
+  background-color: #6c757d;
+  color: #fff;
 }
 .dbg_lv-log-viewer .bootstrap-switch {
   margin-right: 0;
@@ -324,6 +370,11 @@
   align-items: center;
   justify-content: space-between;
 }
+.sidebar .settings .log-info-block .form-switch,
+.sidebar .debug-constants .log-info-block .form-switch,
+.sidebar .notifications .log-info-block .form-switch {
+  padding-left: 10px;
+}
 .sidebar .settings h5,
 .sidebar .debug-constants h5,
 .sidebar .notifications h5 {
@@ -391,6 +442,13 @@
 .sidebar .notifications .form-check {
   margin-top: 5px;
   margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  padding-left: 2px;
+}
+.sidebar .settings .form-check .form-check-label,
+.sidebar .debug-constants .form-check .form-check-label,
+.sidebar .notifications .form-check .form-check-label {
   display: flex;
   align-items: center;
 }
@@ -488,7 +546,7 @@
 }
 #wpbody-content input[type=checkbox].form-check-input {
   background-repeat: no-repeat;
-  margin: 0px 10px 0px -30px;
+  margin: 0px 10px 0 0;
   transform: scale(1.2);
 }
 #wpbody-content input[type=checkbox].form-check-input:before {
@@ -501,11 +559,17 @@
   padding-left: 25px;
 }
 
+.dbg_lv-dashboard .dataTables_wrapper,
+.dbg_lv-log-viewer .dataTables_wrapper,
+.dbg_lv-404-redirects .dataTables_wrapper,
+.dbg_lv-advisor .dataTables_wrapper {
+  padding-top: 10px;
+}
 .dbg_lv-dashboard .dataTables_wrapper .dataTables_length,
 .dbg_lv-log-viewer .dataTables_wrapper .dataTables_length,
 .dbg_lv-404-redirects .dataTables_wrapper .dataTables_length,
 .dbg_lv-advisor .dataTables_wrapper .dataTables_length {
-  margin: 5px 0 10px 0;
+  margin-top: 3px;
 }
 .dbg_lv-dashboard .dataTables_wrapper .dataTables_length select,
 .dbg_lv-log-viewer .dataTables_wrapper .dataTables_length select,
@@ -529,7 +593,7 @@
 .dbg_lv-log-viewer .dataTables_wrapper .dataTables_info,
 .dbg_lv-404-redirects .dataTables_wrapper .dataTables_info,
 .dbg_lv-advisor .dataTables_wrapper .dataTables_info {
-  margin-top: 4px;
+  margin-top: 28px;
 }
 
 /*# sourceMappingURL=style.css.map */

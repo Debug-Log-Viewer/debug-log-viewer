@@ -1,15 +1,20 @@
 {
-    "name": "Debug Log Viewer",
+    "name": "debug-log-viewer",
     "version": "1.0.2",
     "description": "",
     "main": "./assets/js/main.js",
     "scripts": {
-        "build-js": "webpack",
+        "build-js": "webpack --watch",
         "build-scss": "sass --watch public/assets/scss:public/assets/css"
+    },
+    "dependencies": {
+        "datatables.net-bs5": "",
+        "datatables.net-buttons-bs5": "3.2.0"
     },
     "devDependencies": {
         "jquery": "^3.6.0",
-        "webpack": "^5.65.0",
-        "webpack-cli": "^4.9.1"
+        "webpack": "^5.97.1",
+        "webpack-bundle-analyzer": "^4.10.2",
+        "webpack-cli": "^4.10.0"
     }
 }

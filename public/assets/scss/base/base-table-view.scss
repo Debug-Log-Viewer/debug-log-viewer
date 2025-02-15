@@ -6,11 +6,13 @@
 	.dataTable[role="grid"] {
 		border: 1px;
 		border-radius: 5px;
-		border-color: #ddd;
-		border-style: solid;
+		border: none;
+		top: 10px;
+		position: relative;
 
 		thead {
-			background-color: #f8f9fa;
+			background-color: #0027ff26;
+			border-radius: 5px 5px 0 0;
 
 			tr[role="row"] {
 				vertical-align: top;
@@ -18,11 +20,16 @@
 				th:nth-child(1) {
 					text-align: left;
 					padding-left: 10px;
+					border-radius: 5px 0 0 0;
 				}
 
 				th {
 					padding-top: 15px;
 					padding-bottom: 15px;
+					border-bottom: 0;
+				}
+				th:last-child {
+					border-radius: 0 5px 0 0;
 				}
 			}
 		}
@@ -47,9 +54,8 @@
 				}
 
 				td {
-					border-bottom: 1px dashed $light-blue-bg;
-					padding-top: 15px;
-					padding-bottom: 15px;
+					padding-top: 10px;
+					padding-bottom: 10px;
 					padding-left: 5px !important;
 
 					.call-stack {
@@ -75,7 +81,7 @@
 				font-weight: 400;
 				font-size: 14px;
 				line-height: 1.35em;
-				margin: 5px 0 10px 0;
+				margin: 10px 0 10px 0;
 				color: #4bb5ff;
 				border-radius: .1875rem;
 				cursor: pointer;
@@ -91,11 +97,20 @@
 				}
 			}
 		}
+
+		.datetime-ragne-buttons {
+			 .btn.active {
+				background-color: $main-theme-color;
+			 }
+			 .btn:hover {
+				background-color: lighten($main-theme-color, 5%)
+			 }
+		}
 	}
 
 	.dataTables_paginate {
-		margin: 0px;
-		margin-top: 10px;
+		margin: 0;
+		margin-top: 30px;
 		padding: 0px;
 		border: 1px;
 		border-radius: 5px;

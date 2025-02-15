@@ -46,6 +46,11 @@
   align-items: center;
   justify-content: space-between;
 }
+.sidebar .settings .log-info-block .form-switch,
+.sidebar .debug-constants .log-info-block .form-switch,
+.sidebar .notifications .log-info-block .form-switch {
+  padding-left: 10px;
+}
 .sidebar .settings h5,
 .sidebar .debug-constants h5,
 .sidebar .notifications h5 {
@@ -113,6 +118,13 @@
 .sidebar .notifications .form-check {
   margin-top: 5px;
   margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  padding-left: 2px;
+}
+.sidebar .settings .form-check .form-check-label,
+.sidebar .debug-constants .form-check .form-check-label,
+.sidebar .notifications .form-check .form-check-label {
   display: flex;
   align-items: center;
 }
