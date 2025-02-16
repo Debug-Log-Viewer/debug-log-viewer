@@ -67,10 +67,12 @@ class DBG_LV_HooksController
             // Enqueue scripts
             wp_enqueue_script('dbg_lv_app_js', plugins_url('../public/dist/bundle.js', __DIR__), ['jquery'], $version, true);
 
+            wp_enqueue_script('dbg_lv_colvis_js', 'https://cdn.datatables.net/buttons/3.2.2/js/buttons.colVis.min.js', ['jquery'], $version, true);
             wp_enqueue_script('dbg_lv_bootstrap_js', plugins_url('../public/assets/vendor/js/bootstrap.bundle.min.js', __DIR__), [], $version, true);
             wp_enqueue_script('dbg_lv_app_js', plugins_url('../public/assets/js/app.js', __DIR__), ['jquery'], $version, true);
             wp_enqueue_script('dbg_lv_font-awesome_js', plugins_url('../public/assets/vendor/js/font-awesome.js', __DIR__), [], $version, true);
             // Localize script
+
             wp_localize_script('dbg_lv_app_js', 'dbg_lv_backend_data', [
                 'ajax_nonce'           => wp_create_nonce('ajax_nonce'),
                 'phrases'              => DBG_LV_Phrases::getAllPhrases(),
@@ -81,7 +83,6 @@ class DBG_LV_HooksController
             // Enqueue styles
             wp_enqueue_style('dbg_lv_bootstrap_css', plugins_url('../public/assets/vendor/css/bootstrap.min.css', __DIR__), [], $version);
             wp_enqueue_style('dbg_lv_datatables_css', plugins_url('../public/assets/vendor/css/jquery.dataTables.min.css', __DIR__), [], $version);
-            wp_enqueue_style('dbg_lv_datatables_buttons_css', plugins_url('../public/assets/vendor/css/buttons.dataTables.min.css', __DIR__), [], $version);
             wp_enqueue_style('dbg_lv_style', plugins_url('../public/assets/css/style.css', __DIR__), [], $version);
         }
     }

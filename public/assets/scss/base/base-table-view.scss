@@ -3,18 +3,32 @@
 .base-table-viewer-structure {
 	margin-top: 1rem;
 
-	.dataTable[role="grid"] {
+	#dbg_lv_log-table {
 		border: 1px;
 		border-radius: 5px;
 		border: none;
 		top: 10px;
 		position: relative;
 
+.dt-button.dropdown-item.buttons-columnVisibility:before {
+		content: '\2713';
+		/* Unicode checkmark */
+		font-size: 14px;
+		margin-right: 8px;
+		visibility: hidden;
+		/* Hidden by default */
+	}
+
+	.dt-button.dropdown-item.buttons-columnVisibility.dt-button-active:before {
+		visibility: visible;
+		/* Show when active */
+	}
+
 		thead {
 			background-color: #0027ff26;
 			border-radius: 5px 5px 0 0;
 
-			tr[role="row"] {
+			tr {
 				vertical-align: top;
 
 				th:nth-child(1) {
@@ -99,6 +113,7 @@
 		}
 
 		.datetime-ragne-buttons {
+			margin-left: 30px;
 			 .btn.active {
 				background-color: $main-theme-color;
 			 }

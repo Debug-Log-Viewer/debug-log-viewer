@@ -12,6 +12,9 @@
         "datatables.net-buttons-bs5": "3.2.0"
     },
     "devDependencies": {
+        "@babel/core": "^7.26.9",
+        "@babel/preset-env": "^7.26.9",
+        "babel-loader": "^9.2.1",
         "jquery": "^3.6.0",
         "webpack": "^5.97.1",
         "webpack-bundle-analyzer": "^4.10.2",

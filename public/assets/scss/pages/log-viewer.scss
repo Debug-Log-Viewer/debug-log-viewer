@@ -133,6 +133,11 @@
 		border-radius: 5px;
 		box-shadow: $box-shadow;
 
+		.column-visibility-btn {
+			height: 31px;
+			margin-left: 10px;
+		}
+
 		#dbg_lv_log-table {
 			width: 100% !important;
 			padding-top: 10px;
@@ -140,7 +145,7 @@
 			tbody {
 				tr {
 					td {
-						word-break: break-all;
+						vertical-align: text-top;
 					}
 				}
 			}

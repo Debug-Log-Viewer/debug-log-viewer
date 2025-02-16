@@ -28,6 +28,7 @@ class DBG_LV_Phrases
                 'disable' => __('Disable', self::$domain),
                 'enable' => __('Enable', self::$domain),
                 'notifications_enabled' => __('Notifications enabled', self::$domain),
+                'columns' => __('Columns', self::$domain),
             ];
         }
     }

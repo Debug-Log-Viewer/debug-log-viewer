@@ -47,6 +47,9 @@
             justify-content: space-between;
             .form-switch {
                 padding-left: 10px;
+                display: flex;
+                justify-content: space-between;
+                width: 100%;
             }
         }
 
@@ -110,6 +113,7 @@
         }
 
         input[type="submit"] {
+            border: none;
             padding: 10px 20px;
             border-radius: 5px;
 

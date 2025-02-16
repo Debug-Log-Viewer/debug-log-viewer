@@ -29,6 +29,18 @@ import {
             topEnd: null, //remove search from top default position
             top8Start: [
                     'pageLength',
+
+                   {
+                    buttons: [
+                        {
+                            extend: 'colvis',
+                            className: 'column-visibility-btn',
+                            text: t('columns'),
+                            columnText: function (dt, idx, title) {
+                                return (dt.column(idx).visible() ? '✔ ' : '') + title;
+                            }
+                        }
+                    ]},
             
                      $(`<div class="datetime-ragne-buttons">
                         <button class="btn btn-sm btn-outline-primary active" value="all">All</button>
@@ -37,11 +49,12 @@ import {
                         <button class="btn btn-sm btn-outline-primary" value="30m">30m</button>
                         <button class="btn btn-sm btn-outline-primary" value="5m">5m</button>
                     </div>`),
+                   
+                     ],
+            top8End: [
                 {
                     'search': {
-                        rowId: 'hello',
                         placeholder: t('search'),
-                        className: 'layout-end',
                     }
                 },
                 
@@ -61,8 +74,8 @@ import {
                 data: 'type', 
                 render: renderLogTypeBadge 
             },
-            { data: 'datetime', className: 'datetime' }, // Visible datetime column
-            { data: 'description', render: renderDescription, width: '60%' },
+            { data: 'datetime', className: 'datetime', width:'10%' }, // Visible datetime column
+            { data: 'description', render: renderDescription, width: '55%' },
             { data: 'file', width: '25%' },
             { data: 'line'}
         ],
@@ -72,6 +85,10 @@ import {
             initScrollToTopButton();
             fillInitialData();
             bindDynamicEventHandlers();
+
+            $('#dbg_lv_log-table_wrapper').children().first().children().first().removeClass('align-items-center');
+            $('.column-visibility-btn').addClass('btn btn-sm btn-outline-primary').removeClass('btn-secondary');
+
         }
     };
     
