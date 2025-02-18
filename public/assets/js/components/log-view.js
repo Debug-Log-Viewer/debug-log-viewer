@@ -171,18 +171,18 @@ import {
             return;
         }
         target.off('change', toggleDebugModeHandler);
-        target.bootstrapSwitch('state', true);
+        // target.bootstrapSwitch('state', true);
         target.on('change', toggleDebugModeHandler);
     }
 
     function autoEnableDebugLog() {
-        const target = $('#dbg_lv_toggle_debug_log_scripts');
+        const target = $('#wp_ajax_dbg_lv_toggle_log_in_file');
 
         if (target.is(':checked')) {
             return;
         }
         target.off('change', toggleDebugLogHandler);
-        target.bootstrapSwitch('state', true);
+        // target.bootstrapSwitch('state', true);
         target.on('change', toggleDebugLogHandler);
     }
 
@@ -216,7 +216,7 @@ import {
             }
 
             const rawResponse = await jQuery.post(ajaxurl, {
-                action: 'dbg_lv_toggle_debug_log_scripts',
+                action: 'wp_ajax_dbg_lv_toggle_log_in_file',
                 state,
                 wp_nonce: dbg_lv_backend_data.ajax_nonce,
             });
@@ -373,11 +373,11 @@ import {
         let dataOffLabel = _this.data('off-label') || '';
         let state = !!_this.attr('checked');
 
-        _this.bootstrapSwitch({
-            onText: dataOnLabel,
-            offText: dataOffLabel,
-            state,
-        });
+        // _this.bootstrapSwitch({
+        //     onText: dataOnLabel,
+        //     offText: dataOffLabel,
+        //     state,
+        // });
     });
 
     $('.clear-log').on('click', async function () {
@@ -395,8 +395,7 @@ import {
                 throw new Error(response.error);
             }
             showToast(t('log_was_cleared'), 'success');
-
-            $('#dbg_lv_log-table').DataTable().ajax.reload();
+            location.reload();
 
         } catch (error) {
             showToast(error, 'error');

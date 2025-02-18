@@ -53,7 +53,12 @@ With Debug Log Viewer, developers can catch issues early, monitor their site mor
 * Added the ability to filter records by time intervals
 * Updated Freemius SDK
 * Updated DataTables
+* Updated translations
 * Various UI improvements
+
+= 1.2.1 =
+* Added handling for a custom log file location. Now, you can set something like ` define( 'WP_DEBUG_LOG', ABSPATH . 'wp-content/logs/debug.log' );` in `wp-config.php` and the plugin will read data from that custom path
+* Freemius and WP-Config-Transformer update
 
 = 1.2 =
 * Removed SSE implementation for live updates, because of unstable behaviour in some cases

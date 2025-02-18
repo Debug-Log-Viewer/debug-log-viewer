@@ -36,15 +36,23 @@ class DBG_LV_LogController
         return DBG_LV_LogView::dbg_lv_render_view();
     }
 
+    public static function dbg_lv_is_custom_logging_path()
+    {
+        return 
+        defined('WP_DEBUG_LOG') && 
+        is_string(WP_DEBUG_LOG) && 
+        !in_array(WP_DEBUG_LOG, ['1', '0', 'true', 'false'], true) &&
+        !empty(WP_DEBUG_LOG);
+    }
+
     public static function dbg_lv_get_debug_file_path()
     {
-        if (file_exists(WP_CONTENT_DIR . '/debug.log')) {
+
+        if (self::dbg_lv_is_custom_logging_path()) {
+           return WP_DEBUG_LOG;
+        } else {
             return WP_CONTENT_DIR . '/debug.log';
         }
-
-        return '';
-        // For those cases when WP_DEBUG_LOG is setted as a path to debug file (overrided default)
-        // @todo: return WP_DEBUG_LOG;
     }
 
     public function dbg_lv_log_viewer_enable_logging()
@@ -53,17 +61,18 @@ class DBG_LV_LogController
 
         try {
 
-            $path = WP_CONTENT_DIR . '/debug.log';
-            if (!is_file($path) || !file_exists($path)) {
-                // Create debug.log if missing
+            $path = self::dbg_lv_get_debug_file_path();
+            $this->config_editor->update('constant', 'WP_DEBUG', '1');
 
+            if(!self::dbg_lv_is_custom_logging_path()){
+                $this->config_editor->update('constant', 'WP_DEBUG_LOG', '1');
+            }
+
+            if(filesize($path) == 0){
                 $message = __('This is a demo entry. Debugging is enabled. Any notices, warnings, or errors that occur on your site will appear here.', DBG_LV_Phrases::$domain);
                 $demo_string = "[" . gmdate('d-M-Y H:i:s T') . "] PHP Notice: <b>" . $message  . "</b>  in " . dbg_lv_get_document_root() . "/example.php on line 0\n";
                 file_put_contents($path, $demo_string);
             }
-
-            $this->config_editor->update('constant', 'WP_DEBUG', '1');
-            $this->config_editor->update('constant', 'WP_DEBUG_LOG', '1');
 
             echo wp_json_encode([
                 'success' => true,
@@ -123,7 +132,7 @@ class DBG_LV_LogController
         }
     }
 
-    public function dbg_lv_toggle_debug_log_scripts()
+    public function wp_ajax_dbg_lv_toggle_log_in_file()
     {
         dbg_lv_verify_nonce(isset($_POST['wp_nonce']) ? sanitize_text_field(wp_unslash($_POST['wp_nonce'])) : '');
         $state = $this->dbg_lv_prepare_state();
