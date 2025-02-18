@@ -33,7 +33,7 @@ trait DBG_LV_ScheduleTrait
             error_log('Options not found for event ' . $event);
             echo wp_json_encode([
                 'success' => false,
-                'error' => __('Internal error', 'debug-log-viewer')
+                'error' => __('Internal error', DBG_LV_Phrases::$domain)
             ]);
             wp_die();
         }
@@ -42,7 +42,7 @@ trait DBG_LV_ScheduleTrait
             error_log('Action not found in options for event ' . $event);
             echo wp_json_encode([
                 'success' => false,
-                'error' => __('Internal error', 'debug-log-viewer')
+                'error' => __('Internal error', DBG_LV_Phrases::$domain)
             ]);
             wp_die();
         }
@@ -67,7 +67,7 @@ trait DBG_LV_ScheduleTrait
             if (!$email) {
                 echo wp_json_encode([
                     'success' => false,
-                    'error'   => __('Email was not passed', 'debug-log-viewer'),
+                    'error'   => __('Email was not provided', DBG_LV_Phrases::$domain),
                 ]);
                 wp_die();
             }
@@ -75,7 +75,7 @@ trait DBG_LV_ScheduleTrait
             if (!$status) {
                 echo wp_json_encode([
                     'success' => false,
-                    'error'   => __('Notification status was not passed', 'debug-log-viewer'),
+                    'error'   => __('Notification status was not provided', DBG_LV_Phrases::$domain),
                 ]);
                 wp_die();
             }
@@ -86,7 +86,7 @@ trait DBG_LV_ScheduleTrait
             if ($status == 'enable' && (!isset($recurrence) || !array_key_exists($recurrence, $notificator->email_recurrences))) {
                 echo wp_json_encode([
                     'success' => false,
-                    'error' => __('Invalid value received', 'debug-log-viewer')
+                    'error' => __('An invalid value received', DBG_LV_Phrases::$domain)
                 ]);
                 wp_die();
             }

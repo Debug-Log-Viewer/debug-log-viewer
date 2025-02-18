@@ -21,10 +21,10 @@ class DBG_LV_Notificator
             $this->send_test_email_handler = [$this, 'dbg_lv_send_log_viewer_test_email'];
         }
         $this->email_recurrences = [
-            'hourly'     => __('Hourly', 'debug-log-viewer'),
-            'twicedaily' => __('Twice Daily', 'debug-log-viewer'),
-            'daily'      => __('Daily',  'debug-log-viewer'),
-            'weekly'     => __('Weekly', 'debug-log-viewer'),
+            'hourly'     => __('Hourly', DBG_LV_Phrases::$domain),
+            'twicedaily' => __('Twice Daily', DBG_LV_Phrases::$domain),
+            'daily'      => __('Daily',  DBG_LV_Phrases::$domain),
+            'weekly'     => __('Weekly', DBG_LV_Phrases::$domain),
         ];
         $this->options = get_option($this->dbg_lv_build_unique_event_name());
     }
@@ -98,7 +98,7 @@ class DBG_LV_Notificator
 
         dbg_lv_send_log_viewer_email(
             $email,
-            __('Debug Log Viewer: Log monitoring test email', 'debug-log-viewer'),
+            __('Debug Log Viewer: Log Monitoring Test Email', DBG_LV_Phrases::$domain),
             realpath(__DIR__) . '/../templates/email/log_viewer.tpl',
             [
                 'website' => get_site_url(),
