@@ -67,7 +67,7 @@ class DBG_LV_HooksController
             // Enqueue scripts
             wp_enqueue_script('dbg_lv_app_js', plugins_url('../public/dist/bundle.js', __DIR__), ['jquery'], $version, true);
 
-            wp_enqueue_script('dbg_lv_colvis_js', 'https://cdn.datatables.net/buttons/3.2.2/js/buttons.colVis.min.js', ['jquery'], $version, true);
+            wp_enqueue_script('dbg_lv_colvis_js', plugins_url('../public/assets/vendor/js/buttons.colVis.min.js', __DIR__), ['jquery'], $version, true);
             wp_enqueue_script('dbg_lv_bootstrap_js', plugins_url('../public/assets/vendor/js/bootstrap.bundle.min.js', __DIR__), [], $version, true);
             wp_enqueue_script('dbg_lv_app_js', plugins_url('../public/assets/js/app.js', __DIR__), ['jquery'], $version, true);
             wp_enqueue_script('dbg_lv_font-awesome_js', plugins_url('../public/assets/vendor/js/font-awesome.js', __DIR__), [], $version, true);

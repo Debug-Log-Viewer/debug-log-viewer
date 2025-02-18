@@ -36,9 +36,6 @@ import {
                             extend: 'colvis',
                             className: 'column-visibility-btn',
                             text: t('columns'),
-                            columnText: function (dt, idx, title) {
-                                return (dt.column(idx).visible() ? '✔ ' : '') + title;
-                            }
                         }
                     ]},
             

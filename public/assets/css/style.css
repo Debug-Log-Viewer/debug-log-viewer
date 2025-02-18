@@ -125,6 +125,18 @@
 .dbg_lv-log-viewer .main-content .content-wrapper {
   transition: all 0.3s ease;
 }
+.dbg_lv-log-viewer .main-content .dropdown-menu.dt-button-collection {
+  min-width: 200px;
+}
+.dbg_lv-log-viewer .main-content .dropdown-menu.dt-button-collection .dt-button.dropdown-item.buttons-columnVisibility.dt-button-active span:after {
+  content: "\f00c";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  color: #0d6efd;
+  float: right;
+  padding-right: 10px;
+  width: 0;
+}
 .dbg_lv-log-viewer .manual-debugging-instructions_or {
   margin-top: 30px;
   font-weight: bold;
@@ -227,7 +239,7 @@
 }
 .dbg_lv-log-viewer .table-wrapper .column-visibility-btn {
   height: 31px;
-  margin-left: 10px;
+  margin-left: 15px;
 }
 .dbg_lv-log-viewer .table-wrapper #dbg_lv_log-table {
   width: 100% !important;
