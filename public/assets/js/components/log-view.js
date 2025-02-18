@@ -171,7 +171,6 @@ import {
             return;
         }
         target.off('change', toggleDebugModeHandler);
-        // target.bootstrapSwitch('state', true);
         target.on('change', toggleDebugModeHandler);
     }
 
@@ -182,7 +181,6 @@ import {
             return;
         }
         target.off('change', toggleDebugLogHandler);
-        // target.bootstrapSwitch('state', true);
         target.on('change', toggleDebugLogHandler);
     }
 
@@ -367,19 +365,6 @@ import {
         }
     });
 
-    $('.bootstrap-switch').each(function () {
-        let _this = $(this);
-        let dataOnLabel = _this.data('on-label') || '';
-        let dataOffLabel = _this.data('off-label') || '';
-        let state = !!_this.attr('checked');
-
-        // _this.bootstrapSwitch({
-        //     onText: dataOnLabel,
-        //     offText: dataOffLabel,
-        //     state,
-        // });
-    });
-
     $('.clear-log').on('click', async function () {
         try {
             if (!confirm(t('flush_log_confirmation'))) {
@@ -515,12 +500,8 @@ import {
             // Add 'active' class to the clicked button
             $(this).addClass('active');
 
-            // Get the value of the clicked button
-            var filter = $(this).val();
-
             // Trigger the DataTables redraw
             table.draw();
         });
     });
-    
 })(jQuery)
