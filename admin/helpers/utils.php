@@ -32,7 +32,7 @@ function dbg_lv_verify_nonce($nonce, $action = 'ajax_nonce')
     if (!wp_verify_nonce($nonce, $action)) {
         echo wp_json_encode([
             'success' => false,
-            'error'   => __('Please refresh the page', 'debug-log-viewer'),
+            'error'   => __('Please refresh the page', DBG_LV_Phrases::$domain),
         ]);
         wp_die();
     }
