@@ -46,6 +46,14 @@
   align-items: center;
   justify-content: space-between;
 }
+.sidebar .settings .log-info-block .form-switch,
+.sidebar .debug-constants .log-info-block .form-switch,
+.sidebar .notifications .log-info-block .form-switch {
+  padding-left: 10px;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
 .sidebar .settings h5,
 .sidebar .debug-constants h5,
 .sidebar .notifications h5 {
@@ -112,18 +120,28 @@
 .sidebar .debug-constants .form-check,
 .sidebar .notifications .form-check {
   margin-top: 5px;
-  margin-bottom: 24px;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  padding-left: 15px;
+}
+.sidebar .settings .form-check .form-check-label,
+.sidebar .debug-constants .form-check .form-check-label,
+.sidebar .notifications .form-check .form-check-label {
+  display: flex;
+  align-items: center;
 }
 .sidebar .settings input[type=submit],
 .sidebar .debug-constants input[type=submit],
 .sidebar .notifications input[type=submit] {
+  border: none;
   padding: 10px 20px;
   border-radius: 5px;
 }
 .sidebar .settings input[type=submit].enable,
 .sidebar .debug-constants input[type=submit].enable,
 .sidebar .notifications input[type=submit].enable {
-  background-color: #4f6df5;
+  background-color: #0d6efd;
 }
 .sidebar .settings input[type=submit].disable,
 .sidebar .debug-constants input[type=submit].disable,
@@ -136,7 +154,7 @@
   right: 20px;
   z-index: 1100;
   cursor: pointer;
-  background-color: #4f6df5;
+  background-color: #0d6efd;
   border: none;
   color: #fff;
   padding: 10px 15px;
@@ -144,7 +162,7 @@
   box-shadow: 0 2px 4px #929ea9;
 }
 .sidebar .sidebar-toggle-btn:hover {
-  background-color: rgb(30.7419354839, 68.9677419355, 242.2580645161);
+  background-color: #0257d5;
 }
 .sidebar .settings .settings-group legend {
   font-size: 15px;

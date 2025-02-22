@@ -167,7 +167,7 @@ class DBG_LV_LogModel
 
             $re = '/WordPress database error (.*)/m';
             preg_match_all($re, $row, $matches, PREG_SET_ORDER, 0);
-            return isset($matches[0]) && $matches[0][1] ? $matches[0][1] : __('N/A', 'debug-log-viewer');
+            return isset($matches[0]) && $matches[0][1] ? $matches[0][1] : __('N/A', DBG_LV_Phrases::$domain);
         }
 
         $re = '/ (PHP Notice:|PHP Warning:|PHP Fatal error:|PHP Parse error:|PHP Deprecated:)(.*?)(\[ | in |on line)/m';
@@ -189,7 +189,7 @@ class DBG_LV_LogModel
             }
             $filesize_in_mb = $filesize_in_bytes / 1024 / 1024;
             return $with_measure_units
-                ? round($filesize_in_mb, 2) . ' ' . __('Mb', 'debug-log-viewer')
+                ? round($filesize_in_mb, 2) . ' ' . __('Mb', DBG_LV_Phrases::$domain)
                 : round($filesize_in_mb, 2);
         } else {
             return 0;

@@ -45,6 +45,12 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+            .form-switch {
+                padding-left: 10px;
+                display: flex;
+                justify-content: space-between;
+                width: 100%;
+            }
         }
 
         background-color: #fff;
@@ -96,10 +102,18 @@
 
         .form-check {
             margin-top: 5px;
-            margin-bottom: 24px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            padding-left: 15px;
+            .form-check-label{
+                display: flex;
+                align-items: center;
+            }
         }
 
         input[type="submit"] {
+            border: none;
             padding: 10px 20px;
             border-radius: 5px;
 

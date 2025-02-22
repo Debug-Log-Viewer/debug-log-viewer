@@ -4,7 +4,6 @@
 .dbg_lv-log-viewer {
 	@extend .base-table-viewer-structure;
 
-
 	.main-content {
 		display: grid;
 		grid-template-columns: 9fr 3fr;
@@ -17,6 +16,22 @@
 
 		.content-wrapper {
 			transition: all 0.3s ease;
+		}
+
+		.dropdown-menu.dt-button-collection {
+			min-width: 200px;
+
+			.dt-button.dropdown-item.buttons-columnVisibility.dt-button-active {
+				span:after {
+					content: "\f00c";
+					font-family: "Font Awesome 5 Free";
+					font-weight: 900;
+					color: #0d6efd;
+					float: right;
+					padding-right: 10px;
+					width: 0;
+				}
+			}
 		}
 	}
 
@@ -53,7 +68,7 @@
 
 		.buttons {
 			padding-left: 15px;
-			min-width: 255px;
+			min-width: 258px;
 
 			.clear-log,
 			.refresh-log,
@@ -66,6 +81,8 @@
 				height: 35px;
 				padding: 0;
 				font-size: 16px;
+				border: none;
+				border-radius: 5px;
 			}
 
 			.notification {
@@ -107,11 +124,12 @@
 				// anumation one time
 				animation: rotate 1s linear 1;
 			}
-			
+
 			@keyframes rotate {
 				from {
 					transform: rotate(0deg);
 				}
+
 				to {
 					transform: rotate(360deg);
 				}
@@ -131,13 +149,19 @@
 		border-radius: 5px;
 		box-shadow: $box-shadow;
 
+		.column-visibility-btn {
+			height: 31px;
+			margin-left: 15px;
+		}
+
 		#dbg_lv_log-table {
 			width: 100% !important;
+			padding-top: 10px;
 
 			tbody {
 				tr {
 					td {
-						word-break: break-all;
+						vertical-align: text-top;
 					}
 				}
 			}
@@ -145,6 +169,42 @@
 			.badge {
 				min-width: 65px;
 				border-radius: 4px;
+				font-weight: 500;
+
+				&.notice-bg {
+					background-color: #007bff;
+					color: #fff;
+				}
+
+				&.warning-bg {
+					background-color: #ff9800;
+					color: #fff;
+				}
+
+				&.fatal-bg {
+					background-color: #dc3545;
+					color: #fff;
+				}
+
+				&.database-bg {
+					background-color: #6f42c1;
+					color: #fff;
+				}
+
+				&.parse-bg {
+					background-color: #343a40;
+					color: #fff;
+				}
+
+				&.deprecated-bg {
+					background-color: #ffc107;
+					color: #000;
+				}
+
+				&.custom-bg {
+					background-color: #6c757d;
+					color: #fff;
+				}
 			}
 		}
 	}

@@ -36,7 +36,7 @@ class DBG_LV_ReviewController
             <a data-rate-action="do-rate" href="<?php echo esc_url(add_query_arg('dbg_lv_review', 'do', $url)); ?>">
                 <div class="d-flex justify-content-between">
                     <div>
-                        <?php _e('It would help us a great deal if you could give us your feedback on WP plugin directory. We are hoping we earned your ', 'dbg_lv'); ?>
+                        <?php _e('It would help us a great deal if you could give us your feedback on WP Plugin Directory. We are hoping we earned your ', DBG_LV_Phrases::$domain); ?>
                         <i class="fa-solid fa-star fa-fade fa-2sm"></i>
                         <i class="fa-solid fa-star fa-fade fa-2sm"></i>
                         <i class="fa-solid fa-star fa-fade fa-2sm"></i>

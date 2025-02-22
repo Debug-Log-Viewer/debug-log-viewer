@@ -13,7 +13,7 @@ class DBG_LV_MenuController
         function dbg_lv_main_menu()
         {
             $role = 'edit_pages';
-            $name = __('Debug Log Viewer', 'debug-log-viewer');
+            $name = __('Debug Log Viewer', DBG_LV_Phrases::$domain);
             $slug = 'debug-log-viewer';
             $handler =  ['DBG_LV_LogController', 'dbg_lv_render_view'];
             $icon = plugin_dir_url(__FILE__) . '/../../../public/assets/img/logo-grayscale.svg';

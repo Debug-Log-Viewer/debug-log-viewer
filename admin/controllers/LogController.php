@@ -69,11 +69,10 @@ class DBG_LV_LogController
             }
 
             if(filesize($path) == 0){
-                $message = __('This is a demo entry. Debugging is now enabled. If any notices, warnings, or errors occur on your site, they will appear here', `debug-log-viewer`);
+                $message = __('This is a demo entry. Debugging is enabled. Any notices, warnings, or errors that occur on your site will appear here.', DBG_LV_Phrases::$domain);
                 $demo_string = "[" . gmdate('d-M-Y H:i:s T') . "] PHP Notice: <b>" . $message  . "</b>  in " . dbg_lv_get_document_root() . "/example.php on line 0\n";
                 file_put_contents($path, $demo_string);
             }
-
 
             echo wp_json_encode([
                 'success' => true,
@@ -205,9 +204,9 @@ class DBG_LV_LogController
                     wp_die();
                 }
 
-                throw new \Exception(__('Log file was found but can not to be cleared due to missing write permissions', 'debug-log-viewer'));
+                throw new \Exception(__('The log file was found but cannot be cleared due to missing write permissions', DBG_LV_Phrases::$domain));
             }
-            throw new \Exception(__('Log file is not found and can not to be removed', 'debug-log-viewer'));
+            throw new \Exception(__('The log file was not found and cannot be removed', DBG_LV_Phrases::$domain));
         } catch (Exception $e) {
             echo wp_json_encode([
                 'success' => false,
@@ -243,7 +242,7 @@ class DBG_LV_LogController
                 wp_die();
             }
 
-            throw new \Exception(__('Log file is not found and can not to be removed', 'debug-log-viewer'));
+            throw new \Exception(__('The log file was not found and cannot be removed', DBG_LV_Phrases::$domain));
         } catch (Exception $e) {
             echo wp_json_encode([
                 'success' => false,
@@ -289,7 +288,7 @@ class DBG_LV_LogController
             case 1:
                 return (string) $state;
             default:
-                throw new \Exception(__('Incorrect state value passed'), 'debug-log-viewer');
+                throw new \Exception(__('An incorrect state value was passed'), DBG_LV_Phrases::$domain);
         }
     }
 
@@ -362,17 +361,17 @@ class DBG_LV_LogController
         $options = get_option($event);
 
         if (!$options) {
-            error_log(__('Options not found for event ', 'debug-log-viewer') . $event);
+            error_log(__('Options were not found for the event ', DBG_LV_Phrases::$domain) . $event);
             wp_die();
         }
 
         if (!array_key_exists('dbg_lv_notifications_email', $options)) {
-            error_log(__('Notification email not found in options for event ', 'debug-log-viewer') . $event);
+            error_log(__('Notification email was not found in the options for the event ', DBG_LV_Phrases::$domain) . $event);
             wp_die();
         }
 
         if (!array_key_exists('dbg_lv_notifications_email_recurrence', $options)) {
-            error_log(__('Notification email recurrence not found in options for event ', 'debug-log-viewer') . $event);
+            error_log(__('Notification email recurrence was not found in the options for the event ', DBG_LV_Phrases::$domain) . $event);
             wp_die();
         }
 
@@ -383,7 +382,8 @@ class DBG_LV_LogController
         if ($notification_email && $errors) {
             dbg_lv_send_log_viewer_email(
                 $notification_email,
-                __('Debug Log Viewer: Monitoring detected some problems on your website', 'debug-log-viewer'),
+                __('Debug Log Viewer: Monitoring has detected some problems on your website',
+                    DBG_LV_Phrases::$domain),
                 realpath(__DIR__) . '/../templates/email/log_viewer.tpl',
                 [
                     'website' => get_site_url(),
@@ -413,7 +413,7 @@ class DBG_LV_LogController
         if (!DBG_LV_LogModel::dbg_lv_is_log_file_exists()) {
             echo wp_json_encode([
                 'success' => false,
-                'error' => __('Unable to set Email notifications as the log file does not exist.', 'debug-log-viewer')
+                'error' => __('Unable to set email notifications because the log file does not exist', DBG_LV_Phrases::$domain)
             ]);
             wp_die();
         }
@@ -458,31 +458,31 @@ class DBG_LV_LogController
         $mode = isset($_POST['mode']) ? sanitize_text_field(wp_unslash($_POST['mode'])) : null;
     
         if (!$mode) {
-            wp_send_json_error(__('The "mode" parameter is missing from the request', 'debug-log-viewer'), 400);
+            wp_send_json_error(__('The "mode" parameter is missing from the request', DBG_LV_Phrases::$domain), 400);
         }
     
         $allowed_modes = ['AUTO', 'MANUAL'];
         if (!in_array($mode, $allowed_modes, true)) {
-            wp_send_json_error(__('The specified mode is invalid. Please select either "AUTO" or "MANUAL"', 'debug-log-viewer'), 400);
+            wp_send_json_error(__('The specified mode is invalid. Please select either "AUTO" or "MANUAL"', DBG_LV_Phrases::$domain), 400);
         }
     
         // Retrieve the current mode setting
         $current_mode = get_option(DBG_LV_LogModel::DBG_LV_LOG_UPDATES_MODE_OPTION_NAME);
         if ($current_mode === $mode) {
             // If the current value matches the new value, consider it a success
-            wp_send_json_success(__('The updates mode has been successfully updated', 'debug-log-viewer'));
+            wp_send_json_success(__('The updates mode has been successfully updated', DBG_LV_Phrases::$domain));
         }
     
         // Attempt to update the mode setting
         if (update_option(DBG_LV_LogModel::DBG_LV_LOG_UPDATES_MODE_OPTION_NAME, $mode)) {
-            wp_send_json_success(__('The updates mode has been successfully updated', 'debug-log-viewer'));
+            wp_send_json_success(__('The update mode has been successfully updated', DBG_LV_Phrases::$domain));
         } else {
-            wp_send_json_error(__('An error occurred while updating the updates mode. Please try again', 'debug-log-viewer'), 500);
+            wp_send_json_error(__('An error occurred while updating the update mode. Please try again', DBG_LV_Phrases::$domain), 500);
         }
     }
 
     private function getState($state): string
     {
-        return (int) $state ? __('ON', 'debug-log-viewer') : __('OFF', 'debug-log-viewer');
+        return (int) $state ? __('ON', DBG_LV_Phrases::$domain) : __('OFF', DBG_LV_Phrases::$domain);
     }
 }

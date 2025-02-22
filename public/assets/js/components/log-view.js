@@ -21,11 +21,44 @@ import {
             search: '',
             searchPlaceholder: t('search'),
         },
-        pageLength: 25,
-        dom: 'lBfrtip',
-        buttons: [
-            { extend: 'colvis', postfixButtons: ['colvisRestore'], className: 'dt-action-button' },
-        ],
+        pageLength: 10,
+
+        layout: {
+
+            topStart: null, //remove pageLength from top default position
+            topEnd: null, //remove search from top default position
+            top8Start: [
+                    'pageLength',
+
+                   {
+                    buttons: [
+                        {
+                            extend: 'colvis',
+                            className: 'column-visibility-btn',
+                            text: t('columns'),
+                        }
+                    ]},
+            
+                     $(`<div class="datetime-ragne-buttons">
+                        <button class="btn btn-sm btn-outline-primary active" value="all">All</button>
+                        <button class="btn btn-sm btn-outline-primary" value="12h">12h</button>
+                        <button class="btn btn-sm btn-outline-primary" value="1h">1h</button>
+                        <button class="btn btn-sm btn-outline-primary" value="30m">30m</button>
+                        <button class="btn btn-sm btn-outline-primary" value="5m">5m</button>
+                    </div>`),
+                   
+                     ],
+            top8End: [
+                {
+                    'search': {
+                        placeholder: t('search'),
+                    }
+                },
+                
+            ],
+           
+        },
+
         columns: [
             { 
                 data: 'timestamp', 
@@ -38,8 +71,8 @@ import {
                 data: 'type', 
                 render: renderLogTypeBadge 
             },
-            { data: 'datetime', className: 'datetime' }, // Visible datetime column
-            { data: 'description', render: renderDescription, width: '60%' },
+            { data: 'datetime', className: 'datetime', width:'10%' }, // Visible datetime column
+            { data: 'description', render: renderDescription, width: '55%' },
             { data: 'file', width: '25%' },
             { data: 'line'}
         ],
@@ -49,6 +82,10 @@ import {
             initScrollToTopButton();
             fillInitialData();
             bindDynamicEventHandlers();
+
+            $('#dbg_lv_log-table_wrapper').children().first().children().first().removeClass('align-items-center');
+            $('.column-visibility-btn').addClass('btn btn-sm btn-outline-primary').removeClass('btn-secondary');
+
         }
     };
     
@@ -56,11 +93,14 @@ import {
     
     function renderLogTypeBadge(data) {
         const typeClasses = {
-            'Notice': 'bg-dark',
-            'Warning': 'bg-warning',
-            'Fatal': 'bg-danger',
-            'Database': 'bg-primary',
-            'Parse': 'bg-info'
+            'Notice': 'notice-bg',
+            'Warning': 'warning-bg',
+            'Fatal': 'fatal-bg',
+            'Database': 'database-bg',
+            'Parse': 'parse-bg',
+            'Deprecated': 'deprecated-bg',
+            'Custom': 'custom-bg'
+
         };
         const className = typeClasses[data] || 'bg-secondary';
         return `<span class="badge ${className}">${data}</span>`;
@@ -130,9 +170,8 @@ import {
         if (target.is(':checked')) {
             return;
         }
-        target.off('switchChange.bootstrapSwitch', toggleDebugModeHandler);
-        target.bootstrapSwitch('state', true);
-        target.on('switchChange.bootstrapSwitch', toggleDebugModeHandler);
+        target.off('change', toggleDebugModeHandler);
+        target.on('change', toggleDebugModeHandler);
     }
 
     function autoEnableDebugLog() {
@@ -141,9 +180,8 @@ import {
         if (target.is(':checked')) {
             return;
         }
-        target.off('switchChange.bootstrapSwitch', toggleDebugLogHandler);
-        target.bootstrapSwitch('state', true);
-        target.on('switchChange.bootstrapSwitch', toggleDebugLogHandler);
+        target.off('change', toggleDebugLogHandler);
+        target.on('change', toggleDebugLogHandler);
     }
 
     async function toggleDebugModeHandler() {
@@ -276,9 +314,9 @@ import {
         }
     });
 
-    $('#dbg_lv_toggle_debug_mode').on('switchChange.bootstrapSwitch', toggleDebugModeHandler);
+    $('#dbg_lv_toggle_debug_mode').on('change', toggleDebugModeHandler);
 
-    $('#dbg_lv_toggle_debug_scripts').on('switchChange.bootstrapSwitch', async function () {
+    $('#dbg_lv_toggle_debug_scripts').on('change', async function () {
 
         try {
             const rawResponse = await jQuery.post(ajaxurl, {
@@ -299,9 +337,9 @@ import {
         }
     });
 
-    $('#wp_ajax_dbg_lv_toggle_log_in_file').on('switchChange.bootstrapSwitch', toggleDebugLogHandler);
+    $('#dbg_lv_toggle_debug_log_scripts').on('change', toggleDebugLogHandler);
 
-    $('#dbg_lv_toggle_display_errors').on('switchChange.bootstrapSwitch', async function () {
+    $('#dbg_lv_toggle_display_errors').on('change', async function () {
         try {
             const state = +$(this).is(':checked');
 
@@ -325,19 +363,6 @@ import {
         } catch (error) {
             showToast(error, 'error');
         }
-    });
-
-    $('.bootstrap-switch').each(function () {
-        let _this = $(this);
-        let dataOnLabel = _this.data('on-label') || '';
-        let dataOffLabel = _this.data('off-label') || '';
-        let state = !!_this.attr('checked');
-
-        _this.bootstrapSwitch({
-            onText: dataOnLabel,
-            offText: dataOffLabel,
-            state,
-        });
     });
 
     $('.clear-log').on('click', async function () {
@@ -439,4 +464,44 @@ import {
     if (dbg_lv_backend_data.log_updates_mode == "AUTO") {
         startLiveUpdateLogs();
     }
+    
+    // Filter Functionn
+    // document ready
+    $(document).ready(function () {
+        $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
+            var filter = $('.datetime-ragne-buttons .btn.active').val(); // Get the active filter
+
+           
+            if (filter === "all") {
+                return true; // Show all rows
+            }
+
+            var now = new Date();
+            var timestamp = new Date(Number(data[0])); // Assuming the first column is the timestamp
+            if (isNaN(timestamp)) {
+                // If timestamp parsing fails, exclude the row
+                return false;
+            }
+    
+            var timeDiff = now - timestamp; // Time difference in milliseconds
+    
+            if (filter === "5m" && timeDiff <= 5 * 60 * 1000) return true;
+            if (filter === "30m" && timeDiff <= 30 * 60 * 1000) return true;
+            if (filter === "1h" && timeDiff <= 60 * 60 * 1000) return true;
+            if (filter === "12h" && timeDiff <= 12 * 60 * 60 * 1000) return true;
+            return false; // Exclude the row if no condition matches
+        });
+
+        // Filter Button Click Event
+        $('html').on('click', '.datetime-ragne-buttons .btn', function () {
+            // Remove 'active' class from all buttons
+            $('.datetime-ragne-buttons .btn').removeClass('active');
+            
+            // Add 'active' class to the clicked button
+            $(this).addClass('active');
+
+            // Trigger the DataTables redraw
+            table.draw();
+        });
+    });
 })(jQuery)
