@@ -43,6 +43,7 @@ class DBG_LV_LogLevelStatuses
     const DATABASE = 'Database';
     const PARSE = 'Parse';
     const DEPRECATED = 'Deprecated';
+    const CUSTOM = 'Custom';
 }
 
 $DBG_LV_WP_CRON_SCHEDULE_INTERVALS = [
