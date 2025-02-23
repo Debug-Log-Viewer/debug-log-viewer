@@ -9,22 +9,23 @@
 		top: 10px;
 		position: relative;
 
-.dt-button.dropdown-item.buttons-columnVisibility:before {
-		content: '\2713';
-		/* Unicode checkmark */
-		font-size: 14px;
-		margin-right: 8px;
-		visibility: hidden;
-		/* Hidden by default */
-	}
+		.dt-button.dropdown-item.buttons-columnVisibility:before {
+			content: '\2713';
+			/* Unicode checkmark */
+			font-size: 14px;
+			margin-right: 8px;
+			visibility: hidden;
+			/* Hidden by default */
+		}
 
-	.dt-button.dropdown-item.buttons-columnVisibility.dt-button-active:before {
-		visibility: visible;
-		/* Show when active */
-	}
+		.dt-button.dropdown-item.buttons-columnVisibility.dt-button-active:before {
+			visibility: visible;
+			/* Show when active */
+		}
 
 		thead {
-			background-color: #0027ff26;
+			background-color: rgb(13 110 253);
+			color: #fff;
 			border-radius: 5px 5px 0 0;
 
 			tr {
@@ -41,6 +42,7 @@
 					padding-bottom: 15px;
 					border-bottom: 0;
 				}
+
 				th:last-child {
 					border-radius: 0 5px 0 0;
 				}
@@ -111,14 +113,16 @@
 			}
 		}
 
-		.datetime-ragne-buttons {
+		.datetime-range-buttons {
 			margin-left: 30px;
-			 .btn.active {
+
+			.btn.active {
 				background-color: $main-theme-color;
-			 }
-			 .btn:hover {
+			}
+
+			.btn:hover {
 				background-color: lighten($main-theme-color, 5%)
-			 }
+			}
 		}
 	}
 

@@ -26,7 +26,7 @@
 
         <!-- Log in File -->
         <div class="log-info-block form-check form-switch">
-            <label class="form-check-label" for="wp_ajax_dbg_lv_toggle_log_in_file"><?php esc_html_e('Log in file', DBG_LV_Phrases::$domain); ?></label>
+            <label class="form-check-label" for="dbg_lv_toggle_log_in_file"><?php esc_html_e('Log in file', DBG_LV_Phrases::$domain); ?></label>
 
             <?php
             $isCustomPath = DBG_LV_LogController::dbg_lv_is_custom_logging_path();
@@ -34,7 +34,7 @@
             $isChecked = $isCustomPath || in_array(WP_DEBUG_LOG, [1, true, '1', 'true'], true) ? 'checked' : '';
             ?>
             <input
-                id="wp_ajax_dbg_lv_toggle_log_in_file"
+                id="dbg_lv_toggle_log_in_file"
                 <?php disabled($isDisabled); ?>
                 type="checkbox"
                 <?php echo $isChecked; ?>

@@ -132,7 +132,7 @@ class DBG_LV_LogController
         }
     }
 
-    public function wp_ajax_dbg_lv_toggle_log_in_file()
+    public function dbg_lv_toggle_log_in_file()
     {
         dbg_lv_verify_nonce(isset($_POST['wp_nonce']) ? sanitize_text_field(wp_unslash($_POST['wp_nonce'])) : '');
         $state = $this->dbg_lv_prepare_state();

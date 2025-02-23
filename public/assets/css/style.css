@@ -21,7 +21,8 @@
   /* Show when active */
 }
 .base-table-viewer-structure #dbg_lv_log-table thead, .dbg_lv-log-viewer #dbg_lv_log-table thead {
-  background-color: rgba(0, 39, 255, 0.1490196078);
+  background-color: rgb(13, 110, 253);
+  color: #fff;
   border-radius: 5px 5px 0 0;
 }
 .base-table-viewer-structure #dbg_lv_log-table thead tr, .dbg_lv-log-viewer #dbg_lv_log-table thead tr {
@@ -88,13 +89,13 @@
   border: 1px solid #4bb5ff;
   background: transparent;
 }
-.base-table-viewer-structure .table-wrapper .datetime-ragne-buttons, .dbg_lv-log-viewer .table-wrapper .datetime-ragne-buttons {
+.base-table-viewer-structure .table-wrapper .datetime-range-buttons, .dbg_lv-log-viewer .table-wrapper .datetime-range-buttons {
   margin-left: 30px;
 }
-.base-table-viewer-structure .table-wrapper .datetime-ragne-buttons .btn.active, .dbg_lv-log-viewer .table-wrapper .datetime-ragne-buttons .btn.active {
+.base-table-viewer-structure .table-wrapper .datetime-range-buttons .btn.active, .dbg_lv-log-viewer .table-wrapper .datetime-range-buttons .btn.active {
   background-color: #0d6efd;
 }
-.base-table-viewer-structure .table-wrapper .datetime-ragne-buttons .btn:hover, .dbg_lv-log-viewer .table-wrapper .datetime-ragne-buttons .btn:hover {
+.base-table-viewer-structure .table-wrapper .datetime-range-buttons .btn:hover, .dbg_lv-log-viewer .table-wrapper .datetime-range-buttons .btn:hover {
   background-color: #267dfd;
 }
 .base-table-viewer-structure .dataTables_paginate, .dbg_lv-log-viewer .dataTables_paginate {
@@ -305,9 +306,6 @@
 .dbg_lv-log-viewer .log-not-found button {
   margin: 0 auto;
   display: block;
-  background-color: #0d6efd;
-  text-transform: uppercase;
-  font-weight: 500;
 }
 .dbg_lv-log-viewer .log-not-found .card {
   max-width: 100%;
@@ -523,7 +521,10 @@
   margin-bottom: 0;
   display: flex;
   align-items: center;
-  margin-left: 20px;
+  margin-left: 15px;
+}
+.sidebar .settings .settings-group .form-check .form-check-input:checked[type=radio] {
+  background-color: #fff;
 }
 .sidebar .settings .settings-group .form-check label {
   padding-left: 10px;

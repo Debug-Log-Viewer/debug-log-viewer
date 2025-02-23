@@ -36,8 +36,8 @@ class DBG_LV_HooksController
         add_action('wp_ajax_dbg_lv_toggle_debug_scripts', function () use ($log_controller) {
             $log_controller->dbg_lv_toggle_debug_scripts();
         });
-        add_action('wp_ajax_wp_ajax_dbg_lv_toggle_log_in_file',  function () use ($log_controller) {
-            $log_controller->wp_ajax_dbg_lv_toggle_log_in_file();
+        add_action('wp_ajax_dbg_lv_toggle_log_in_file',  function () use ($log_controller) {
+            $log_controller->dbg_lv_toggle_log_in_file();
         });
         add_action('wp_ajax_dbg_lv_toggle_display_errors',  function () use ($log_controller) {
             $log_controller->dbg_lv_toggle_display_errors();

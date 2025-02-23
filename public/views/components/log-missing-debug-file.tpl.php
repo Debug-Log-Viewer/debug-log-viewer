@@ -18,7 +18,7 @@ if (!defined('ABSPATH')) {
 
   <div class="row">
     <div class="col-md-12">
-      <button id="dbg_lv_log_viewer_enable_logging" class="btn btn-lg btn-info">
+      <button id="dbg_lv_log_viewer_enable_logging" class="btn btn-lg btn-primary">
         Start Debugging
       </button>
     </div>
