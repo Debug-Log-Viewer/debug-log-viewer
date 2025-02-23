@@ -1,51 +1,69 @@
+@charset "UTF-8";
 .base-table-viewer-structure, .dbg_lv-log-viewer {
   margin-top: 1rem;
 }
-.base-table-viewer-structure .dataTable[role=grid], .dbg_lv-log-viewer .dataTable[role=grid] {
-  border: 1px;
+.base-table-viewer-structure #dbg_lv_log-table, .dbg_lv-log-viewer #dbg_lv_log-table {
   border-radius: 5px;
-  border-color: #ddd;
-  border-style: solid;
+  border: none;
+  top: 10px;
+  position: relative;
 }
-.base-table-viewer-structure .dataTable[role=grid] thead, .dbg_lv-log-viewer .dataTable[role=grid] thead {
-  background-color: #f8f9fa;
+.base-table-viewer-structure #dbg_lv_log-table .dt-button.dropdown-item.buttons-columnVisibility:before, .dbg_lv-log-viewer #dbg_lv_log-table .dt-button.dropdown-item.buttons-columnVisibility:before {
+  content: "✓";
+  /* Unicode checkmark */
+  font-size: 14px;
+  margin-right: 8px;
+  visibility: hidden;
+  /* Hidden by default */
 }
-.base-table-viewer-structure .dataTable[role=grid] thead tr[role=row], .dbg_lv-log-viewer .dataTable[role=grid] thead tr[role=row] {
+.base-table-viewer-structure #dbg_lv_log-table .dt-button.dropdown-item.buttons-columnVisibility.dt-button-active:before, .dbg_lv-log-viewer #dbg_lv_log-table .dt-button.dropdown-item.buttons-columnVisibility.dt-button-active:before {
+  visibility: visible;
+  /* Show when active */
+}
+.base-table-viewer-structure #dbg_lv_log-table thead, .dbg_lv-log-viewer #dbg_lv_log-table thead {
+  background-color: rgba(0, 39, 255, 0.1490196078);
+  border-radius: 5px 5px 0 0;
+}
+.base-table-viewer-structure #dbg_lv_log-table thead tr, .dbg_lv-log-viewer #dbg_lv_log-table thead tr {
   vertical-align: top;
 }
-.base-table-viewer-structure .dataTable[role=grid] thead tr[role=row] th:nth-child(1), .dbg_lv-log-viewer .dataTable[role=grid] thead tr[role=row] th:nth-child(1) {
+.base-table-viewer-structure #dbg_lv_log-table thead tr th:nth-child(1), .dbg_lv-log-viewer #dbg_lv_log-table thead tr th:nth-child(1) {
   text-align: left;
   padding-left: 10px;
+  border-radius: 5px 0 0 0;
 }
-.base-table-viewer-structure .dataTable[role=grid] thead tr[role=row] th, .dbg_lv-log-viewer .dataTable[role=grid] thead tr[role=row] th {
+.base-table-viewer-structure #dbg_lv_log-table thead tr th, .dbg_lv-log-viewer #dbg_lv_log-table thead tr th {
   padding-top: 15px;
   padding-bottom: 15px;
+  border-bottom: 0;
 }
-.base-table-viewer-structure .dataTable[role=grid] tbody tr.odd, .dbg_lv-log-viewer .dataTable[role=grid] tbody tr.odd {
+.base-table-viewer-structure #dbg_lv_log-table thead tr th:last-child, .dbg_lv-log-viewer #dbg_lv_log-table thead tr th:last-child {
+  border-radius: 0 5px 0 0;
+}
+.base-table-viewer-structure #dbg_lv_log-table tbody tr.odd, .dbg_lv-log-viewer #dbg_lv_log-table tbody tr.odd {
   background-color: #ffffff;
 }
-.base-table-viewer-structure .dataTable[role=grid] tbody tr.odd:hover, .dbg_lv-log-viewer .dataTable[role=grid] tbody tr.odd:hover {
+.base-table-viewer-structure #dbg_lv_log-table tbody tr.odd:hover, .dbg_lv-log-viewer #dbg_lv_log-table tbody tr.odd:hover {
   background-color: #f8f9fa;
 }
-.base-table-viewer-structure .dataTable[role=grid] tbody tr.even:hover, .dbg_lv-log-viewer .dataTable[role=grid] tbody tr.even:hover {
+.base-table-viewer-structure #dbg_lv_log-table tbody tr.even:hover, .dbg_lv-log-viewer #dbg_lv_log-table tbody tr.even:hover {
   background-color: #f8f9fa;
 }
-.base-table-viewer-structure .dataTable[role=grid] tbody tr td:nth-child(1), .dbg_lv-log-viewer .dataTable[role=grid] tbody tr td:nth-child(1) {
+.base-table-viewer-structure #dbg_lv_log-table tbody tr td:nth-child(1), .dbg_lv-log-viewer #dbg_lv_log-table tbody tr td:nth-child(1) {
   text-align: left;
   padding-left: 20px;
 }
-.base-table-viewer-structure .dataTable[role=grid] tbody tr td, .dbg_lv-log-viewer .dataTable[role=grid] tbody tr td {
-  border-bottom: 1px dashed rgba(178, 169, 255, 0.0588235294);
-  padding-top: 15px;
-  padding-bottom: 15px;
+.base-table-viewer-structure #dbg_lv_log-table tbody tr td, .dbg_lv-log-viewer #dbg_lv_log-table tbody tr td {
+  padding-top: 10px;
+  padding-bottom: 10px;
   padding-left: 5px !important;
 }
-.base-table-viewer-structure .dataTable[role=grid] tbody tr td .call-stack, .dbg_lv-log-viewer .dataTable[role=grid] tbody tr td .call-stack {
-  color: #4f6df5;
+.base-table-viewer-structure #dbg_lv_log-table tbody tr td .call-stack, .dbg_lv-log-viewer #dbg_lv_log-table tbody tr td .call-stack {
+  color: #0d6efd;
   text-decoration: none;
   font-weight: bold;
 }
-.base-table-viewer-structure .dataTable[role=grid] tbody tr:hover, .dbg_lv-log-viewer .dataTable[role=grid] tbody tr:hover {
+.base-table-viewer-structure #dbg_lv_log-table tbody tr:hover, .dbg_lv-log-viewer #dbg_lv_log-table tbody tr:hover {
   --bs-table-accent-bg: #f8f9fa;
 }
 .base-table-viewer-structure .table-wrapper .dt-buttons, .dbg_lv-log-viewer .table-wrapper .dt-buttons {
@@ -56,7 +74,7 @@
   font-weight: 400;
   font-size: 14px;
   line-height: 1.35em;
-  margin: 5px 0 10px 0;
+  margin: 10px 0 10px 0;
   color: #4bb5ff;
   border-radius: 0.1875rem;
   cursor: pointer;
@@ -70,9 +88,18 @@
   border: 1px solid #4bb5ff;
   background: transparent;
 }
+.base-table-viewer-structure .table-wrapper .datetime-ragne-buttons, .dbg_lv-log-viewer .table-wrapper .datetime-ragne-buttons {
+  margin-left: 30px;
+}
+.base-table-viewer-structure .table-wrapper .datetime-ragne-buttons .btn.active, .dbg_lv-log-viewer .table-wrapper .datetime-ragne-buttons .btn.active {
+  background-color: #0d6efd;
+}
+.base-table-viewer-structure .table-wrapper .datetime-ragne-buttons .btn:hover, .dbg_lv-log-viewer .table-wrapper .datetime-ragne-buttons .btn:hover {
+  background-color: #267dfd;
+}
 .base-table-viewer-structure .dataTables_paginate, .dbg_lv-log-viewer .dataTables_paginate {
-  margin: 0px;
-  margin-top: 10px;
+  margin: 0;
+  margin-top: 30px;
   padding: 0px;
   border: 1px;
   border-radius: 5px;
@@ -97,6 +124,18 @@
 .dbg_lv-log-viewer .main-content .content-wrapper {
   transition: all 0.3s ease;
 }
+.dbg_lv-log-viewer .main-content .dropdown-menu.dt-button-collection {
+  min-width: 200px;
+}
+.dbg_lv-log-viewer .main-content .dropdown-menu.dt-button-collection .dt-button.dropdown-item.buttons-columnVisibility.dt-button-active span:after {
+  content: "\f00c";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  color: #0d6efd;
+  float: right;
+  padding-right: 10px;
+  width: 0;
+}
 .dbg_lv-log-viewer .manual-debugging-instructions_or {
   margin-top: 30px;
   font-weight: bold;
@@ -106,7 +145,7 @@
   text-align: center;
   display: block;
   margin: 10px auto;
-  color: #4f6df5;
+  color: #0d6efd;
 }
 .dbg_lv-log-viewer .top-section {
   background-color: #fff;
@@ -127,7 +166,7 @@
 }
 .dbg_lv-log-viewer .top-section .buttons {
   padding-left: 15px;
-  min-width: 255px;
+  min-width: 258px;
 }
 .dbg_lv-log-viewer .top-section .buttons .clear-log,
 .dbg_lv-log-viewer .top-section .buttons .refresh-log,
@@ -140,6 +179,8 @@
   height: 35px;
   padding: 0;
   font-size: 16px;
+  border: none;
+  border-radius: 5px;
 }
 .dbg_lv-log-viewer .top-section .buttons .notification {
   font-size: 17px;
@@ -161,14 +202,14 @@
 .dbg_lv-log-viewer .top-section .buttons .notification,
 .dbg_lv-log-viewer .top-section .buttons .debug-constants,
 .dbg_lv-log-viewer .top-section .buttons .settings {
-  background-color: #4f6df5;
+  background-color: #0d6efd;
 }
 .dbg_lv-log-viewer .top-section .buttons .refresh-log:active,
 .dbg_lv-log-viewer .top-section .buttons .download-log:active,
 .dbg_lv-log-viewer .top-section .buttons .notification:active,
 .dbg_lv-log-viewer .top-section .buttons .debug-constants:active,
 .dbg_lv-log-viewer .top-section .buttons .settings:active {
-  background-color: rgb(103.1290322581, 129.0161290323, 246.3709677419);
+  background-color: #267dfd;
 }
 .dbg_lv-log-viewer .top-section .buttons .clear-log {
   background-color: #f84042;
@@ -195,21 +236,55 @@
   border-radius: 5px;
   box-shadow: 0 2px 4px #929ea9;
 }
+.dbg_lv-log-viewer .table-wrapper .column-visibility-btn {
+  height: 31px;
+  margin-left: 15px;
+}
 .dbg_lv-log-viewer .table-wrapper #dbg_lv_log-table {
   width: 100% !important;
+  padding-top: 10px;
 }
 .dbg_lv-log-viewer .table-wrapper #dbg_lv_log-table tbody tr td {
-  word-break: break-all;
+  vertical-align: text-top;
 }
 .dbg_lv-log-viewer .table-wrapper #dbg_lv_log-table .badge {
   min-width: 65px;
   border-radius: 4px;
+  font-weight: 500;
+}
+.dbg_lv-log-viewer .table-wrapper #dbg_lv_log-table .badge.notice-bg {
+  background-color: #007bff;
+  color: #fff;
+}
+.dbg_lv-log-viewer .table-wrapper #dbg_lv_log-table .badge.warning-bg {
+  background-color: #ff9800;
+  color: #fff;
+}
+.dbg_lv-log-viewer .table-wrapper #dbg_lv_log-table .badge.fatal-bg {
+  background-color: #dc3545;
+  color: #fff;
+}
+.dbg_lv-log-viewer .table-wrapper #dbg_lv_log-table .badge.database-bg {
+  background-color: #6f42c1;
+  color: #fff;
+}
+.dbg_lv-log-viewer .table-wrapper #dbg_lv_log-table .badge.parse-bg {
+  background-color: #343a40;
+  color: #fff;
+}
+.dbg_lv-log-viewer .table-wrapper #dbg_lv_log-table .badge.deprecated-bg {
+  background-color: #ffc107;
+  color: #000;
+}
+.dbg_lv-log-viewer .table-wrapper #dbg_lv_log-table .badge.custom-bg {
+  background-color: #6c757d;
+  color: #fff;
 }
 .dbg_lv-log-viewer .bootstrap-switch {
   margin-right: 0;
 }
 .dbg_lv-log-viewer .bootstrap-switch-on {
-  background: #4f6df5;
+  background: #0d6efd;
 }
 .dbg_lv-log-viewer .log-not-found {
   background: #fff;
@@ -218,7 +293,7 @@
   box-shadow: 0 2px 4px #929ea9;
 }
 .dbg_lv-log-viewer .log-not-found code {
-  color: #4f6df5;
+  color: #0d6efd;
 }
 .dbg_lv-log-viewer .log-not-found h5 {
   text-align: center;
@@ -230,7 +305,7 @@
 .dbg_lv-log-viewer .log-not-found button {
   margin: 0 auto;
   display: block;
-  background-color: #4f6df5;
+  background-color: #0d6efd;
   text-transform: uppercase;
   font-weight: 500;
 }
